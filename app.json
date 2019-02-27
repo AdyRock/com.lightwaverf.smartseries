@@ -1,0 +1,54 @@
+{
+  "id": "com.lightwaverf.smartseries",
+  "version": "0.0.1",
+  "compatibility": ">=2.0.0",
+  "sdk": 2,
+  "name": {
+    "en": "Lightwave Smart Series"
+  },
+  "description": {
+    "en": "Adds support for LightwaveRF Smart Series Devices"
+  },
+  "category": [
+    "lights"
+  ],
+  "permissions": [],
+  "images": {
+    "large": "/assets/images/large.png",
+    "small": "/assets/images/small.png"
+  },
+  "author": {
+    "name": "Adrian Rockall",
+    "email": "homey@rockall.plus.com"
+  },
+  "drivers": [
+    {
+      "id": "lwdimmer",
+      "name": {
+        "en": "lwDimmer"
+      },
+      "class": "light",
+      "capabilities": [
+        "dim",
+        "onoff"
+      ],
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "images": {
+        "large": "/drivers/lwdimmer/assets/images/large.png",
+        "small": "/drivers/lwdimmer/assets/images/small.png"
+      }
+    }
+  ]
+}

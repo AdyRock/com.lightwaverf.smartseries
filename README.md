@@ -1,0 +1,1 @@
+# com.lightwaverf.smartseries
