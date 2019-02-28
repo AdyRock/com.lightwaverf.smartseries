@@ -41,7 +41,7 @@ module.exports = class lwdimmer extends Homey.Device
 
         try
         {
-            // Get the device information stored durig pairing
+            // Get the device information stored during pairing
             const devData = this.getData();
 
             // The device requires '0' for off and '1' for on
@@ -76,7 +76,7 @@ module.exports = class lwdimmer extends Homey.Device
             // Homey return a value of 0 to 1 but the real device requires a value of 0 to 100
             value *= 100;
 
-            // Get the device information stored durig pairing
+            // Get the device information stored during pairing
             const devData = this.getData();
             //            this.log('Dimming ', devData['dimLevel'], " to ", value);
 
