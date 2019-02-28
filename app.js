@@ -1,4 +1,4 @@
 'use strict';
 
-const LightwaveSmartApp = require('./lib/LightwaveSmartApp');
+const LightwaveSmartApp = require( './lib/LightwaveSmartApp' );
 module.exports = LightwaveSmartApp;
