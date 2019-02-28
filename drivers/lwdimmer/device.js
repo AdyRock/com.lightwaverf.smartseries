@@ -119,31 +119,27 @@ module.exports = class lwdimmer extends Homey.Device
             // this.log('Dim Level = ', dimLevel);
             if ( dimLevel >= 0 )
             {
-                this.setCapabilityValue( 'dim', dimLevel / 100 )
-                    .catch( this.error );
+                await this.setCapabilityValue( 'dim', dimLevel / 100 );
             }
 
             // Get the current switch Value from the device using the unique feature ID stored during pairing
             const onoff = await this.lwBridge.getFeatureValue( devData[ 'switch' ] );
-            if ( onoff >= 0 )
+            switch ( onoff )
             {
-                // Device returns 0 for off and 1 for on so convert o false and true
-                this.setAvailable();
-                if ( onoff == 0 )
-                {
-                    this.setCapabilityValue( 'onoff', false )
-                        .catch( this.error, cb( this.setUnavailable() ) );
-                }
-                else
-                {
-                    this.setCapabilityValue( 'onoff', true )
-                        .catch( this.error, cb( this.setUnavailable() ) );
-                }
-            }
-            else
-            {
-                // Bad response so set as unavailable for now
-                this.setUnavailable();
+                case 0:
+                    // Device returns 0 for off and 1 for on so convert o false and true
+                    this.setAvailable();
+                    await this.setCapabilityValue( 'onoff', false );
+                    break;
+                    
+                case 1:
+                    await this.setCapabilityValue( 'onoff', true );
+                    break;
+
+                default:
+                    // Bad response so set as unavailable for now
+                    this.setUnavailable();
+                    break;
             }
         }
         catch ( err )
