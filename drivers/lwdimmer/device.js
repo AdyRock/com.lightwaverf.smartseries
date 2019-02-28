@@ -12,11 +12,9 @@ module.exports = class lwdimmer extends Homey.Device
     {
         try
         {
-            this.log( 'Device init' );
-            this.log( 'Name:', this.getName() );
-            this.log( 'Class:', this.getClass() );
+            this.log( 'Device init( Name:', this.getName(), ', Class:', this.getClass() + ")" );
 
-            this.lwBridge = this.getDriver().lwBridge // new LightwaveSmartBridge();
+            this.lwBridge = this.getDriver().lwBridge // Get the LightwaveSmartBridge;
 
             this.getDeviceValues();
 
@@ -24,7 +22,7 @@ module.exports = class lwdimmer extends Homey.Device
             this.registerCapabilityListener( 'onoff', this.onCapabilityOnoff.bind( this ) );
             this.registerCapabilityListener( 'dim', this.onCapabilityDim.bind( this ) );
 
-            // Use polling until Lightwave fixe the webhook bug
+            // Use polling until Lightwave fix the webhooks bug
             this.onPoll = this.onPoll.bind( this );
             this.pollInterval = setInterval( this.onPoll, POLL_INTERVAL );
         }
@@ -59,9 +57,14 @@ module.exports = class lwdimmer extends Homey.Device
             {
                 this.setUnavailable();
             }
+            else
+            {
+                this.setAvailable();
+            }
         }
         catch ( err )
         {
+            this.setUnavailable();
             this.log( "lwdimmer Device onCapabilityOnoff Error ", err );
         }
     }
@@ -78,7 +81,7 @@ module.exports = class lwdimmer extends Homey.Device
 
             // Get the device information stored during pairing
             const devData = this.getData();
-            //            this.log('Dimming ', devData['dimLevel'], " to ", value);
+            // this.log('Dimming ', devData['dimLevel'], " to ", value);
 
             // Set the dim Value on the device using the unique feature ID stored during pairing
             result = await this.lwBridge.setFeatureValue( devData[ 'dimLevel' ], value );
@@ -86,9 +89,14 @@ module.exports = class lwdimmer extends Homey.Device
             {
                 this.setUnavailable();
             }
+            else
+            {
+                this.setAvailable();
+            }
         }
         catch ( err )
         {
+            this.setUnavailable();
             this.log( "lwdimmer Device onCapabilityDim Error ", err );
         }
     }
@@ -108,7 +116,7 @@ module.exports = class lwdimmer extends Homey.Device
 
             // Get the current dim Value from the device using the unique feature ID stored during pairing
             const dimLevel = await this.lwBridge.getFeatureValue( devData[ 'dimLevel' ] );
-            //            this.log('Dim Level = ', dimLevel);
+            // this.log('Dim Level = ', dimLevel);
             if ( dimLevel >= 0 )
             {
                 this.setCapabilityValue( 'dim', dimLevel / 100 )
@@ -124,12 +132,12 @@ module.exports = class lwdimmer extends Homey.Device
                 if ( onoff == 0 )
                 {
                     this.setCapabilityValue( 'onoff', false )
-                        .catch( this.error );
+                        .catch( this.error, cb( this.setUnavailable() ) );
                 }
                 else
                 {
                     this.setCapabilityValue( 'onoff', true )
-                        .catch( this.error );
+                        .catch( this.error, cb( this.setUnavailable() ) );
                 }
             }
             else
