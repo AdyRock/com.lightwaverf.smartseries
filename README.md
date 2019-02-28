@@ -3,7 +3,7 @@
 This app is for the LightwaveRF Smart Series of devices and the Link Plus hub.
 
 # How does it work
-It connects via the Lightwave API for the Link Plus and therefore requires an internet connect to operate.
+It connects via the Lightwave API for the Link Plus and therefore requires an internet connection to operate.
 
 > Note: If you have a previous version for this app installed, then you need to remove the already added devices and add them again to enable additional or changed functionality.
 You will also have to repair all related flows because of that.
@@ -38,12 +38,12 @@ You will also have to repair all related flows because of that.
 Lightwave provide a Bearer token and Refresh Token via their Link Plus phone app and their my.lightwave.com web interface.
 These will have to be entered into the homey app settings page. Note the Refresh token is a one time use code that is updated every time it is used to obtain a new access token.
 It appears the Lightwave account page is not updated automatically when a new refresh token is generated externally so you might need to hit the REFRESH TOKEN button to get a current refresh token.
-Currently, Lightwave do not support oauth 2 so these parameters have to be obtained and entered in to homey manually. But at least I don't need to worry about oauth 2 callbacks :-)
+Currently, Lightwave do not support oauth 2 so these parameters have to be obtained and entered in to homey manually.
 
 So, to use the app you will need to install it then enter the codes into the app's settings page before you add new devices to homey.
 
 When adding devices you will need to choose the category to include.
-Select the devices you want to include and hit next on the screen to add them to homey.
+Then select the devices you want to include from the provided list and hit next on the screen to add them to homey.
 The devices all appear in the Home section of homey, so the Lightwave zone / room is ignored, but you can move them to homey rooms as normal.
 
 # Limitations
