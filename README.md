@@ -16,16 +16,16 @@ You will also have to repair all related flows because of that.
 * Switch (On / Off)
 * Dim
 
-## Flows:
-# Triggers:
+# Flows:
+## Triggers:
 * Dim-level changed (with level tag)
 * Turned on
 * Turned off
 
-# Conditions:
+## Conditions:
 * Is turned on
 
-# Then:
+## Then:
 * Dim to
 * Set relative dim-level
 * Turn on
