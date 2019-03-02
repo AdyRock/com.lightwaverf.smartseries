@@ -1,14 +1,12 @@
 'use strict';
 
-const Homey = require( 'homey' );
+const Homey = require('homey');
 const LightwaveSmartBridge = require( '../../lib/LightwaveSmartBridge' );
 const POLL_INTERVAL = 10000;
 
-module.exports = class lwsockets extends Homey.Device
-{
-    // this method is called when the Device is inited
-    async onInit()
-    {
+module.exports = class lwrelay extends Homey.Device {
+	
+	onInit() {
         try
         {
             this.log( 'Device init( Name:', this.getName(), ', Class:', this.getClass() + ")" );
@@ -26,10 +24,9 @@ module.exports = class lwsockets extends Homey.Device
         }
         catch ( err )
         {
-            this.log( "lwsockets Device OnInit Error ", err );
+            this.log( "lwrelays Device OnInit Error ", err );
         }
-    }
-
+	}
     // this method is called when the Homey device has requested a state change (turned on or off)
     async onCapabilityOnoff( value, opts )
     {
@@ -63,7 +60,7 @@ module.exports = class lwsockets extends Homey.Device
         catch ( err )
         {
             this.setUnavailable();
-            this.log( "lwsockets Device onCapabilityOnoff Error ", err );
+            this.log( "lwrelays Device onCapabilityOnoff Error ", err );
         }
     }
 
@@ -100,27 +97,11 @@ module.exports = class lwsockets extends Homey.Device
                     this.setUnavailable();
                     break;
             }
-
-            // Get the current power Value from the device using the unique feature ID stored during pairing
-            const power = await this.lwBridge.getFeatureValue( devData[ 'power' ] );
-            if ( power >= 0 )
-            {
-                this.setAvailable();
-                await this.setCapabilityValue( 'measure_power', power );
-            }
-
-            // Get the current power Value from the device using the unique feature ID stored during pairing
-            const energy = await this.lwBridge.getFeatureValue( devData[ 'energy' ] );
-            if ( energy >= 0 )
-            {
-                this.setAvailable();
-                await this.setCapabilityValue( 'meter_power', energy );
-            }
         }
         catch ( err )
         {
             this.setUnavailable();
-            this.log( "lwsockets Device getDeviceValues Error ", err );
+            this.log( "lwrelays Device getDeviceValues Error ", err );
         }
     }
 
@@ -130,6 +111,7 @@ module.exports = class lwsockets extends Homey.Device
         clearInterval( this.pollInterval );
         this.getDriver().unregisterWebhook();
     }
+	
 }
 
 //module.exports = MyDevice;

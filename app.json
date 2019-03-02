@@ -53,7 +53,7 @@
     {
       "id": "lwsockets",
       "name": {
-        "en": "Power (Socket / Relay)"
+        "en": "Socket"
       },
       "class": "socket",
       "capabilities": [
@@ -77,6 +77,33 @@
       "images": {
         "large": "/drivers/lwsockets/assets/images/large.png",
         "small": "/drivers/lwsockets/assets/images/small.png"
+      }
+    },
+    {
+      "id": "lwrelay",
+      "name": {
+        "en": "Relay"
+      },
+      "class": "socket",
+      "capabilities": [
+        "onoff"
+      ],
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "images": {
+        "large": "/drivers/lwrelay/assets/images/large.png",
+        "small": "/drivers/lwrelay/assets/images/small.png"
       }
     }
   ]

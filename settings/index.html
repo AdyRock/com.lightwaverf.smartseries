@@ -33,8 +33,16 @@
             <label for="refreshtoken">Refresh Token</label>
             <input id="refreshtoken" type="text" value="" />
         </div>
-
+        <p data-i18n="settings.unsupportedDescription">
+            <!--
+                    This field will also be translated
+                    -->
+        </p>
+        <div class="field row">
+            <textarea id="unsupportedDevices"></textarea>
+        </div>
     </fieldset>
+
 
     <button id="save" class="right">Save changes</button>
 
@@ -48,6 +56,8 @@
 
             var beareridElement = document.getElementById( 'bearerid' );
             var refreshtokenElement = document.getElementById( 'refreshtoken' );
+            var unsupportedDevicesElement = document.getElementById( 'unsupportedDevices' );
+
             var saveElement = document.getElementById( 'save' );
 
             Homey.get( 'bearerid', function( err, bearerid )
@@ -62,6 +72,14 @@
                 refreshtokenElement.value = refreshtoken;
             } );
 
+            Homey.get( 'unsupportedDevices', function( err, unsupportedDevices )
+            {
+                if ( err ) return Homey.alert( err );
+                unsupportedDevicesElement.value = unsupportedDevices;
+                unsupportedDevicesElement.setAttribute( 'cols', unsupportedDevicesElement.parentElement.clientWidth / 8 );
+                unsupportedDevicesElement.style.height = ( unsupportedDevicesElement.scrollHeight ) + 'px';
+            } );
+
             saveElement.addEventListener( 'click', function( e )
             {
 
@@ -73,7 +91,10 @@
                 {
                     if ( err ) return Homey.alert( err );
                 } );
-
+                Homey.set( 'unsupportedDevices', unsupportedDevicesElement.value, function( err )
+                {
+                    if ( err ) return Homey.alert( err );
+                } );
             } );
         }
     </script>

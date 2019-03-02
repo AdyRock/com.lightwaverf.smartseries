@@ -1,6 +1,8 @@
 {
     "settings": {
       "title": "Lightwave Smart Serries Settings",
-      "subtitle": "Access Credentials"
+      "subtitle": "Access Credentials",
+      "unsupportedTitle": "Unsupported Devices",
+      "unsupportedDescription": "Any devices that were found in the last pairing stage that are not currently supported will appear below"
     }
   }
