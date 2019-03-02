@@ -10,6 +10,8 @@ You will also have to repair all related flows because of that.
 
 # Currently supported:
 * Dimmers.
+* Sockets.
+* Relays.
 * Other categories will be added later.
 
 ## Capabilities supported for dimmers:
@@ -28,6 +30,42 @@ You will also have to repair all related flows because of that.
 ## Then:
 * Dim to
 * Set relative dim-level
+* Turn on
+* Turn off
+* Toggle on or off
+
+## Capabilities supported for sockets:
+* Switch (On / Off)
+* Power usage.
+* Energy Used.
+
+# Flows:
+## Triggers:
+* Turn on
+* Turn off
+* The power changed
+* The power meter changed
+
+## Conditions:
+* Is turned on
+
+## Then:
+* Turn on
+* Turn off
+* Toggle on or off
+
+## Capabilities supported for relay:
+* Switch (On / Off)
+
+# Flows:
+## Triggers:
+* Turn on
+* Turn off
+
+## Conditions:
+* Is turned on
+
+## Then:
 * Turn on
 * Turn off
 * Toggle on or off
