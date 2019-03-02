@@ -9,9 +9,9 @@ It connects via the Lightwave API for the Link Plus and therefore requires an in
 You will also have to repair all related flows because of that.
 
 # Currently supported:
-* Dimmers.
-* Sockets.
-* Relays.
+* Dimmers: L21, L22.
+* Sockets: L41, L42.
+* Relays: LW380.
 * Other categories will be added later.
 
 ## Capabilities supported for dimmers:
@@ -87,4 +87,8 @@ The devices all appear in the Home section of homey, so the Lightwave zone / roo
 # Limitations
 Lightwave have an issue with their web hooks feature that is preventing me from registering a web hook so I have implemented a polling system to refresh the status of the homey tiles. The system polls every 10 seconds so there could be a slight delay between pressing a physical button and the homey tile updating. I will move to using the web hooks as soon as it is working, which should reduce the latency and network traffic.
 This does not affect the sending of updates from homey so changing the state of a device from a tile or flow should be quick.
+
+# Notes
+If you have devices that are not supported, a log will appear in the settings page after you have run the pairing process. This log provides details of the devices that were found that are not supported.
+If you post the log to https://github.com/AdyRock/com.lightwaverf.smartseries/issues I will try to add the devices to the next version.
 
