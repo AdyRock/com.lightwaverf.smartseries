@@ -9,7 +9,7 @@ It connects via the Lightwave API for the Link Plus and therefore requires an in
 You will also have to repair all related flows because of that.
 
 # Currently supported:
-* Dimmers: L21, L22.
+* Dimmers: L21, L22. L23, L24.
 * Sockets: L41, L42.
 * Relays: LW380.
 * Other categories will be added later.
