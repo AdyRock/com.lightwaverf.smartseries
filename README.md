@@ -92,3 +92,6 @@ This does not affect the sending of updates from homey so changing the state of 
 If you have devices that are not supported, a log will appear in the settings page after you have run the pairing process. This log provides details of the devices that were found that are not supported.
 If you post the log to https://github.com/AdyRock/com.lightwaverf.smartseries/issues I will try to add the devices to the next version.
 
+# Version Log
+0.1.0
+First beta
