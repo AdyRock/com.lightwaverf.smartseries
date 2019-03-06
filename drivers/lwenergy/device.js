@@ -47,7 +47,7 @@ module.exports = class lwenergy extends Homey.Device
             if ( power >= 0 )
             {
                 this.setAvailable();
-                await this.setCapabilityValue( 'measure_power', power / 1000 );
+                await this.setCapabilityValue( 'measure_power', power );
             }
 
             // Get the current power Value from the device using the unique feature ID stored during pairing
