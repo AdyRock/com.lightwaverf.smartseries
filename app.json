@@ -105,6 +105,62 @@
         "large": "/drivers/lwrelay/assets/images/large.png",
         "small": "/drivers/lwrelay/assets/images/small.png"
       }
+    },
+    {
+      "id": "lwcontact",
+      "name": {
+        "en": "Contact Sensor"
+      },
+      "class": "sensor",
+      "capabilities": [
+        "measure_battery",
+        "alarm_contact"
+      ],
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "images": {
+        "large": "/drivers/lwcontact/assets/images/large.png",
+        "small": "/drivers/lwcontact/assets/images/small.png"
+      }
+    },
+    {
+      "id": "lwenergy",
+      "name": {
+        "en": "Energy Monitor"
+      },
+      "class": "sensor",
+      "capabilities": [
+        "measure_power",
+        "meter_power"
+      ],
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "images": {
+        "large": "/drivers/lwenergy/assets/images/large.png",
+        "small": "/drivers/lwenergy/assets/images/small.png"
+      }
     }
   ]
 }
