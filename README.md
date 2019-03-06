@@ -93,5 +93,8 @@ If you have devices that are not supported, a log will appear in the settings pa
 If you post the log to https://github.com/AdyRock/com.lightwaverf.smartseries/issues I will try to add the devices to the next version.
 
 # Version Log
+0.2.0
+Divided power and energy values by 1000 to convert from integer to real number.
+
 0.1.0
 First beta
