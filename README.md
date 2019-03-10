@@ -12,6 +12,8 @@ You will also have to repair all related flows because of that.
 * Dimmers: L21, L22. L23, L24.
 * Sockets: L41, L42.
 * Relays: LW380.
+* Contact Sensor: LW931.
+* Energy Monitor: LW600.
 * Other categories will be added later.
 
 ## Capabilities supported for dimmers:
@@ -70,6 +72,33 @@ You will also have to repair all related flows because of that.
 * Turn off
 * Toggle on or off
 
+## Capabilities supported for contact sensor:
+* alarm
+
+# Flows:
+## Triggers:
+* The battery level changed
+* The contact alarm turned on
+* The contact alarm turned off
+
+## Conditions:
+* Is contact alarm is on
+
+## Then:
+
+## Capabilities supported for electricity monitor:
+* Power usage
+* Energy usage
+
+# Flows:
+## Triggers:
+* The power changed
+* The power meter changed
+
+## Conditions:
+
+## Then:
+
 # Configuration
 * Be sure that your Lightwave devices are paired and working with the Link Plus bridge.
 
@@ -93,5 +122,11 @@ If you have devices that are not supported, a log will appear in the settings pa
 If you post the log to https://github.com/AdyRock/com.lightwaverf.smartseries/issues I will try to add the devices to the next version.
 
 # Version Log
+0.2.1
+Added support for LW600 electricity monitor and LW931 contact sensor.
+
+0.2.0
+Divided power and energy values by 1000 to convert from integer to real number.
+
 0.1.0
 First beta
