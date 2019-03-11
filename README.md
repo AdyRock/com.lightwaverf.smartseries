@@ -6,7 +6,7 @@ This app is for the LightwaveRF Smart Series of devices and the Link Plus hub.
 It connects via the Lightwave API for the Link Plus and therefore requires an internet connection to operate.
 
 > Note: If you have a previous version for this app installed, then you need to remove the already added devices and add them again to enable additional or changed functionality.
-You will also have to repair all related flows because of that.
+You will also have to repair all related flows because of that. This only applies to new features for existing devices so should not be a problems yet.
 
 # Currently supported:
 * Dimmers: L21, L22. L23, L24.
@@ -113,17 +113,13 @@ When adding devices you will need to choose the category to include.
 Then select the devices you want to include from the provided list and hit next on the screen to add them to homey.
 The devices all appear in the Home section of homey, so the Lightwave zone / room is ignored, but you can move them to homey rooms as normal.
 
-# Limitations
-Lightwave have an issue with their web hooks feature that is preventing me from registering a web hook so I have implemented a polling system to refresh the status of the homey tiles. The system polls every 10 seconds so there could be a slight delay between pressing a physical button and the homey tile updating. I will move to using the web hooks as soon as it is working, which should reduce the latency and network traffic.
-This does not affect the sending of updates from homey so changing the state of a device from a tile or flow should be quick.
-
 # Notes
 If you have devices that are not supported, a log will appear in the settings page after you have run the pairing process. This log provides details of the devices that were found that are not supported.
 If you post the log to https://github.com/AdyRock/com.lightwaverf.smartseries/issues I will try to add the devices to the next version.
 
 # Version Log
 1.0.1
-Implemented webhooks and remove polling.
+Implemented webhooks and removed polling.
 Changed method of synchronising async functions when fetching new tokens.
 
 1.0.0
