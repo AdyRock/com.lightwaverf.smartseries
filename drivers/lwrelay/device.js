@@ -1,32 +1,33 @@
 'use strict';
 
-const Homey = require('homey');
+const Homey = require( 'homey' );
 const LightwaveSmartBridge = require( '../../lib/LightwaveSmartBridge' );
-const POLL_INTERVAL = 10000;
 
-module.exports = class lwrelay extends Homey.Device {
-	
-	onInit() {
+module.exports = class lwrelay extends Homey.Device
+{
+
+    async onInit()
+    {
         try
         {
             this.log( 'Device init( Name:', this.getName(), ', Class:', this.getClass() + ")" );
 
-            this.lwBridge = this.getDriver().lwBridge // Get the LightwaveSmartBridge;
+            //this.lwBridge = this.getDriver().lwBridge // Get the LightwaveSmartBridge;
+            this.lwBridge = new LightwaveSmartBridge();
+            await this.lwBridge.waitForBridgeReady();
 
+            this.log( this.getName(), ': Getting Values' );
             this.getDeviceValues();
+            this.registerWebhook();
 
             // register a capability listener
             this.registerCapabilityListener( 'onoff', this.onCapabilityOnoff.bind( this ) );
-
-            // Use polling until Lightwave fix the webhooks bug
-            this.onPoll = this.onPoll.bind( this );
-            this.pollInterval = setInterval( this.onPoll, POLL_INTERVAL );
         }
         catch ( err )
         {
             this.log( "lwrelays Device OnInit Error ", err );
         }
-	}
+    }
     // this method is called when the Homey device has requested a state change (turned on or off)
     async onCapabilityOnoff( value, opts )
     {
@@ -64,11 +65,39 @@ module.exports = class lwrelay extends Homey.Device {
         }
     }
 
-    // Use polling until Lightwave fixe the webhook bug
-    async onPoll()
+    async registerWebhook()
     {
-        // Bad response so set as unavailable for now
-        this.getDeviceValues();
+        try
+        {
+            this.log( this.getName(), ': Registering LW WebHooks' );
+
+            let driverId = this.getDriver().id;
+            let data = this.getData();
+            let id = driverId + "_" + data.id;
+
+            this.log( 'registering WEBHook: ', data.switch, id );
+            await Promise.all( [ this.lwBridge.registerWEBHooks( data.switch, 'feature', id + '_switch' ) ] );
+        }
+        catch ( err )
+        {
+            this.log( "Failed to create webhooks", err );
+        }
+    }
+
+    async setWebHookValue( capability, value )
+    {
+        try
+        {
+            if ( capability == "switch" )
+            {
+                await this.setCapabilityValue( 'onoff', ( value == 1 ) );
+                this.setAvailable();
+            }
+        }
+        catch ( err )
+        {
+
+        }
     }
 
     async getDeviceValues()
@@ -89,6 +118,7 @@ module.exports = class lwrelay extends Homey.Device {
                     break;
 
                 case 1:
+                    this.setAvailable();
                     await this.setCapabilityValue( 'onoff', true );
                     break;
 
@@ -105,13 +135,8 @@ module.exports = class lwrelay extends Homey.Device {
         }
     }
 
-    async onDeleted()
-    {
-        // Disable the timer for ths device
-        clearInterval( this.pollInterval );
-        this.getDriver().unregisterWebhook();
-    }
-	
+    async onDeleted() {}
+
 }
 
 //module.exports = MyDevice;

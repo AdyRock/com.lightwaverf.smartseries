@@ -6,11 +6,13 @@ const LightwaveSmartBridge = require( '../../lib/LightwaveSmartBridge' );
 module.exports = class lwcontact extends Homey.Driver
 {
 
-    onInit()
+    async onInit()
     {
-        this.log( 'lwcontact has been inited' );
+        //this.log( 'Driver init( Name:', this.getName(), ', Class:', this.getClass() + ")" );
         this.lwBridge = new LightwaveSmartBridge();
+        await this.lwBridge.waitForBridgeReady();
     }
+
     // this is the easiest method to overwrite, when only the template 'Drivers-Pairing-System-Views' is being used.
     onPairListDevices( data, callback )
     {
@@ -36,7 +38,6 @@ module.exports = class lwcontact extends Homey.Driver
             callback( new Error( "Connection Failed" + err ), [] );
         } );
     }
-
 }
 
 //module.exports = MyDriver;

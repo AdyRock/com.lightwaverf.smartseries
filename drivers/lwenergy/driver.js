@@ -1,14 +1,18 @@
 'use strict';
 
-const Homey = require('homey');
+const Homey = require( 'homey' );
 const LightwaveSmartBridge = require( '../../lib/LightwaveSmartBridge' );
 
-module.exports = class lwenergy extends Homey.Driver {
-	
-	onInit() {
-		this.log('lwenergy has been inited');
+module.exports = class lwenergy extends Homey.Driver
+{
+
+    async onInit()
+    {
+        //this.log( 'Driver init( Name:', this.getName(), ', Class:', this.getClass() + ")" );
         this.lwBridge = new LightwaveSmartBridge();
-	}
+        await this.lwBridge.waitForBridgeReady();
+    }
+
     // this is the easiest method to overwrite, when only the template 'Drivers-Pairing-System-Views' is being used.
     onPairListDevices( data, callback )
     {
@@ -34,7 +38,7 @@ module.exports = class lwenergy extends Homey.Driver {
             callback( new Error( "Connection Failed" + err ), [] );
         } );
     }
-	
+
 }
 
 //module.exports = MyDriver;

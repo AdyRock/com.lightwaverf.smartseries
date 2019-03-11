@@ -2,26 +2,22 @@
 
 const Homey = require( 'homey' );
 const LightwaveSmartBridge = require( '../../lib/LightwaveSmartBridge' );
-const POLL_INTERVAL = 1000;
-
-var batteryDelay = 0;
 
 module.exports = class lwcontact extends Homey.Device
 {
-    onInit()
+    async onInit()
     {
-        this.log( 'lwcontact has been inited' );
         try
         {
             this.log( 'Device init( Name:', this.getName(), ', Class:', this.getClass() + ")" );
 
-            this.lwBridge = this.getDriver().lwBridge // Get the LightwaveSmartBridge;
+            //this.lwBridge = this.getDriver().lwBridge // Get the LightwaveSmartBridge;
+            this.lwBridge = new LightwaveSmartBridge();
+            await this.lwBridge.waitForBridgeReady();
 
+            this.log( this.getName(), ': Getting Values' );
             this.getDeviceValues();
-
-            // Use polling until Lightwave fix the webhooks bug
-            this.onPoll = this.onPoll.bind( this );
-            this.pollInterval = setInterval( this.onPoll, POLL_INTERVAL );
+            this.registerWebhook();
         }
         catch ( err )
         {
@@ -29,11 +25,47 @@ module.exports = class lwcontact extends Homey.Device
         }
     }
 
-    // Use polling until Lightwave fixe the webhook bug
-    async onPoll()
+    async registerWebhook()
     {
-        // Bad response so set as unavailable for now
-        this.getDeviceValues();
+        try
+        {
+            this.log( this.getName(), ': Registering LW WebHooks' );
+
+            let driverId = this.getDriver().id;
+            let data = this.getData();
+            let id = driverId + "_" + data.id;
+
+            this.log( 'registering WEBHook: ', data.windowPosition, id );
+            this.log( 'registering WEBHook: ', data.batteryLevel, id );
+            await Promise.all( [ this.lwBridge.registerWEBHooks( data.windowPosition, 'feature', id + '_windowPosition' ),
+                this.lwBridge.registerWEBHooks( data.batteryLevel, 'feature', id + '_batteryLevel' )
+            ] );
+        }
+        catch ( err )
+        {
+            this.log( "Failed to create webhooks", err );
+        }
+    }
+
+    async setWebHookValue( capability, value )
+    {
+        try
+        {
+            if ( capability == "windowPosition" )
+            {
+                await this.setCapabilityValue( 'alarm_contact', ( value == 1 ) );
+                this.setAvailable();
+            }
+            else if ( capability == "batteryLevel" )
+            {
+                await this.setCapabilityValue( 'measure_battery', value );
+                this.setAvailable();
+            }
+        }
+        catch ( err )
+        {
+
+        }
     }
 
     async getDeviceValues()
@@ -54,6 +86,7 @@ module.exports = class lwcontact extends Homey.Device
                     break;
 
                 case 1:
+                    this.setAvailable();
                     await this.setCapabilityValue( 'alarm_contact', true );
                     break;
 
@@ -63,27 +96,17 @@ module.exports = class lwcontact extends Homey.Device
                     break;
             }
 
-            if ( batteryDelay <= 0 )
-            { // Get the battery Value from the device using the unique feature ID stored during pairing
-                const battery = await this.lwBridge.getFeatureValue( devData[ 'batteryLevel' ] );
-                if ( battery >= 0 )
-                {
-                    this.setAvailable();
-                    await this.setCapabilityValue( 'measure_battery', battery );
-                }
-                else
-                {
-                    // Bad response so set as unavailable for now
-                    this.setUnavailable();
-				}
-				
-				// Only get the battery status once per minute
-				batteryDelay = 60 / POLL_INTERVAL;
-			}
-			else
-			{
-				batteryDelay--;
-			}
+            const battery = await this.lwBridge.getFeatureValue( devData[ 'batteryLevel' ] );
+            if ( battery >= 0 )
+            {
+                this.setAvailable();
+                await this.setCapabilityValue( 'measure_battery', battery );
+            }
+            else
+            {
+                // Bad response so set as unavailable for now
+                this.setUnavailable();
+            }
         }
         catch ( err )
         {
@@ -92,15 +115,7 @@ module.exports = class lwcontact extends Homey.Device
         }
     }
 
-    async onDeleted()
-    {
-        // Disable the timer for ths device
-        clearInterval( this.pollInterval );
-        this.getDriver().unregisterWebhook().catch( function( err )
-        {
-            callback( new Error( "Unregister callback Failed" + err ), [] );
-        } );
-    }
+    async onDeleted() {}
 
 }
 

@@ -2,7 +2,7 @@
 
 const Homey = require( 'homey' );
 const LightwaveSmartBridge = require( '../../lib/LightwaveSmartBridge' );
-const POLL_INTERVAL = 10000;
+//const POLL_INTERVAL = 10000;
 
 module.exports = class lwdimmer extends Homey.Device
 {
@@ -14,17 +14,17 @@ module.exports = class lwdimmer extends Homey.Device
         {
             this.log( 'Device init( Name:', this.getName(), ', Class:', this.getClass() + ")" );
 
-            this.lwBridge = this.getDriver().lwBridge // Get the LightwaveSmartBridge;
+            //this.lwBridge = this.getDriver().lwBridge // Get the LightwaveSmartBridge;
+            this.lwBridge = new LightwaveSmartBridge();
+            await this.lwBridge.waitForBridgeReady();
 
+            this.log( this.getName(), ': Getting Values' );
             this.getDeviceValues();
+            this.registerWebhook();
 
             // register a capability listener
             this.registerCapabilityListener( 'onoff', this.onCapabilityOnoff.bind( this ) );
             this.registerCapabilityListener( 'dim', this.onCapabilityDim.bind( this ) );
-
-            // Use polling until Lightwave fix the webhooks bug
-            this.onPoll = this.onPoll.bind( this );
-            this.pollInterval = setInterval( this.onPoll, POLL_INTERVAL );
         }
         catch ( err )
         {
@@ -101,11 +101,47 @@ module.exports = class lwdimmer extends Homey.Device
         }
     }
 
-    // Use polling until Lightwave fixe the webhook bug
-    async onPoll()
+    async registerWebhook()
     {
-        // Bad response so set as unavailable for now
-        this.getDeviceValues();
+        try
+        {
+            this.log( this.getName(), ': Registering LW WebHooks' );
+
+            let driverId = this.getDriver().id;
+            let data = this.getData();
+            let id = driverId + "_" + data.id;
+
+            this.log( 'registering WEBHook: ', data.switch, id );
+            this.log( 'registering WEBHook: ', data.dimLevel, id );
+            await Promise.all( [ this.lwBridge.registerWEBHooks( data.switch, 'feature', id + '_switch' ),
+                this.lwBridge.registerWEBHooks( data.dimLevel, 'feature', id + '_dimLevel' )
+            ] );
+        }
+        catch ( err )
+        {
+            this.log( "Failed to create webhooks", err );
+        }
+    }
+
+    async setWebHookValue( capability, value )
+    {
+        try
+        {
+            if ( capability == "switch" )
+            {
+                await this.setCapabilityValue( 'onoff', ( value == 1 ) );
+                this.setAvailable();
+            }
+            else if ( capability == "dimLevel" )
+            {
+                await this.setCapabilityValue( 'dim', value / 100 );
+                this.setAvailable();
+            }
+        }
+        catch ( err )
+        {
+
+        }
     }
 
     async getDeviceValues()
@@ -131,8 +167,9 @@ module.exports = class lwdimmer extends Homey.Device
                     this.setAvailable();
                     await this.setCapabilityValue( 'onoff', false );
                     break;
-                    
+
                 case 1:
+                    this.setAvailable();
                     await this.setCapabilityValue( 'onoff', true );
                     break;
 
@@ -149,12 +186,7 @@ module.exports = class lwdimmer extends Homey.Device
         }
     }
 
-    async onDeleted()
-    {
-        // Disable the timer for ths device
-        clearInterval( this.pollInterval );
-        this.getDriver().unregisterWebhook();
-    }
+    async onDeleted() {}
 }
 
 //module.exports = MyDevice;
