@@ -122,6 +122,9 @@ If you have devices that are not supported, a log will appear in the settings pa
 If you post the log to https://github.com/AdyRock/com.lightwaverf.smartseries/issues I will try to add the devices to the next version.
 
 # Version Log
+1.0.0
+Changed to release version
+
 0.2.1
 Added support for LW600 electricity monitor and LW931 contact sensor.
 
