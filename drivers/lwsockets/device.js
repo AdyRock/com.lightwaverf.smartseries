@@ -100,7 +100,7 @@ module.exports = class lwsockets extends Homey.Device
             }
             else if ( capability == "power" )
             {
-                await this.setCapabilityValue( 'measure_power', value / 1000 );
+                await this.setCapabilityValue( 'measure_power', value );
                 this.setAvailable();
             }
             else if ( capability == "energy" )
@@ -148,7 +148,7 @@ module.exports = class lwsockets extends Homey.Device
             if ( power >= 0 )
             {
                 this.setAvailable();
-                await this.setCapabilityValue( 'measure_power', power / 1000 );
+                await this.setCapabilityValue( 'measure_power', power );
             }
 
             // Get the current power Value from the device using the unique feature ID stored during pairing

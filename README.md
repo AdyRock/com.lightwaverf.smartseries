@@ -118,6 +118,9 @@ If you have devices that are not supported, a log will appear in the settings pa
 If you post the log to https://github.com/AdyRock/com.lightwaverf.smartseries/issues I will try to add the devices to the next version.
 
 # Version Log
+1.0.3
+Fixed Socket power value as this does not need to be divided by 1000 which was change in 0.2.0
+
 1.0.2
 Fixed issue with the webhook identifying the target homey.
 
