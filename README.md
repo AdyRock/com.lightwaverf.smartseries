@@ -118,6 +118,9 @@ If you have devices that are not supported, a log will appear in the settings pa
 If you post the log to https://github.com/AdyRock/com.lightwaverf.smartseries/issues I will try to add the devices to the next version.
 
 # Version Log
+1.0.2
+Fixed issue with the webhook identifying the target homey.
+
 1.0.1
 Implemented webhooks and removed polling.
 Changed method of synchronising async functions when fetching new tokens.
