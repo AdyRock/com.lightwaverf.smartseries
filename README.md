@@ -118,6 +118,9 @@ If you have devices that are not supported, a log will appear in the settings pa
 If you post the log to https://github.com/AdyRock/com.lightwaverf.smartseries/issues I will try to add the devices to the next version.
 
 # Version Log
+1.0.5
+Added energy monitors to dimmers. (requires existing dimmers to be removed and added back in. Flows will then need to be repaired.)
+
 1.0.4
 Added new EU version devices.
 
