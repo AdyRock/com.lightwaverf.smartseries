@@ -1,6 +1,6 @@
 {
   "id": "com.lightwaverf.smartseries",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "compatibility": ">=2.0.0",
   "sdk": 2,
   "name": {
@@ -12,7 +12,10 @@
   "category": [
     "lights"
   ],
-  "permissions": [],
+  "tags": {
+    "en": ["Lightwave", "Dimmer", "Socket", "Relay", "Power" ]
+},
+"permissions": [],
   "images": {
     "large": "/assets/images/large.png",
     "small": "/assets/images/small.png"
@@ -29,6 +32,8 @@
       },
       "class": "light",
       "capabilities": [
+        "measure_power",
+        "meter_power",
         "dim",
         "onoff"
       ],

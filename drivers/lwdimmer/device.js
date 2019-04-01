@@ -113,8 +113,12 @@ module.exports = class lwdimmer extends Homey.Device
 
             this.log( 'registering WEBHook: ', data.switch, id );
             this.log( 'registering WEBHook: ', data.dimLevel, id );
+            this.log( 'registering WEBHook: ', data.power, id );
+            this.log( 'registering WEBHook: ', data.energy, id );
             await Promise.all( [ this.lwBridge.registerWEBHooks( data.switch, 'feature', id + '_switch' ),
-                this.lwBridge.registerWEBHooks( data.dimLevel, 'feature', id + '_dimLevel' )
+                this.lwBridge.registerWEBHooks( data.dimLevel, 'feature', id + '_dimLevel' ),
+                this.lwBridge.registerWEBHooks( data.power, 'feature', id + '_power' ),
+                this.lwBridge.registerWEBHooks( data.energy, 'feature', id + '_energy' )
             ] );
         }
         catch ( err )
@@ -135,6 +139,16 @@ module.exports = class lwdimmer extends Homey.Device
             else if ( capability == "dimLevel" )
             {
                 await this.setCapabilityValue( 'dim', value / 100 );
+                this.setAvailable();
+            }
+            else if ( capability == "power" )
+            {
+                await this.setCapabilityValue( 'measure_power', value );
+                this.setAvailable();
+            }
+            else if ( capability == "energy" )
+            {
+                await this.setCapabilityValue( 'meter_power', value / 1000 );
                 this.setAvailable();
             }
         }
@@ -177,6 +191,22 @@ module.exports = class lwdimmer extends Homey.Device
                     // Bad response so set as unavailable for now
                     this.setUnavailable();
                     break;
+            }
+
+            // Get the current power Value from the device using the unique feature ID stored during pairing
+            const power = await this.lwBridge.getFeatureValue( devData[ 'power' ] );
+            if ( power >= 0 )
+            {
+                this.setAvailable();
+                await this.setCapabilityValue( 'measure_power', power );
+            }
+
+            // Get the current power Value from the device using the unique feature ID stored during pairing
+            const energy = await this.lwBridge.getFeatureValue( devData[ 'energy' ] );
+            if ( energy >= 0 )
+            {
+                this.setAvailable();
+                await this.setCapabilityValue( 'meter_power', energy / 1000 );
             }
         }
         catch ( err )
