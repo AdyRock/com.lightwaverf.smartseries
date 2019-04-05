@@ -14,16 +14,23 @@ module.exports = class lwenergy extends Homey.Device
 
             //this.lwBridge = this.getDriver().lwBridge // Get the LightwaveSmartBridge;
             this.lwBridge = new LightwaveSmartBridge();
-            await this.lwBridge.waitForBridgeReady();
-
-            this.log( this.getName(), ': Getting Values' );
-            this.getDeviceValues();
-            this.registerWebhook();
+            if ( await this.lwBridge.waitForBridgeReady() )
+            {
+                this.initDevice();
+            }
         }
         catch ( err )
         {
             this.log( "lwenergy Device OnInit Error ", err );
         }
+    }
+
+    initDevice()
+    {
+        this.log( this.getName(), ': Getting Values' );
+        this.getDeviceValues();
+        this.registerWebhook();
+
     }
 
     async registerWebhook()

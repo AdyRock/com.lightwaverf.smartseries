@@ -16,20 +16,26 @@ module.exports = class lwdimmer extends Homey.Device
 
             //this.lwBridge = this.getDriver().lwBridge // Get the LightwaveSmartBridge;
             this.lwBridge = new LightwaveSmartBridge();
-            await this.lwBridge.waitForBridgeReady();
-
-            this.log( this.getName(), ': Getting Values' );
-            this.getDeviceValues();
-            this.registerWebhook();
-
-            // register a capability listener
-            this.registerCapabilityListener( 'onoff', this.onCapabilityOnoff.bind( this ) );
-            this.registerCapabilityListener( 'dim', this.onCapabilityDim.bind( this ) );
+            if ( await this.lwBridge.waitForBridgeReady() )
+            {
+                this.initDevice();
+            }
         }
         catch ( err )
         {
             this.log( "lwdimmer Device OnInit Error ", err );
         }
+
+        // register a capability listener
+        this.registerCapabilityListener( 'onoff', this.onCapabilityOnoff.bind( this ) );
+        this.registerCapabilityListener( 'dim', this.onCapabilityDim.bind( this ) );
+    }
+
+    initDevice()
+    {
+        this.log( this.getName(), ': Getting Values' );
+        this.getDeviceValues();
+        this.registerWebhook();
     }
 
     // this method is called when the Homey device has requested a state change (turned on or off)
