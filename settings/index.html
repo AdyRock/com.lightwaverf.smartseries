@@ -41,6 +41,11 @@
         <div class="field row">
             <textarea id="unsupportedDevices"></textarea>
         </div>
+        <p Diagnostics Log>
+        </p>
+        <div class="field row">
+            <textarea id="diagLog"></textarea>
+        </div>
     </fieldset>
 
 
@@ -57,6 +62,7 @@
             var beareridElement = document.getElementById( 'bearerid' );
             var refreshtokenElement = document.getElementById( 'refreshtoken' );
             var unsupportedDevicesElement = document.getElementById( 'unsupportedDevices' );
+            var diagLogElement = document.getElementById( 'diagLog' );
 
             var saveElement = document.getElementById( 'save' );
 
@@ -80,6 +86,14 @@
                 unsupportedDevicesElement.style.height = ( unsupportedDevicesElement.scrollHeight ) + 'px';
             } );
 
+            Homey.get( 'diagLog', function( err, diagLog )
+            {
+                if ( err ) return Homey.alert( err );
+                diagLogElement.value = diagLog;
+                diagLogElement.setAttribute( 'cols', diagLogElement.parentElement.clientWidth / 8 );
+                diagLogElement.style.height = ( diagLogElement.scrollHeight ) + 'px';
+            } );
+
             saveElement.addEventListener( 'click', function( e )
             {
 
@@ -92,6 +106,10 @@
                     if ( err ) return Homey.alert( err );
                 } );
                 Homey.set( 'unsupportedDevices', unsupportedDevicesElement.value, function( err )
+                {
+                    if ( err ) return Homey.alert( err );
+                } );
+                Homey.set( 'diagLog', diagLogElement.value, function( err )
                 {
                     if ( err ) return Homey.alert( err );
                 } );
