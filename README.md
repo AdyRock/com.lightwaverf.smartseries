@@ -118,11 +118,13 @@ If you have devices that are not supported, a log will appear in the settings pa
 If you post the log to https://github.com/AdyRock/com.lightwaverf.smartseries/issues I will try to add the devices to the next version.
 
 # Version Log
+1.0.7
+Added type check on product code to ensure a string has been returned.
+
 1.0.6
 Rewritten some sections so the connections and webhooks are renewed after changing settings. This means you no longer have to restart the app after making changes.
 Added a confirmation message when saving settings.
 Added a diagnostics log to settings page to help trouble shoot connection issues.
-Added type check on product code to ensure a string has been returned.
 
 1.0.5
 Added energy monitors to dimmers. (requires existing dimmers to be removed and added back in. Flows will then need to be repaired.)
