@@ -41,8 +41,12 @@
         <div class="field row">
             <textarea id="unsupportedDevices"></textarea>
         </div>
-        <p Diagnostics Log>
+        <p> Diagnostics Log
         </p>
+        <div class="field row">
+            <label for="logWebhooks">Log Webhook messages (Use with caution as it can generate a lot of data)</label>
+            <input id="logWebhooks" type="checkbox" value="logWebhooks" />
+        </div>
         <div class="field row">
             <textarea id="diagLog"></textarea>
         </div>
@@ -63,6 +67,7 @@
             var refreshtokenElement = document.getElementById( 'refreshtoken' );
             var unsupportedDevicesElement = document.getElementById( 'unsupportedDevices' );
             var diagLogElement = document.getElementById( 'diagLog' );
+            var logWebhooksElement = document.getElementById( 'logWebhooks' );
 
             var saveElement = document.getElementById( 'save' );
 
@@ -86,6 +91,12 @@
                 unsupportedDevicesElement.style.height = ( unsupportedDevicesElement.scrollHeight ) + 'px';
             } );
 
+            Homey.get( 'logWebhooks', function( err, logWebhooks )
+            {
+                if ( err ) return Homey.alert( err );
+                logWebhooksElement.checked = logWebhooks;
+            } );
+
             Homey.get( 'diagLog', function( err, diagLog )
             {
                 if ( err ) return Homey.alert( err );
@@ -106,6 +117,10 @@
                     if ( err ) return Homey.alert( err );
                 } );
                 Homey.set( 'unsupportedDevices', unsupportedDevicesElement.value, function( err )
+                {
+                    if ( err ) return Homey.alert( err );
+                } );
+                Homey.set( 'logWebhooks', logWebhooksElement.checked, function( err )
                 {
                     if ( err ) return Homey.alert( err );
                 } );
