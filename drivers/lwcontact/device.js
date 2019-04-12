@@ -11,7 +11,6 @@ module.exports = class lwcontact extends Homey.Device
         {
             this.log( 'Device init( Name:', this.getName(), ', Class:', this.getClass() + ")" );
 
-            //this.lwBridge = this.getDriver().lwBridge // Get the LightwaveSmartBridge;
             this.lwBridge = new LightwaveSmartBridge();
             if ( await this.lwBridge.waitForBridgeReady() )
             {
