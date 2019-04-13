@@ -11,8 +11,7 @@ module.exports = class lwcontact extends Homey.Device
         {
             this.log( 'Device init( Name:', this.getName(), ', Class:', this.getClass() + ")" );
 
-            this.lwBridge = new LightwaveSmartBridge();
-            if ( await this.lwBridge.waitForBridgeReady() )
+            if ( await Homey.app.getBridge().waitForBridgeReady() )
             {
                 this.initDevice();
             }
@@ -35,16 +34,14 @@ module.exports = class lwcontact extends Homey.Device
     {
         try
         {
-            this.log( this.getName(), ': Registering LW WebHooks' );
-
             let driverId = this.getDriver().id;
             let data = this.getData();
             let id = driverId + "_" + data.id;
 
-            this.log( 'registering WEBHook: ', data.windowPosition, id );
-            this.log( 'registering WEBHook: ', data.batteryLevel, id );
-            await Promise.all( [ this.lwBridge.registerWEBHooks( data.windowPosition, 'feature', id + '_windowPosition' ),
-                this.lwBridge.registerWEBHooks( data.batteryLevel, 'feature', id + '_batteryLevel' )
+            this.log( this.getName(), ': Registering LW WebHooks', data.windowPosition, id );
+
+            await Promise.all( [ Homey.app.getBridge().registerWEBHooks( data.windowPosition, 'feature', id + '_windowPosition' ),
+            Homey.app.getBridge().registerWEBHooks( data.batteryLevel, 'feature', id + '_batteryLevel' )
             ] );
         }
         catch ( err )
@@ -82,7 +79,7 @@ module.exports = class lwcontact extends Homey.Device
             //console.log( devData );
 
             // Get the current switch Value from the device using the unique feature ID stored during pairing
-            const onoff = await this.lwBridge.getFeatureValue( devData[ 'windowPosition' ] );
+            const onoff = await Homey.app.getBridge().getFeatureValue( devData[ 'windowPosition' ] );
             switch ( onoff )
             {
                 case 0:
@@ -102,7 +99,7 @@ module.exports = class lwcontact extends Homey.Device
                     break;
             }
 
-            const battery = await this.lwBridge.getFeatureValue( devData[ 'batteryLevel' ] );
+            const battery = await Homey.app.getBridge().getFeatureValue( devData[ 'batteryLevel' ] );
             if ( battery >= 0 )
             {
                 this.setAvailable();

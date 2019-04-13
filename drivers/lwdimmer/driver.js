@@ -7,9 +7,14 @@ module.exports = class lwdimmer extends Homey.Driver
 {
     async onInit()
     {
-        //this.log( 'Driver init( Name:', this.getName(), ', Class:', this.getClass() + ")" );
-        this.lwBridge = new LightwaveSmartBridge();
-        await this.lwBridge.waitForBridgeReady();
+        try
+        {
+            await Homey.app.getBridge().waitForBridgeReady();
+        }
+        catch ( err )
+        {
+            this.log( "lwdimmer Device OnInit Error ", err );
+        }
     }
 
     // this is the easiest method to overwrite, when only the template 'Drivers-Pairing-System-Views' is being used.
@@ -28,7 +33,7 @@ module.exports = class lwdimmer extends Homey.Driver
         // "store": { "foo": "bar" },
         // "settings": { "my_setting": "my_value" },
 
-        this.lwBridge.getDevicesOfType( 'dimmer' ).then( function( devices )
+        Homey.app.getBridge().getDevicesOfType( 'dimmer' ).then( function( devices )
         {
             callback( null, devices );
 

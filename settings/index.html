@@ -64,10 +64,14 @@
             <p> Diagnostics Log
             </p>
             <div class="field row">
-                <label for="logWebhooks">Log Webhook messages (Use with caution as it can generate a lot of data)</label>
-                <input id="logWebhooks" type="checkbox" value="logWebhooks" />
+                <label for="logEnabled">Log Enabled</label>
+                <input id="logEnabled" type="checkbox" value="logEnabled" />
             </div>
-        </fieldset>
+            <div class="field row">
+                    <label for="logWebhooks">Log Webhook messages (Use with caution as it can generate a lot of data)</label>
+                    <input id="logWebhooks" type="checkbox" value="logWebhooks" />
+                </div>
+            </fieldset>
         <fieldset>
                 <p><button id="clearLog">Clear Log</button></p>
                 <div class="field row">
@@ -81,6 +85,7 @@
         var refreshtokenElement = document.getElementById( 'refreshtoken' );
         var unsupportedDevicesElement = document.getElementById( 'unsupportedDevices' );
         var diagLogElement = document.getElementById( 'diagLog' );
+        var logEnabledElement = document.getElementById( 'logEnabled' );
         var logWebhooksElement = document.getElementById( 'logWebhooks' );
 
         var saveElement = document.getElementById( 'save' );
@@ -141,6 +146,14 @@
                 Homey.alert( "The settings have been saved" );
             } );
 
+            logEnabledElement.addEventListener( 'click', function( e )
+            {
+                Homey.set( 'logEnabled', logWebhooksElement.checked, function( err )
+                {
+                    if ( err ) return Homey.alert( err );
+                } );
+            } );
+
             logWebhooksElement.addEventListener( 'click', function( e )
             {
                 Homey.set( 'logWebhooks', logWebhooksElement.checked, function( err )
@@ -184,6 +197,12 @@
             if ( tabPage == 'log' )
             {
                 // Refresh the log data
+                Homey.get( 'logEnabled', function( err, logEnabled )
+                {
+                    if ( err ) return Homey.alert( err );
+                    logEnabledElement.checked = logEnabled;
+                } );
+
                 Homey.get( 'logWebhooks', function( err, logWebhooks )
                 {
                     if ( err ) return Homey.alert( err );

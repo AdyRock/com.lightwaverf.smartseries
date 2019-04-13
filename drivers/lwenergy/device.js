@@ -12,9 +12,7 @@ module.exports = class lwenergy extends Homey.Device
         {
             this.log( 'Device init( Name:', this.getName(), ', Class:', this.getClass() + ")" );
 
-            //this.lwBridge = this.getDriver().lwBridge // Get the LightwaveSmartBridge;
-            this.lwBridge = new LightwaveSmartBridge();
-            if ( await this.lwBridge.waitForBridgeReady() )
+            if ( await Homey.app.getBridge().waitForBridgeReady() )
             {
                 this.initDevice();
             }
@@ -37,16 +35,14 @@ module.exports = class lwenergy extends Homey.Device
     {
         try
         {
-            this.log( this.getName(), ': Registering LW WebHooks' );
-
             let driverId = this.getDriver().id;
             let data = this.getData();
             let id = driverId + "_" + data.id;
 
-            this.log( 'registering WEBHook: ', data.power, id );
-            this.log( 'registering WEBHook: ', data.energy, id );
-            await Promise.all( [ this.lwBridge.registerWEBHooks( data.power, 'feature', id + '_power' ),
-                this.lwBridge.registerWEBHooks( data.energy, 'feature', id + '_energy' )
+            this.log( this.getName(), ': Registering LW WebHooks', data.power, id );
+
+            await Promise.all( [ Homey.app.getBridge().registerWEBHooks( data.power, 'feature', id + '_power' ),
+                Homey.app.getBridge().registerWEBHooks( data.energy, 'feature', id + '_energy' )
             ] );
         }
         catch ( err )
@@ -84,7 +80,7 @@ module.exports = class lwenergy extends Homey.Device
             //console.log( devData );
 
             // Get the current power Value from the device using the unique feature ID stored during pairing
-            const power = await this.lwBridge.getFeatureValue( devData[ 'power' ] );
+            const power = await Homey.app.getBridge().getFeatureValue( devData[ 'power' ] );
             if ( power >= 0 )
             {
                 this.setAvailable();
@@ -92,7 +88,7 @@ module.exports = class lwenergy extends Homey.Device
             }
 
             // Get the current power Value from the device using the unique feature ID stored during pairing
-            const energy = await this.lwBridge.getFeatureValue( devData[ 'energy' ] );
+            const energy = await Homey.app.getBridge().getFeatureValue( devData[ 'energy' ] );
             if ( energy >= 0 )
             {
                 this.setAvailable();

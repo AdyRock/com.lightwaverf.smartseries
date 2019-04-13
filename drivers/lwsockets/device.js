@@ -11,9 +11,7 @@ module.exports = class lwsockets extends Homey.Device
         {
             this.log( 'Device init( Name:', this.getName(), ', Class:', this.getClass() + ")" );
 
-            //this.lwBridge = this.getDriver().lwBridge // Get the LightwaveSmartBridge;
-            this.lwBridge = new LightwaveSmartBridge();
-            if ( await this.lwBridge.waitForBridgeReady() )
+            if ( await Homey.app.getBridge().waitForBridgeReady() )
             {
                 this.initDevice();
             }
@@ -54,7 +52,7 @@ module.exports = class lwsockets extends Homey.Device
             // this.log('Switching ', devData['switch'], " to ", data);
 
             // Set the switch Value on the device using the unique feature ID stored during pairing
-            result = await this.lwBridge.setFeatureValue( devData[ 'switch' ], data );
+            result = await Homey.app.getBridge().setFeatureValue( devData[ 'switch' ], data );
             if ( result == -1 )
             {
                 this.setUnavailable();
@@ -75,18 +73,15 @@ module.exports = class lwsockets extends Homey.Device
     {
         try
         {
-            this.log( this.getName(), ': Registering LW WebHooks' );
-
             let driverId = this.getDriver().id;
             let data = this.getData();
             let id = driverId + "_" + data.id;
 
-            this.log( 'registering WEBHook: ', data.switch, id );
-            this.log( 'registering WEBHook: ', data.power, id );
-            this.log( 'registering WEBHook: ', data.energy, id );
-            await Promise.all( [ this.lwBridge.registerWEBHooks( data.switch, 'feature', id + '_switch' ),
-                this.lwBridge.registerWEBHooks( data.power, 'feature', id + '_power' ),
-                this.lwBridge.registerWEBHooks( data.energy, 'feature', id + '_energy' )
+            this.log( this.getName(), ': Registering LW WebHooks', data.switch, id );
+
+            await Promise.all( [ Homey.app.getBridge().registerWEBHooks( data.switch, 'feature', id + '_switch' ),
+                Homey.app.getBridge().registerWEBHooks( data.power, 'feature', id + '_power' ),
+                Homey.app.getBridge().registerWEBHooks( data.energy, 'feature', id + '_energy' )
             ] );
         }
         catch ( err )
@@ -129,7 +124,7 @@ module.exports = class lwsockets extends Homey.Device
             //console.log( devData );
 
             // Get the current switch Value from the device using the unique feature ID stored during pairing
-            const onoff = await this.lwBridge.getFeatureValue( devData[ 'switch' ] );
+            const onoff = await Homey.app.getBridge().getFeatureValue( devData[ 'switch' ] );
             switch ( onoff )
             {
                 case 0:
@@ -150,7 +145,7 @@ module.exports = class lwsockets extends Homey.Device
             }
 
             // Get the current power Value from the device using the unique feature ID stored during pairing
-            const power = await this.lwBridge.getFeatureValue( devData[ 'power' ] );
+            const power = await Homey.app.getBridge().getFeatureValue( devData[ 'power' ] );
             if ( power >= 0 )
             {
                 this.setAvailable();
@@ -158,7 +153,7 @@ module.exports = class lwsockets extends Homey.Device
             }
 
             // Get the current power Value from the device using the unique feature ID stored during pairing
-            const energy = await this.lwBridge.getFeatureValue( devData[ 'energy' ] );
+            const energy = await Homey.app.getBridge().getFeatureValue( devData[ 'energy' ] );
             if ( energy >= 0 )
             {
                 this.setAvailable();

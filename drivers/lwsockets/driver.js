@@ -8,9 +8,14 @@ module.exports = class lwsockets extends Homey.Driver
 
     async onInit()
     {
-        //this.log( 'Driver init( Name:', this.getName(), ', Class:', this.getClass() + ")" );
-        this.lwBridge = new LightwaveSmartBridge();
-        await this.lwBridge.waitForBridgeReady();
+        try
+        {
+            await Homey.app.getBridge().waitForBridgeReady();
+        }
+        catch ( err )
+        {
+            this.log( "lwsockets Device OnInit Error ", err );
+        }
     }
 
     // this is the easiest method to overwrite, when only the template 'Drivers-Pairing-System-Views' is being used.
@@ -29,7 +34,7 @@ module.exports = class lwsockets extends Homey.Driver
         // "store": { "foo": "bar" },
         // "settings": { "my_setting": "my_value" },
 
-        this.lwBridge.getDevicesOfType( 'socket' ).then( function( devices )
+        Homey.app.getBridge().getDevicesOfType( 'socket' ).then( function( devices )
         {
             callback( null, devices );
 
