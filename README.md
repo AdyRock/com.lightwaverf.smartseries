@@ -118,6 +118,13 @@ If you have devices that are not supported, a log will appear in the settings pa
 If you post the log to https://github.com/AdyRock/com.lightwaverf.smartseries/issues I will try to add the devices to the next version.
 
 # Version Log
+1.0.8
+Updated bridge methods for better queuing of transactions.
+Updated the settings page so the log is on a separate tab.
+Added an option to switch logging off.
+Log data panel is now refreshed when new data arrives.
+Changed WebHook function to filter on a different parameter.
+
 1.0.7
 Added type check on product code to ensure a string has been returned.
 
