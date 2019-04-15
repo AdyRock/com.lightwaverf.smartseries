@@ -133,11 +133,12 @@
 
             saveElement.addEventListener( 'click', function( e )
             {
-
+                beareridElement.value = beareridElement.value.replace(/[\"\']/g, '');
                 Homey.set( 'bearerid', beareridElement.value, function( err )
                 {
                     if ( err ) return Homey.alert( err );
                 } );
+                refreshtokenElement.value = refreshtokenElement.value.replace(/[\"\']/g, '');
                 Homey.set( 'refreshtoken', refreshtokenElement.value, function( err )
                 {
                     if ( err ) return Homey.alert( err );
