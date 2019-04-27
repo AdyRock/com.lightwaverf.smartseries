@@ -2,7 +2,6 @@
 
 const Homey = require( 'homey' );
 const LightwaveSmartBridge = require( '../../lib/LightwaveSmartBridge' );
-
 module.exports = class lwrelay extends Homey.Device
 {
 
@@ -32,7 +31,6 @@ module.exports = class lwrelay extends Homey.Device
         Homey.app.updateLog( this.getName() + ': Getting Values' );
         this.getDeviceValues();
         this.registerWebhook();
-
     }
 
     // this method is called when the Homey device has requested a state change (turned on or off)
@@ -104,6 +102,8 @@ module.exports = class lwrelay extends Homey.Device
 
     async getDeviceValues()
     {
+        Homey.app.updateLog( this.getName() + ': Getting Values', true );
+
         try
         {
             const devData = this.getData();
@@ -137,8 +137,9 @@ module.exports = class lwrelay extends Homey.Device
         }
     }
 
-    async onDeleted() {}
-
+    async onDeleted()
+    {
+    }
 }
 
 //module.exports = MyDevice;

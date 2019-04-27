@@ -2,17 +2,15 @@
 
 const Homey = require( 'homey' );
 const LightwaveSmartBridge = require( '../../lib/LightwaveSmartBridge' );
-const POLL_INTERVAL = 5000;
 
 module.exports = class lwdimmer extends Homey.Device
 {
-
     // this method is called when the Device is inited
     async onInit()
     {
         try
         {
-            Homey.app.updateLog( 'Device initialising( Name: ' + this.getName() + ', Class: ' +  this.getClass() + ")" );
+            Homey.app.updateLog( 'Device initialising( Name: ' + this.getName() + ', Class: ' + this.getClass() + ")" );
 
             if ( await Homey.app.getBridge().waitForBridgeReady() )
             {
@@ -32,20 +30,9 @@ module.exports = class lwdimmer extends Homey.Device
 
     initDevice()
     {
-        // Use polling for energy values to reduce webhook calls
-        this.onPoll = this.onPoll.bind( this );
-
-        Homey.app.updateLog( this.getName() + ': Getting Values' );
         this.getDeviceValues();
+        this.getEnergyValues();
         this.registerWebhook();
-        this.getEnergyValues();
-    }
-
-    // Use polling
-    async onPoll()
-    {
-        // Bad response so set as unavailable for now
-        this.getEnergyValues();
     }
 
     // this method is called when the Homey device has requested a state change (turned on or off)
@@ -125,7 +112,7 @@ module.exports = class lwdimmer extends Homey.Device
             await Promise.all( [ Homey.app.getBridge().registerWEBHooks( data.switch, 'feature', id + '_switch' ),
                 Homey.app.getBridge().registerWEBHooks( data.dimLevel, 'feature', id + '_dimLevel' )
             ] );
-    }
+        }
         catch ( err )
         {
             Homey.app.updateLog( this.getName() + " Failed to create webhooks ", err );
@@ -165,16 +152,10 @@ module.exports = class lwdimmer extends Homey.Device
 
     async getDeviceValues()
     {
+        Homey.app.updateLog( this.getName() + ': Getting Values', true );
         try
         {
             const devData = this.getData();
-
-            // Get the current dim Value from the device using the unique feature ID stored during pairing
-            const dimLevel = await Homey.app.getBridge().getFeatureValue( devData[ 'dimLevel' ] );
-            if ( dimLevel >= 0 )
-            {
-                await this.setCapabilityValue( 'dim', dimLevel / 100 );
-            }
 
             // Get the current switch Value from the device using the unique feature ID stored during pairing
             const onoff = await Homey.app.getBridge().getFeatureValue( devData[ 'switch' ] );
@@ -184,21 +165,28 @@ module.exports = class lwdimmer extends Homey.Device
                     // Device returns 0 for off and 1 for on so convert o false and true
                     this.setAvailable();
                     await this.setCapabilityValue( 'onoff', false );
-
-                    // Don't poll for energy when switched off
-                    clearInterval( this.pollInterval );
                     break;
 
                 case 1:
                     this.setAvailable();
                     await this.setCapabilityValue( 'onoff', true );
-                    this.pollInterval = setInterval( this.onPoll, POLL_INTERVAL );
                     break;
 
                 default:
                     // Bad response so set as unavailable for now
                     this.setUnavailable();
                     break;
+            }
+
+            // Only get the dim value if the switch is on or is currently unknown
+            if ((onoff == 1) || (this.getCapabilityValue( 'dimLevel' ) == null))
+            {
+                // Get the current dim Value from the device using the unique feature ID stored during pairing
+                const dimLevel = await Homey.app.getBridge().getFeatureValue( devData[ 'dimLevel' ] );
+                if ( dimLevel >= 0 )
+                {
+                    await this.setCapabilityValue( 'dim', dimLevel / 100 );
+                }
             }
         }
         catch ( err )
@@ -212,20 +200,25 @@ module.exports = class lwdimmer extends Homey.Device
     {
         try
         {
-            const devData = this.getData();
-
-            // Get the current power Value from the device using the unique feature ID stored during pairing
-            const power = await Homey.app.getBridge().getFeatureValue( devData[ 'power' ] );
-            if ( power >= 0 )
+            if ( this.getCapabilityValue( 'onoff' ) == true )
             {
-                await this.setCapabilityValue( 'measure_power', power );
-            }
+                Homey.app.updateLog( this.getName() + ': Getting Energy', true );
 
-            // Get the current power Value from the device using the unique feature ID stored during pairing
-            const energy = await Homey.app.getBridge().getFeatureValue( devData[ 'energy' ] );
-            if ( energy >= 0 )
-            {
-                await this.setCapabilityValue( 'meter_power', energy / 1000 );
+                const devData = this.getData();
+
+                // Get the current power Value from the device using the unique feature ID stored during pairing
+                const power = await Homey.app.getBridge().getFeatureValue( devData[ 'power' ] );
+                if ( power >= 0 )
+                {
+                    await this.setCapabilityValue( 'measure_power', power );
+                }
+
+                // Get the current power Value from the device using the unique feature ID stored during pairing
+                const energy = await Homey.app.getBridge().getFeatureValue( devData[ 'energy' ] );
+                if ( energy >= 0 )
+                {
+                    await this.setCapabilityValue( 'meter_power', energy / 1000 );
+                }
             }
         }
         catch ( err )
@@ -234,11 +227,7 @@ module.exports = class lwdimmer extends Homey.Device
         }
     }
 
-    async onDeleted()
-    {
-        // Disable the timer for ths device
-        clearInterval( this.pollInterval );
-    }
+    async onDeleted() {}
 }
 
 //module.exports = MyDevice;

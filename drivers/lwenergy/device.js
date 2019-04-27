@@ -3,7 +3,7 @@
 const Homey = require( 'homey' );
 const LightwaveSmartBridge = require( '../../lib/LightwaveSmartBridge' );
 
-const POLL_INTERVAL = 5000;
+const POLL_INTERVAL = 30000;
 
 module.exports = class lwenergy extends Homey.Device
 {
@@ -31,17 +31,6 @@ module.exports = class lwenergy extends Homey.Device
         Homey.app.updateLog( this.getName() + ': Getting Values' );
         this.getEnergyValues();
         //this.registerWebhook();
-
-        // Use polling for energy values to reduce webhook calls
-        this.onPoll = this.onPoll.bind( this );
-        this.pollInterval = setInterval( this.onPoll, POLL_INTERVAL );
-    }
-
-    // Use polling
-    async onPoll()
-    {
-        // Bad response so set as unavailable for now
-        this.getEnergyValues();
     }
 
     async registerWebhook()
@@ -85,6 +74,8 @@ module.exports = class lwenergy extends Homey.Device
 
     async getEnergyValues()
     {
+        Homey.app.updateLog( this.getName() + ': Getting Energy', true );
+
         try
         {
             const devData = this.getData();
@@ -115,8 +106,6 @@ module.exports = class lwenergy extends Homey.Device
 
     async onDeleted()
     {
-        // Disable the timer for ths device
-        clearInterval( this.pollInterval );
     }
 }
 
