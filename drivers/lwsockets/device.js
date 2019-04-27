@@ -3,22 +3,24 @@
 const Homey = require( 'homey' );
 const LightwaveSmartBridge = require( '../../lib/LightwaveSmartBridge' );
 
+const POLL_INTERVAL = 5000;
 module.exports = class lwsockets extends Homey.Device
 {
     async onInit()
     {
         try
         {
-            this.log( 'Device init( Name:', this.getName(), ', Class:', this.getClass() + ")" );
+            Homey.app.updateLog( 'Device initialising( Name: ' + this.getName() + ', Class: ' +  this.getClass() + ")" );
 
             if ( await Homey.app.getBridge().waitForBridgeReady() )
             {
                 this.initDevice();
             }
+            Homey.app.updateLog( 'Device initialised( Name: ' + this.getName() + ")" );
         }
         catch ( err )
         {
-            this.log( "lwsockets Device OnInit Error ", err );
+            Homey.app.updateLog( this.getName() + " OnInit Error: " + err );
         }
         // register a capability listener
         this.registerCapabilityListener( 'onoff', this.onCapabilityOnoff.bind( this ) );
@@ -26,10 +28,20 @@ module.exports = class lwsockets extends Homey.Device
 
     initDevice()
     {
-        this.log( this.getName(), ': Getting Values' );
+        // Use polling for energy values to reduce webhook calls
+        this.onPoll = this.onPoll.bind( this );
+
+        Homey.app.updateLog( this.getName() + ': Getting Values' );
         this.getDeviceValues();
         this.registerWebhook();
+        this.getEnergyValues();
+    }
 
+    // Use polling
+    async onPoll()
+    {
+        // Bad response so set as unavailable for now
+        this.getEnergyValues();
     }
 
     // this method is called when the Homey device has requested a state change (turned on or off)
@@ -49,8 +61,6 @@ module.exports = class lwsockets extends Homey.Device
                 data = '1';
             }
 
-            // this.log('Switching ', devData['switch'], " to ", data);
-
             // Set the switch Value on the device using the unique feature ID stored during pairing
             result = await Homey.app.getBridge().setFeatureValue( devData[ 'switch' ], data );
             if ( result == -1 )
@@ -65,7 +75,7 @@ module.exports = class lwsockets extends Homey.Device
         catch ( err )
         {
             this.setUnavailable();
-            this.log( "lwsockets Device onCapabilityOnoff Error ", err );
+            Homey.app.updateLog( this.getName() + " onCapabilityOnoff Error ", err );
         }
     }
 
@@ -77,16 +87,12 @@ module.exports = class lwsockets extends Homey.Device
             let data = this.getData();
             let id = driverId + "_" + data.id;
 
-            this.log( this.getName(), ': Registering LW WebHooks', data.switch, id );
-
-            await Promise.all( [ Homey.app.getBridge().registerWEBHooks( data.switch, 'feature', id + '_switch' ),
-                Homey.app.getBridge().registerWEBHooks( data.power, 'feature', id + '_power' ),
-                Homey.app.getBridge().registerWEBHooks( data.energy, 'feature', id + '_energy' )
+            await Promise.all( [ Homey.app.getBridge().registerWEBHooks( data.switch, 'feature', id + '_switch' )
             ] );
-        }
+    }
         catch ( err )
         {
-            this.log( "Failed to create webhooks", err );
+            Homey.app.updateLog( this.getName() + " Failed to create webhooks ", err );
         }
     }
 
@@ -131,11 +137,15 @@ module.exports = class lwsockets extends Homey.Device
                     // Device returns 0 for off and 1 for on so convert o false and true
                     this.setAvailable();
                     await this.setCapabilityValue( 'onoff', false );
+
+                    // Don't poll for energy when switched off
+                    clearInterval( this.pollInterval );
                     break;
 
                 case 1:
                     this.setAvailable();
                     await this.setCapabilityValue( 'onoff', true );
+                    this.pollInterval = setInterval( this.onPoll, POLL_INTERVAL );
                     break;
 
                 default:
@@ -143,6 +153,19 @@ module.exports = class lwsockets extends Homey.Device
                     this.setUnavailable();
                     break;
             }
+        }
+        catch ( err )
+        {
+            this.setUnavailable();
+            Homey.app.updateLog( this.getName() + " getDeviceValues Error ", err );
+        }
+    }
+
+    async getEnergyValues()
+    {
+        try
+        {
+            const devData = this.getData();
 
             // Get the current power Value from the device using the unique feature ID stored during pairing
             const power = await Homey.app.getBridge().getFeatureValue( devData[ 'power' ] );
@@ -162,12 +185,15 @@ module.exports = class lwsockets extends Homey.Device
         }
         catch ( err )
         {
-            this.setUnavailable();
-            this.log( "lwsockets Device getDeviceValues Error ", err );
+            Homey.app.updateLog( this.getName() + " getDeviceValues Error ", err );
         }
     }
 
-    async onDeleted() {}
+    async onDeleted()
+    {
+        // Disable the timer for ths device
+        clearInterval( this.pollInterval );
+    }
 }
 
 //module.exports = MyDevice;

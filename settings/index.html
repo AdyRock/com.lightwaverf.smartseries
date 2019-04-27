@@ -12,6 +12,7 @@
     <!-- Tab links -->
     <div class="tab">
         <button class="tablinks" onclick="setPage(event, 'settings')" id="defaultOpen">Settings</button>
+        <button class="tablinks" onclick="setPage(event, 'unsupported')">Unsupported</button>
         <button class="tablinks" onclick="setPage(event, 'log')">Log</button>
     </div>
 
@@ -44,7 +45,10 @@
 
             <p><button id="save" class="right">Save changes</button></p>
         </fieldset>
+    </div>
 
+    <!-- Unsupported-->
+    <div id="unsupported" class="tabcontent">
         <fieldset>
             <p data-i18n="settings.unsupportedDescription">
                 <!--
@@ -55,7 +59,6 @@
                 <textarea id="unsupportedDevices"></textarea>
             </div>
         </fieldset>
-
     </div>
 
     <!-- LOG PAGE -->
@@ -68,13 +71,13 @@
                 <input id="logEnabled" type="checkbox" value="logEnabled" />
             </div>
             <div class="field row">
-                    <label for="logWebhooks">Log Webhook messages (Use with caution as it can generate a lot of data)</label>
-                    <input id="logWebhooks" type="checkbox" value="logWebhooks" />
-                </div>
-            </fieldset>
+                <label for="logWebhooks">Log Webhook messages (Use with caution as it can generate a lot of data)</label>
+                <input id="logWebhooks" type="checkbox" value="logWebhooks" />
+            </div>
+        </fieldset>
         <fieldset>
-                <p><button id="clearLog">Clear Log</button></p>
-                <div class="field row">
+            <p><button id="clearLog">Clear Log</button></p>
+            <div class="field row">
                 <textarea id="diagLog"></textarea>
             </div>
         </fieldset>
@@ -98,10 +101,6 @@
             Homey.ready();
 
             document.getElementById( "defaultOpen" ).click();
-
-            // Make the unsupported devices text area fill the page
-            unsupportedDevicesElement.setAttribute( 'cols', unsupportedDevicesElement.parentElement.clientWidth / 8 );
-            unsupportedDevicesElement.style.height = ( window.innerHeight - unsupportedDevicesElement.offsetTop - 20 ) + 'px';
 
             Homey.on( 'settings.set', function()
             {
@@ -133,12 +132,12 @@
 
             saveElement.addEventListener( 'click', function( e )
             {
-                beareridElement.value = beareridElement.value.replace(/[\"\']/g, '');
+                beareridElement.value = beareridElement.value.replace( /[\"\']/g, '' );
                 Homey.set( 'bearerid', beareridElement.value, function( err )
                 {
                     if ( err ) return Homey.alert( err );
                 } );
-                refreshtokenElement.value = refreshtokenElement.value.replace(/[\"\']/g, '');
+                refreshtokenElement.value = refreshtokenElement.value.replace( /[\"\']/g, '' );
                 Homey.set( 'refreshtoken', refreshtokenElement.value, function( err )
                 {
                     if ( err ) return Homey.alert( err );
@@ -219,6 +218,12 @@
                 // Make the log text area fill the page
                 diagLogElement.setAttribute( 'cols', diagLogElement.parentElement.clientWidth / 8 );
                 diagLogElement.style.height = ( window.innerHeight - diagLogElement.offsetTop - 20 ) + 'px';
+            }
+            else if ( tabPage == 'unsupported' )
+            {
+                // Make the unsupported devices text area fill the page
+                unsupportedDevicesElement.setAttribute( 'cols', unsupportedDevicesElement.parentElement.clientWidth / 8 );
+                unsupportedDevicesElement.style.height = ( window.innerHeight - unsupportedDevicesElement.offsetTop - 20 ) + 'px';
             }
         };
     </script>

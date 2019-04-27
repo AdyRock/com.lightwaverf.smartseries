@@ -14,7 +14,7 @@ module.exports = class lwenergy extends Homey.Driver
         }
         catch ( err )
         {
-            this.log( "lwenergy Device OnInit Error ", err );
+            Homey.app.updateLog( "lwenergy Driver OnInit Error " + err );
         }
     }
 

@@ -9,25 +9,25 @@ module.exports = class lwcontact extends Homey.Device
     {
         try
         {
-            this.log( 'Device init( Name:', this.getName(), ', Class:', this.getClass() + ")" );
+            Homey.app.updateLog( 'Device initialising( Name: ' + this.getName() + ', Class: ' +  this.getClass() + ")" );
 
             if ( await Homey.app.getBridge().waitForBridgeReady() )
             {
                 this.initDevice();
             }
+            Homey.app.updateLog( 'Device initialised( Name: ' + this.getName() + ")" );
         }
         catch ( err )
         {
-            this.log( "lwcontact Device OnInit Error ", err );
+            Homey.app.updateLog( this.getName() + " OnInit Error: " + err );
         }
     }
 
     initDevice()
     {
-        this.log( this.getName(), ': Getting Values' );
+        Homey.app.updateLog( this.getName() + ': Getting Values' );
         this.getDeviceValues();
         this.registerWebhook();
-
     }
 
     async registerWebhook()
@@ -38,15 +38,13 @@ module.exports = class lwcontact extends Homey.Device
             let data = this.getData();
             let id = driverId + "_" + data.id;
 
-            this.log( this.getName(), ': Registering LW WebHooks', data.windowPosition, id );
-
             await Promise.all( [ Homey.app.getBridge().registerWEBHooks( data.windowPosition, 'feature', id + '_windowPosition' ),
             Homey.app.getBridge().registerWEBHooks( data.batteryLevel, 'feature', id + '_batteryLevel' )
             ] );
         }
         catch ( err )
         {
-            this.log( "Failed to create webhooks", err );
+            Homey.app.updateLog( this.getName() + " Failed to create webhooks" + err );
         }
     }
 
@@ -114,7 +112,7 @@ module.exports = class lwcontact extends Homey.Device
         catch ( err )
         {
             this.setUnavailable();
-            this.log( "lwcontact Device getDeviceValues Error ", err );
+            Homey.app.updateLog( "lwcontact Device getDeviceValues Error " + err );
         }
     }
 

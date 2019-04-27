@@ -13,7 +13,7 @@ module.exports = class lwdimmer extends Homey.Driver
         }
         catch ( err )
         {
-            this.log( "lwdimmer Device OnInit Error ", err );
+            Homey.app.updateLog( "lwdimmer Driver OnInit Error " + err );
         }
     }
 

@@ -14,7 +14,7 @@ module.exports = class lwcontact extends Homey.Driver
         }
         catch ( err )
         {
-            this.log( "lwcontact Device OnInit Error ", err );
+            Homey.app.updateLog( "lwcontact Driver OnInit Error " + err );
         }
     }
 

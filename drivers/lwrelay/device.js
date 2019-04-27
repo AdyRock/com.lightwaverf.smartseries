@@ -10,16 +10,17 @@ module.exports = class lwrelay extends Homey.Device
     {
         try
         {
-            this.log( 'Device init( Name:', this.getName(), ', Class:', this.getClass() + ")" );
+            Homey.app.updateLog( 'Device initialising( Name: ' + this.getName() + ', Class: ' +  this.getClass() + ")" );
 
             if ( await Homey.app.getBridge().waitForBridgeReady() )
             {
                 this.initDevice();
             }
+            Homey.app.updateLog( 'Device initialised( Name: ' + this.getName() + ")" );
         }
         catch ( err )
         {
-            this.log( "lwrelays Device OnInit Error ", err );
+            Homey.app.updateLog( this.getName() + " OnInit Error: " + err );
         }
 
         // register a capability listener
@@ -28,7 +29,7 @@ module.exports = class lwrelay extends Homey.Device
 
     initDevice()
     {
-        this.log( this.getName(), ': Getting Values' );
+        Homey.app.updateLog( this.getName() + ': Getting Values' );
         this.getDeviceValues();
         this.registerWebhook();
 
@@ -51,8 +52,6 @@ module.exports = class lwrelay extends Homey.Device
                 data = '1';
             }
 
-            // this.log('Switching ', devData['switch'], " to ", data);
-
             // Set the switch Value on the device using the unique feature ID stored during pairing
             result = await Homey.app.getBridge().setFeatureValue( devData[ 'switch' ], data );
             if ( result == -1 )
@@ -67,7 +66,7 @@ module.exports = class lwrelay extends Homey.Device
         catch ( err )
         {
             this.setUnavailable();
-            this.log( "lwrelays Device onCapabilityOnoff Error ", err );
+            Homey.app.updateLog( this.getName() + " onCapabilityOnoff Error ", err );
         }
     }
 
@@ -79,13 +78,11 @@ module.exports = class lwrelay extends Homey.Device
             let data = this.getData();
             let id = driverId + "_" + data.id;
 
-            this.log( this.getName(), ': Registering LW WebHooks', data.switch, id );
-
             await Promise.all( [ Homey.app.getBridge().registerWEBHooks( data.switch, 'feature', id + '_switch' ) ] );
         }
         catch ( err )
         {
-            this.log( "Failed to create webhooks", err );
+            Homey.app.updateLog( this.getName() + " Failed to create webhooks ", err );
         }
     }
 
@@ -136,7 +133,7 @@ module.exports = class lwrelay extends Homey.Device
         catch ( err )
         {
             this.setUnavailable();
-            this.log( "lwrelays Device getDeviceValues Error ", err );
+            Homey.app.updateLog( this.getName() + " getDeviceValues Error ", err );
         }
     }
 

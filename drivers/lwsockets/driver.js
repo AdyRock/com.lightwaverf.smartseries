@@ -14,7 +14,7 @@ module.exports = class lwsockets extends Homey.Driver
         }
         catch ( err )
         {
-            this.log( "lwsockets Device OnInit Error ", err );
+            Homey.app.updateLog( "lwsockets Driver OnInit Error " + err );
         }
     }
 

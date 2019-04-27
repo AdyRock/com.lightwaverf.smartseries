@@ -14,7 +14,7 @@ module.exports = class lwrelay extends Homey.Driver
         }
         catch ( err )
         {
-            this.log( "lwrelay Device OnInit Error ", err );
+            Homey.app.updateLog( "lwrelay Driver OnInit Error " + err );
         }
     }
 

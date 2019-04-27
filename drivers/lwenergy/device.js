@@ -3,6 +3,8 @@
 const Homey = require( 'homey' );
 const LightwaveSmartBridge = require( '../../lib/LightwaveSmartBridge' );
 
+const POLL_INTERVAL = 5000;
+
 module.exports = class lwenergy extends Homey.Device
 {
 
@@ -10,25 +12,36 @@ module.exports = class lwenergy extends Homey.Device
     {
         try
         {
-            this.log( 'Device init( Name:', this.getName(), ', Class:', this.getClass() + ")" );
+            Homey.app.updateLog( 'Device initialising( Name: ' + this.getName() + ', Class: ' + this.getClass() + ")" );
 
             if ( await Homey.app.getBridge().waitForBridgeReady() )
             {
                 this.initDevice();
             }
+            Homey.app.updateLog( 'Device initialised( Name: ' + this.getName() + ")" );
         }
         catch ( err )
         {
-            this.log( "lwenergy Device OnInit Error ", err );
+            Homey.app.updateLog( this.getName() + " OnInit Error: " + err );
         }
     }
 
     initDevice()
     {
-        this.log( this.getName(), ': Getting Values' );
-        this.getDeviceValues();
-        this.registerWebhook();
+        Homey.app.updateLog( this.getName() + ': Getting Values' );
+        this.getEnergyValues();
+        //this.registerWebhook();
 
+        // Use polling for energy values to reduce webhook calls
+        this.onPoll = this.onPoll.bind( this );
+        this.pollInterval = setInterval( this.onPoll, POLL_INTERVAL );
+    }
+
+    // Use polling
+    async onPoll()
+    {
+        // Bad response so set as unavailable for now
+        this.getEnergyValues();
     }
 
     async registerWebhook()
@@ -39,15 +52,13 @@ module.exports = class lwenergy extends Homey.Device
             let data = this.getData();
             let id = driverId + "_" + data.id;
 
-            this.log( this.getName(), ': Registering LW WebHooks', data.power, id );
-
             await Promise.all( [ Homey.app.getBridge().registerWEBHooks( data.power, 'feature', id + '_power' ),
                 Homey.app.getBridge().registerWEBHooks( data.energy, 'feature', id + '_energy' )
             ] );
         }
         catch ( err )
         {
-            this.log( "Failed to create webhooks", err );
+            Homey.app.updateLog( this.getName() + " Failed to create webhooks ", err );
         }
     }
 
@@ -72,7 +83,7 @@ module.exports = class lwenergy extends Homey.Device
         }
     }
 
-    async getDeviceValues()
+    async getEnergyValues()
     {
         try
         {
@@ -98,11 +109,15 @@ module.exports = class lwenergy extends Homey.Device
         catch ( err )
         {
             this.setUnavailable();
-            this.log( "lwenergy Device getDeviceValues Error ", err );
+            Homey.app.updateLog( this.getName() + " getDeviceValues Error ", err );
         }
     }
 
-    async onDeleted() {}
+    async onDeleted()
+    {
+        // Disable the timer for ths device
+        clearInterval( this.pollInterval );
+    }
 }
 
 //module.exports = MyDevice;
