@@ -118,6 +118,13 @@ If you have devices that are not supported, a log will appear in the settings pa
 If you post the log to https://github.com/AdyRock/com.lightwaverf.smartseries/issues I will try to add the devices to the next version.
 
 # Version Log
+1.0.9
+Added option to select Polling instead of Webhooks in case LW stops sending notifications.
+Added option to specify polling interval.
+Updated the settings page so the Unsupported Devices panel is on a separate tab.
+Added the Homey ID as a parameter to the webhook URI so the address looks different for each Homey.
+Changed WebHook function to filter on the Homey ID instead of the LW Location ID.
+
 1.0.8
 Updated bridge methods for better queuing of transactions.
 Updated the settings page so the log is on a separate tab.
