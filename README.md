@@ -118,52 +118,55 @@ If you have devices that are not supported, a log will appear in the settings pa
 If you post the log to https://github.com/AdyRock/com.lightwaverf.smartseries/issues I will try to add the devices to the next version.
 
 # Version Log
-1.0.9
+## 1.0.10
+* Fix possible double timer after settings changed.
+
+## 1.0.9
 * Added option to select Polling instead of Webhooks in case LW stops sending notifications.
 * Added option to specify polling interval.
 * Updated the settings page so the Unsupported Devices panel is on a separate tab.
 * Added the Homey ID as a parameter to the webhook URI so the address looks different for each Homey.
 * Changed WebHook function to filter on the Homey ID instead of the LW Location ID.
 
-1.0.8
+## 1.0.8
 * Updated bridge methods for better queuing of transactions.
 * Updated the settings page so the log is on a separate tab.
 * Added an option to switch logging off.
 * Log data panel is now refreshed when new data arrives.
 * Changed WebHook function to filter on a different parameter.
 
-1.0.7
+## 1.0.7
 * Added type check on product code to ensure a string has been returned.
 
-1.0.6
+## 1.0.6
 * Rewritten some sections so the connections and webhooks are renewed after changing settings. This means you no longer have to restart the app after making changes.
 * Added a confirmation message when saving settings.
 * Added a diagnostics log to settings page to help trouble shoot connection issues.
 
-1.0.5
+## 1.0.5
 * Added energy monitors to dimmers. (requires existing dimmers to be removed and added back in. Flows will then need to be repaired.)
 
-1.0.4
+## 1.0.4
 * Added new EU version devices.
 
-1.0.3
+## 1.0.3
 * Fixed Socket power value as this does not need to be divided by 1000 which was change in 0.2.0
 
-1.0.2
+## 1.0.2
 * Fixed issue with the webhook identifying the target homey.
 
-1.0.1
+## 1.0.1
 * Implemented webhooks and removed polling.
 * Changed method of synchronising async functions when fetching new tokens.
 
-1.0.0
+## 1.0.0
 * Changed to release
 
-0.2.1
+## 0.2.1
 * Added support for LW600 electricity monitor and LW931 contact sensor.
 
-0.2.0
+## 0.2.0
 * Divided power and energy values by 1000 to convert from integer to real number.
 
-0.1.0
+## 0.1.0
 * First beta
