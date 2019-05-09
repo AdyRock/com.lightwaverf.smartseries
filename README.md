@@ -118,6 +118,9 @@ If you have devices that are not supported, a log will appear in the settings pa
 If you post the log to https://github.com/AdyRock/com.lightwaverf.smartseries/issues I will try to add the devices to the next version.
 
 # Version Log
+## 1.0.11
+* Changed the webhook to and end-point.
+
 ## 1.0.10
 * Fix possible double timer after settings changed.
 

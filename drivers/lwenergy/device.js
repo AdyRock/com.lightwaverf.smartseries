@@ -30,7 +30,7 @@ module.exports = class lwenergy extends Homey.Device
     {
         Homey.app.updateLog( this.getName() + ': Getting Values' );
         this.getEnergyValues();
-        //this.registerWebhook();
+        this.registerWebhook();
     }
 
     async registerWebhook()
