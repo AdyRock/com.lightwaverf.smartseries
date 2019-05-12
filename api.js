@@ -7,9 +7,9 @@ module.exports = [
         method: 'GET',
         path: '/',
         public: true,
-        fn: function( args, callback )
+        fn: async function( args, callback )
         {
-            const result = Homey.app.getSomething( args );
+            const result = await Homey.app.getSomething( args );
 
             // callback follows ( err, result )
             callback( null, result );

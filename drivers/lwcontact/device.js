@@ -68,7 +68,7 @@ module.exports = class lwcontact extends Homey.Device
         }
     }
 
-    async getDeviceValues()
+    async getDeviceValues( ValueList )
     {
         Homey.app.updateLog( this.getName() + ': Getting Values', true );
 
@@ -77,7 +77,7 @@ module.exports = class lwcontact extends Homey.Device
             const devData = this.getData();
 
             // Get the current switch Value from the device using the unique feature ID stored during pairing
-            const onoff = await Homey.app.getBridge().getFeatureValue( devData[ 'windowPosition' ] );
+            const onoff = await Homey.app.getBridge().getFeatureValue( devData[ 'windowPosition' ], ValueList );
             switch ( onoff )
             {
                 case 0:

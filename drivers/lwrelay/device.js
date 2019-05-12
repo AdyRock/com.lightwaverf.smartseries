@@ -100,7 +100,7 @@ module.exports = class lwrelay extends Homey.Device
         }
     }
 
-    async getDeviceValues()
+    async getDeviceValues( ValueList )
     {
         Homey.app.updateLog( this.getName() + ': Getting Values', true );
 
@@ -110,7 +110,7 @@ module.exports = class lwrelay extends Homey.Device
             //console.log( devData );
 
             // Get the current switch Value from the device using the unique feature ID stored during pairing
-            const onoff = await Homey.app.getBridge().getFeatureValue( devData[ 'switch' ] );
+            const onoff = await Homey.app.getBridge().getFeatureValue( devData[ 'switch' ], ValueList );
             switch ( onoff )
             {
                 case 0:

@@ -72,7 +72,7 @@ module.exports = class lwenergy extends Homey.Device
         }
     }
 
-    async getEnergyValues()
+    async getEnergyValues( ValueList )
     {
         Homey.app.updateLog( this.getName() + ': Getting Energy', true );
 
@@ -82,7 +82,7 @@ module.exports = class lwenergy extends Homey.Device
             //console.log( devData );
 
             // Get the current power Value from the device using the unique feature ID stored during pairing
-            const power = await Homey.app.getBridge().getFeatureValue( devData[ 'power' ] );
+            const power = await Homey.app.getBridge().getFeatureValue( devData[ 'power' ], ValueList );
             if ( power >= 0 )
             {
                 this.setAvailable();
