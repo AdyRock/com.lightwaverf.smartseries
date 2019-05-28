@@ -118,6 +118,9 @@ If you have devices that are not supported, a log will appear in the settings pa
 If you post the log to https://github.com/AdyRock/com.lightwaverf.smartseries/issues I will try to add the devices to the next version.
 
 # Version Log
+## 1.1.1
+* Added support for LW260 gen 1 socket.
+
 ## 1.1.0
 * LW webhooks working again so updated to new format.
 
