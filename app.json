@@ -1,6 +1,6 @@
 {
   "id": "com.lightwaverf.smartseries",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "compatibility": ">=2.0.0",
   "sdk": 2,
   "name": {
@@ -13,9 +13,16 @@
     "lights"
   ],
   "tags": {
-    "en": ["Lightwave", "Dimmer", "Socket", "Relay", "Power" ]
-},
-"permissions": [],
+    "en": [
+      "Lightwave",
+      "Dimmer",
+      "Socket",
+      "Relay",
+      "Power",
+      "Thermostat"
+    ]
+  },
+  "permissions": [],
   "images": {
     "large": "/assets/images/large.png",
     "small": "/assets/images/small.png"
@@ -165,6 +172,41 @@
       "images": {
         "large": "/drivers/lwenergy/assets/images/large.png",
         "small": "/drivers/lwenergy/assets/images/small.png"
+      }
+    },
+    {
+      "id": "lwthermostat",
+      "name": {
+        "en": "Heating"
+      },
+      "class": "thermostat",
+      "capabilities": [
+        "target_temperature",
+        "measure_temperature",
+        "onoff",
+        "alarm_contact"
+      ],
+      "capabilitiesOptions": {
+        "target_temperature": {
+          "max": 40
+        }
+      },
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "images": {
+        "large": "/drivers/lwthermostat/assets/images/large.png",
+        "small": "/drivers/lwthermostat/assets/images/small.png"
       }
     }
   ]
