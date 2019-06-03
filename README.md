@@ -9,11 +9,14 @@ It connects via the Lightwave API for the Link Plus and therefore requires an in
 You will also have to repair all related flows because of that. This only applies to new features for existing devices so should not be a problems yet.
 
 # Currently supported:
-* Dimmers: L21, L22. L23, L24.
-* Sockets: L41, L42.
+* Dimmers: L21, L22. L23, L24, LW400, LW831.
+* Sockets: L41, L42, LW260.
 * Relays: LW380.
 * Contact Sensor: LW931.
 * Energy Monitor: LW600.
+* TRV: LW922.
+* Electric Switch: LW934.
+* Thermostat: LW921
 * Other categories will be added later.
 
 ## Capabilities supported for dimmers:
@@ -73,7 +76,8 @@ You will also have to repair all related flows because of that. This only applie
 * Toggle on or off
 
 ## Capabilities supported for contact sensor:
-* alarm
+* Alarm
+* Battery Level
 
 # Flows:
 ## Triggers:
@@ -99,6 +103,31 @@ You will also have to repair all related flows because of that. This only applie
 
 ## Then:
 
+## Capabilities supported for Thermostats, TRV and Electric Switch:
+* Standby (On / Off)
+* Dim
+* Battery Level (TRV only)
+
+# Flows:
+## Triggers:
+* Temperature changed (with Temperature tag)
+* Target Temperature changed (with Target Temperature tag)
+* Contact Turned on
+* Contact Turned off
+* Turned on
+* Turned off
+* The battery level changed (TRV only)
+
+## Conditions:
+* Contact is turned on
+* Is turned on
+
+## Then:
+* Set Temperature
+* Turn on
+* Turn off
+* Toggle on or off
+
 # Configuration
 * Be sure that your Lightwave devices are paired and working with the Link Plus bridge.
 
@@ -118,6 +147,9 @@ If you have devices that are not supported, a log will appear in the settings pa
 If you post the log to https://github.com/AdyRock/com.lightwaverf.smartseries/issues I will try to add the devices to the next version.
 
 # Version Log
+## 1.1.2
+* Added support for LW400, LW831, LW921, LW922, LW934.
+
 ## 1.1.1
 * Added support for LW260 gen 1 socket.
 

@@ -117,7 +117,6 @@ module.exports = class lwthermostat extends Homey.Device
 
     async setWebHookValue( capability, value )
     {
-        Homey.app.updateLog( "Webhook Value: capability: " + capability + " == " + value );
         try
         {
             if ( capability == "temperature" )
@@ -142,7 +141,6 @@ module.exports = class lwthermostat extends Homey.Device
                     // Get the current target temperature Value from the device using the unique feature ID stored during pairing
                     const devData = this.getData();
                     const target = await Homey.app.getBridge().getFeatureValue( devData[ 'targetTemperature' ] );
-                    Homey.app.updateLog( "Webhook Value: fetch target: == " + target );
                     await this.setCapabilityValue( 'target_temperature', target / 10 );
                 }
                 this.setAvailable();

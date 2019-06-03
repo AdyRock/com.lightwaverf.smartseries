@@ -9,7 +9,7 @@ module.exports = class lwcontact extends Homey.Device
     {
         try
         {
-            Homey.app.updateLog( 'Device initialising( Name: ' + this.getName() + ', Class: ' +  this.getClass() + ")" );
+            Homey.app.updateLog( 'Device initialising( Name: ' + this.getName() + ', Class: ' + this.getClass() + ")" );
 
             if ( await Homey.app.getBridge().waitForBridgeReady() )
             {
@@ -38,7 +38,8 @@ module.exports = class lwcontact extends Homey.Device
             let id = driverId + "_" + data.id;
 
             await Promise.all( [ Homey.app.getBridge().registerWEBHooks( data.windowPosition, 'feature', id + '_windowPosition' ),
-            Homey.app.getBridge().registerWEBHooks( data.batteryLevel, 'feature', id + '_batteryLevel' )
+                Homey.app.getBridge().registerWEBHooks( data.batteryLevel, 'feature', id + '_batteryLevel' ),
+                Homey.app.getBridge().registerWEBHooks( data.buttonPress, 'feature', id + '_buttonPress' )
             ] );
         }
         catch ( err )
@@ -54,6 +55,11 @@ module.exports = class lwcontact extends Homey.Device
             if ( capability == "windowPosition" )
             {
                 await this.setCapabilityValue( 'alarm_contact', ( value == 1 ) );
+                this.setAvailable();
+            }
+            else if ( capability == "buttonPress" )
+            {
+                await this.setCapabilityValue( 'alarm_generic', ( value == 1 ) );
                 this.setAvailable();
             }
             else if ( capability == "batteryLevel" )
@@ -78,35 +84,41 @@ module.exports = class lwcontact extends Homey.Device
 
             // Get the current switch Value from the device using the unique feature ID stored during pairing
             const onoff = await Homey.app.getBridge().getFeatureValue( devData[ 'windowPosition' ], ValueList );
-            switch ( onoff )
+            if ( typeof onoff == 'number' )
             {
-                case 0:
-                    // Device returns 0 for off and 1 for on so convert o false and true
-                    this.setAvailable();
-                    await this.setCapabilityValue( 'alarm_contact', false );
-                    break;
+                switch ( onoff )
+                {
+                    case 0:
+                        // Device returns 0 for off and 1 for on so convert o false and true
+                        this.setAvailable();
+                        await this.setCapabilityValue( 'alarm_contact', false );
+                        break;
 
-                case 1:
-                    this.setAvailable();
-                    await this.setCapabilityValue( 'alarm_contact', true );
-                    break;
+                    case 1:
+                        this.setAvailable();
+                        await this.setCapabilityValue( 'alarm_contact', true );
+                        break;
 
-                default:
-                    // Bad response so set as unavailable for now
-                    this.setUnavailable();
-                    break;
+                    default:
+                        // Bad response so set as unavailable for now
+                        this.setUnavailable();
+                        break;
+                }
             }
 
             const battery = await Homey.app.getBridge().getFeatureValue( devData[ 'batteryLevel' ] );
-            if ( battery >= 0 )
+            if ( typeof battery == 'number' )
             {
-                this.setAvailable();
-                await this.setCapabilityValue( 'measure_battery', battery );
-            }
-            else
-            {
-                // Bad response so set as unavailable for now
-                this.setUnavailable();
+                if ( battery >= 0 )
+                {
+                    this.setAvailable();
+                    await this.setCapabilityValue( 'measure_battery', battery );
+                }
+                else
+                {
+                    // Bad response so set as unavailable for now
+                    this.setUnavailable();
+                }
             }
         }
         catch ( err )
@@ -116,9 +128,7 @@ module.exports = class lwcontact extends Homey.Device
         }
     }
 
-    async onDeleted()
-    {
-    }
+    async onDeleted() {}
 }
 
 //module.exports = MyDevice;
