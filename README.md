@@ -147,6 +147,12 @@ If you have devices that are not supported, a log will appear in the settings pa
 If you post the log to https://github.com/AdyRock/com.lightwaverf.smartseries/issues I will try to add the devices to the next version.
 
 # Version Log
+## 1.1.3
+* Removed remnants of old, now unused, WebHook.
+* Added new batteries array that is required for upcoming energy object for contact (LW931).
+* Removed code to make device unavailable when an error occurs so a temporary issue does not render a device unusable.
+* Removed unsupported "button_pressed" registration from contact driver.
+
 ## 1.1.2
 * Added support for LW400, LW831, LW921, LW922, LW934.
 

@@ -99,7 +99,7 @@ module.exports = class lwenergy extends Homey.Device
         }
         catch ( err )
         {
-            this.setUnavailable();
+            //this.setUnavailable();
             Homey.app.updateLog( this.getName() + " getDeviceValues Error ", err );
         }
     }

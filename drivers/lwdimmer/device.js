@@ -56,7 +56,7 @@ module.exports = class lwdimmer extends Homey.Device
             result = await Homey.app.getBridge().setFeatureValue( devData[ 'switch' ], data );
             if ( result == -1 )
             {
-                this.setUnavailable();
+                //this.setUnavailable();
             }
             else
             {
@@ -65,7 +65,7 @@ module.exports = class lwdimmer extends Homey.Device
         }
         catch ( err )
         {
-            this.setUnavailable();
+            //this.setUnavailable();
             Homey.app.updateLog( this.getName() + " onCapabilityOnoff Error ", err );
         }
     }
@@ -87,7 +87,7 @@ module.exports = class lwdimmer extends Homey.Device
             result = await Homey.app.getBridge().setFeatureValue( devData[ 'dimLevel' ], value );
             if ( result == -1 )
             {
-                this.setUnavailable();
+                //this.setUnavailable();
             }
             else
             {
@@ -96,7 +96,7 @@ module.exports = class lwdimmer extends Homey.Device
         }
         catch ( err )
         {
-            this.setUnavailable();
+            //this.setUnavailable();
             Homey.app.updateLog( this.getName() + " onCapabilityOnDimError ", err );
         }
     }
@@ -174,7 +174,7 @@ module.exports = class lwdimmer extends Homey.Device
 
                 default:
                     // Bad response so set as unavailable for now
-                    this.setUnavailable();
+                    //this.setUnavailable();
                     break;
             }
 
@@ -191,7 +191,7 @@ module.exports = class lwdimmer extends Homey.Device
         }
         catch ( err )
         {
-            this.setUnavailable();
+            //this.setUnavailable();
             Homey.app.updateLog( this.getName() + " getDeviceValues Error ", err );
         }
     }

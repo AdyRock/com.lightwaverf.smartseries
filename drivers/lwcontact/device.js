@@ -38,8 +38,7 @@ module.exports = class lwcontact extends Homey.Device
             let id = driverId + "_" + data.id;
 
             await Promise.all( [ Homey.app.getBridge().registerWEBHooks( data.windowPosition, 'feature', id + '_windowPosition' ),
-                Homey.app.getBridge().registerWEBHooks( data.batteryLevel, 'feature', id + '_batteryLevel' ),
-                Homey.app.getBridge().registerWEBHooks( data.buttonPress, 'feature', id + '_buttonPress' )
+                Homey.app.getBridge().registerWEBHooks( data.batteryLevel, 'feature', id + '_batteryLevel' )
             ] );
         }
         catch ( err )
@@ -101,7 +100,7 @@ module.exports = class lwcontact extends Homey.Device
 
                     default:
                         // Bad response so set as unavailable for now
-                        this.setUnavailable();
+                        //this.setUnavailable();
                         break;
                 }
             }
@@ -117,13 +116,13 @@ module.exports = class lwcontact extends Homey.Device
                 else
                 {
                     // Bad response so set as unavailable for now
-                    this.setUnavailable();
+                    //this.setUnavailable();
                 }
             }
         }
         catch ( err )
         {
-            this.setUnavailable();
+            //this.setUnavailable();
             Homey.app.updateLog( "lwcontact Device getDeviceValues Error " + err );
         }
     }

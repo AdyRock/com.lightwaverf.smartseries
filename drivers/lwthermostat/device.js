@@ -49,7 +49,7 @@ module.exports = class lwthermostat extends Homey.Device
             result = await Homey.app.getBridge().setFeatureValue( devData[ 'heatState' ], value == true ? 1 : 0 );
             if ( result == -1 )
             {
-                this.setUnavailable();
+                //this.setUnavailable();
             }
             else
             {
@@ -58,7 +58,7 @@ module.exports = class lwthermostat extends Homey.Device
         }
         catch ( err )
         {
-            this.setUnavailable();
+            //this.setUnavailable();
             Homey.app.updateLog( this.getName() + " onCapabilityMode Error ", err );
         }
     }
@@ -80,7 +80,7 @@ module.exports = class lwthermostat extends Homey.Device
             result = await Homey.app.getBridge().setFeatureValue( devData[ 'targetTemperature' ], value );
             if ( result == -1 )
             {
-                this.setUnavailable();
+                //this.setUnavailable();
             }
             else
             {
@@ -89,7 +89,7 @@ module.exports = class lwthermostat extends Homey.Device
         }
         catch ( err )
         {
-            this.setUnavailable();
+            //this.setUnavailable();
             Homey.app.updateLog( this.getName() + " onCapabilityTargetTemperature " + err );
         }
     }
@@ -189,7 +189,7 @@ module.exports = class lwthermostat extends Homey.Device
         }
         catch ( err )
         {
-            this.setUnavailable();
+            //this.setUnavailable();
             Homey.app.updateLog( this.getName() + " getDeviceValues Error ", err );
         }
     }
