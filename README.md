@@ -147,6 +147,10 @@ If you have devices that are not supported, a log will appear in the settings pa
 If you post the log to https://github.com/AdyRock/com.lightwaverf.smartseries/issues I will try to add the devices to the next version.
 
 # Version Log
+## 1.1.4
+* Added hooks for power readings so they are updated in real time.
+* Fix for MK2 version products.
+
 ## 1.1.3
 * Removed remnants of old, now unused, WebHook.
 * Added new batteries array that is required for upcoming energy object for contact (LW931).

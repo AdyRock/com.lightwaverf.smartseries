@@ -110,7 +110,9 @@ module.exports = class lwdimmer extends Homey.Device
             let id = driverId + "_" + data.id;
 
             await Promise.all( [ Homey.app.getBridge().registerWEBHooks( data.switch, 'feature', id + '_switch' ),
-                Homey.app.getBridge().registerWEBHooks( data.dimLevel, 'feature', id + '_dimLevel' )
+                Homey.app.getBridge().registerWEBHooks( data.dimLevel, 'feature', id + '_dimLevel' ),
+                Homey.app.getBridge().registerWEBHooks( data.power, 'feature', id + '_power' ),
+                Homey.app.getBridge().registerWEBHooks( data.energy, 'feature', id + '_energy' )
             ] );
         }
         catch ( err )
@@ -179,7 +181,7 @@ module.exports = class lwdimmer extends Homey.Device
             }
 
             // Only get the dim value if the switch is on or is currently unknown
-            if ((onoff == 1) || (this.getCapabilityValue( 'dimLevel' ) == null))
+            if ( ( onoff == 1 ) || ( this.getCapabilityValue( 'dimLevel' ) == null ) )
             {
                 // Get the current dim Value from the device using the unique feature ID stored during pairing
                 const dimLevel = await Homey.app.getBridge().getFeatureValue( devData[ 'dimLevel' ] );

@@ -76,7 +76,10 @@ module.exports = class lwsockets extends Homey.Device
             let data = this.getData();
             let id = driverId + "_" + data.id;
 
-            await Promise.all( [ Homey.app.getBridge().registerWEBHooks( data.switch, 'feature', id + '_switch' ) ] );
+            await Promise.all( [ Homey.app.getBridge().registerWEBHooks( data.switch, 'feature', id + '_switch' ),
+                Homey.app.getBridge().registerWEBHooks( data.power, 'feature', id + '_power' ),
+                Homey.app.getBridge().registerWEBHooks( data.energy, 'feature', id + '_energy' )
+            ] );
         }
         catch ( err )
         {
@@ -180,8 +183,7 @@ module.exports = class lwsockets extends Homey.Device
         }
     }
 
-    async onDeleted()
-    {}
+    async onDeleted() {}
 }
 
 //module.exports = MyDevice;
