@@ -38,7 +38,8 @@ module.exports = class lwcontact extends Homey.Device
             let id = driverId + "_" + data.id;
 
             await Promise.all( [ Homey.app.getBridge().registerWEBHooks( data.windowPosition, 'feature', id + '_windowPosition' ),
-                Homey.app.getBridge().registerWEBHooks( data.batteryLevel, 'feature', id + '_batteryLevel' )
+            Homey.app.getBridge().registerWEBHooks( data.buttonPress, 'feature', id + '_buttonPress' ),
+            Homey.app.getBridge().registerWEBHooks( data.batteryLevel, 'feature', id + '_batteryLevel' )
             ] );
         }
         catch ( err )

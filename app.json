@@ -19,7 +19,8 @@
       "Socket",
       "Relay",
       "Power",
-      "Thermostat"
+      "Thermostat",
+      "Remote"
     ]
   },
   "permissions": [],
@@ -129,8 +130,11 @@
         "alarm_contact"
       ],
       "energy": {
-        "batteries": [ "AA", "AA" ] 
-      },   
+        "batteries": [
+          "AA",
+          "AA"
+        ]
+      },
       "pair": [
         {
           "id": "list_devices",
@@ -161,7 +165,7 @@
       ],
       "energy": {
         "cumulative": true
-      },      
+      },
       "pair": [
         {
           "id": "list_devices",
@@ -210,6 +214,33 @@
       "images": {
         "large": "/drivers/lwthermostat/assets/images/large.png",
         "small": "/drivers/lwthermostat/assets/images/small.png"
+      }
+    },
+    {
+      "id": "lwremote",
+      "name": {
+        "en": "Remote"
+      },
+      "class": "remote",
+      "capabilities": [
+        "alarm_generic"
+      ],
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "images": {
+        "large": "/drivers/lwremote/assets/images/large.png",
+        "small": "/drivers/lwremote/assets/images/small.png"
       }
     }
   ]

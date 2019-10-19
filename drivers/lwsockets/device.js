@@ -64,7 +64,7 @@ module.exports = class lwsockets extends Homey.Device
         catch ( err )
         {
             //this.setUnavailable();
-            Homey.app.updateLog( this.getName() + " onCapabilityOnoff Error ", err );
+            Homey.app.updateLog( this.getName() + " onCapabilityOnoff Error " + err );
         }
     }
 
@@ -83,7 +83,7 @@ module.exports = class lwsockets extends Homey.Device
         }
         catch ( err )
         {
-            Homey.app.updateLog( this.getName() + " Failed to create webhooks ", err );
+            Homey.app.updateLog( this.getName() + " Failed to create webhooks " + err );
         }
     }
 
@@ -146,7 +146,7 @@ module.exports = class lwsockets extends Homey.Device
         catch ( err )
         {
             //this.setUnavailable();
-            Homey.app.updateLog( this.getName() + " getDeviceValues Error ", err );
+            Homey.app.updateLog( this.getName() + " getDeviceValues Error " + err );
         }
     }
 
@@ -170,7 +170,7 @@ module.exports = class lwsockets extends Homey.Device
         }
         catch ( err )
         {
-            Homey.app.updateLog( this.getName() + " getDeviceValues Error ", err );
+            Homey.app.updateLog( this.getName() + " getDeviceValues Error " + err );
         }
     }
 

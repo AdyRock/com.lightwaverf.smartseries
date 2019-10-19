@@ -66,7 +66,7 @@ module.exports = class lwdimmer extends Homey.Device
         catch ( err )
         {
             //this.setUnavailable();
-            Homey.app.updateLog( this.getName() + " onCapabilityOnoff Error ", err );
+            Homey.app.updateLog( this.getName() + " onCapabilityOnoff Error " + err );
         }
     }
 
@@ -97,7 +97,7 @@ module.exports = class lwdimmer extends Homey.Device
         catch ( err )
         {
             //this.setUnavailable();
-            Homey.app.updateLog( this.getName() + " onCapabilityOnDimError ", err );
+            Homey.app.updateLog( this.getName() + " onCapabilityOnDimError " + err );
         }
     }
 
@@ -117,7 +117,7 @@ module.exports = class lwdimmer extends Homey.Device
         }
         catch ( err )
         {
-            Homey.app.updateLog( this.getName() + " Failed to create webhooks ", err );
+            Homey.app.updateLog( this.getName() + " Failed to create webhooks " + err );
         }
     }
 
@@ -205,7 +205,7 @@ module.exports = class lwdimmer extends Homey.Device
         catch ( err )
         {
             //this.setUnavailable();
-            Homey.app.updateLog( this.getName() + " getDeviceValues Error ", err );
+            Homey.app.updateLog( this.getName() + " getDeviceValues Error " + err );
         }
     }
 
@@ -213,6 +213,8 @@ module.exports = class lwdimmer extends Homey.Device
     {
         try
         {
+            const devData = this.getData();
+            
             // If the device supports energy then fetch the current value
             if ( typeof devData.energy == 'string' )
             {
@@ -229,7 +231,7 @@ module.exports = class lwdimmer extends Homey.Device
         }
         catch ( err )
         {
-            Homey.app.updateLog( this.getName() + " getDeviceValues Error ", err );
+            Homey.app.updateLog( this.getName() + " getDeviceValues Error " + err );
         }
     }
 

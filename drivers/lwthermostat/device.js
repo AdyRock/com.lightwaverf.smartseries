@@ -59,7 +59,7 @@ module.exports = class lwthermostat extends Homey.Device
         catch ( err )
         {
             //this.setUnavailable();
-            Homey.app.updateLog( this.getName() + " onCapabilityMode Error ", err );
+            Homey.app.updateLog( this.getName() + " onCapabilityMode Error "+ err );
         }
     }
 
@@ -111,7 +111,7 @@ module.exports = class lwthermostat extends Homey.Device
         }
         catch ( err )
         {
-            Homey.app.updateLog( this.getName() + " Failed to create webhooks ", err );
+            Homey.app.updateLog( this.getName() + " Failed to create webhooks " + err );
         }
     }
 
@@ -190,7 +190,7 @@ module.exports = class lwthermostat extends Homey.Device
         catch ( err )
         {
             //this.setUnavailable();
-            Homey.app.updateLog( this.getName() + " getDeviceValues Error ", err );
+            Homey.app.updateLog( this.getName() + " getDeviceValues Error " + err );
         }
     }
 
