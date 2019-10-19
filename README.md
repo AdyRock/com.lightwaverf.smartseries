@@ -16,7 +16,8 @@ You will also have to repair all related flows because of that. This only applie
 * Energy Monitor: LW600.
 * TRV: LW922.
 * Electric Switch: LW934.
-* Thermostat: LW921
+* Thermostat: LW921.
+* Remote: LW929.
 * Other categories will be added later.
 
 ## Capabilities supported for dimmers:
@@ -128,6 +129,13 @@ You will also have to repair all related flows because of that. This only applie
 * Turn off
 * Toggle on or off
 
+## Capabilities supported for remote:
+* Generic Alarm (Button Pressed)
+
+# Flows:
+## Triggers:
+* Turned on (Button Pressed)
+
 # Configuration
 * Be sure that your Lightwave devices are paired and working with the Link Plus bridge.
 
@@ -150,6 +158,7 @@ If you post the log to https://github.com/AdyRock/com.lightwaverf.smartseries/is
 ## 2.0.0
 * Added 'cumulative' energy settings to the Energy Monitor for compatibility with the new Energy information in Homey V3
 * Now fetches the dim level when a light is switched on to ensure it is in sync. The energy can then be calculated correctly on devices that do not support power reporting.
+* Added support for LW929.
 
 ## 1.1.4
 * Added hooks for power readings so they are updated in real time.
