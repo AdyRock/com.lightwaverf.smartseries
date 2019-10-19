@@ -129,6 +129,17 @@ module.exports = class lwdimmer extends Homey.Device
             {
                 await this.setCapabilityValue( 'onoff', ( value == 1 ) );
                 this.setAvailable();
+
+                // Get the dim value if the switch when it's switched on
+                if ( value == 1 )
+                {
+                    // Get the current dim Value from the device using the unique feature ID stored during pairing
+                    const dimLevel = await Homey.app.getBridge().getFeatureValue( devData[ 'dimLevel' ] );
+                    if ( dimLevel >= 0 )
+                    {
+                        await this.setCapabilityValue( 'dim', dimLevel / 100 );
+                    }
+                }
             }
             else if ( capability == "dimLevel" )
             {
@@ -202,25 +213,18 @@ module.exports = class lwdimmer extends Homey.Device
     {
         try
         {
-            if ( this.getCapabilityValue( 'onoff' ) == true )
+            // If the device supports energy then fetch the current value
+            if ( typeof devData.energy == 'string' )
             {
-                Homey.app.updateLog( this.getName() + ': Getting Energy', true );
-
-                const devData = this.getData();
-
-                // Get the current power Value from the device using the unique feature ID stored during pairing
-                const power = await Homey.app.getBridge().getFeatureValue( devData[ 'power' ] );
-                if ( power >= 0 )
-                {
-                    await this.setCapabilityValue( 'measure_power', power );
-                }
-
-                // Get the current power Value from the device using the unique feature ID stored during pairing
                 const energy = await Homey.app.getBridge().getFeatureValue( devData[ 'energy' ] );
-                if ( energy >= 0 )
-                {
-                    await this.setCapabilityValue( 'meter_power', energy / 1000 );
-                }
+                await this.setCapabilityValue( 'meter_power', energy / 1000 );
+            }
+
+            // If the device supports power then fetch the current value
+            if ( typeof devData.power == 'string' )
+            {
+                const power = await Homey.app.getBridge().getFeatureValue( devData[ 'power' ] );
+                await this.setCapabilityValue( 'measure_power', power );
             }
         }
         catch ( err )

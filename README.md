@@ -147,6 +147,10 @@ If you have devices that are not supported, a log will appear in the settings pa
 If you post the log to https://github.com/AdyRock/com.lightwaverf.smartseries/issues I will try to add the devices to the next version.
 
 # Version Log
+## 2.0.0
+* Added 'cumulative' energy settings to the Energy Monitor for compatibility with the new Energy information in Homey V3
+* Now fetches the dim level when a light is switched on to ensure it is in sync. The energy can then be calculated correctly on devices that do not support power reporting.
+
 ## 1.1.4
 * Added hooks for power readings so they are updated in real time.
 * Fix for MK2 version products.
