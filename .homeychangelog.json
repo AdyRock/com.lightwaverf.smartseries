@@ -1,0 +1,5 @@
+{
+  "2.0.1": {
+    "en": "Fixed error code of -1 showing as the current power. Added support for LW929"
+  }
+}
