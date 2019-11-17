@@ -105,8 +105,7 @@ module.exports = class lwenergy extends Homey.Device
     }
 
     async onDeleted()
-    {
-    }
+    {}
 }
 
 //module.exports = MyDevice;
