@@ -5,7 +5,7 @@ This app is for the LightwaveRF Smart Series of devices and the Link Plus hub.
 HOW DOES IT WORK
 It connects via the Lightwave API for the Link Plus and therefore requires an internet connection to operate.
 
-> Note: If you have a previous version for this app installed, then you need to remove the already added devices and add them again to enable additional or changed functionality.
+NOTE: If you have a previous version for this app installed, then you need to remove the already added devices and add them again to enable additional or changed functionality.
 You will also have to repair all related flows because of that. This only applies to new features for existing devices so should not be a problems yet.
 
 CURRENTLY SUPPORTED:
