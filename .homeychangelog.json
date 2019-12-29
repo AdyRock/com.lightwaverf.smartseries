@@ -1,5 +1,8 @@
 {
   "2.0.1": {
     "en": "Fixed error code of -1 showing as the current power. Added support for LW929"
+  },
+  "2.0.2": {
+    "en": "removed markdown and version log from readme.txt"
   }
 }
