@@ -154,6 +154,8 @@ module.exports = class lwsockets extends Homey.Device
     {
         try
         {
+            const devData = this.getData();
+
             // If the device supports energy then fetch the current value
             if ( typeof devData.energy == 'string' )
             {

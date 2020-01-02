@@ -4,5 +4,8 @@
   },
   "2.0.2": {
     "en": "removed markdown and version log from readme.txt"
+  },
+  "2.0.3": {
+    "en": "Added support for LW821 and L82 plus changed id field for compatability with the L82"
   }
 }
