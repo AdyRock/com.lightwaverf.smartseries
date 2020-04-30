@@ -174,7 +174,7 @@
 
             logEnabledElement.addEventListener( 'click', function( e )
             {
-                Homey.set( 'logEnabled', logWebhooksElement.checked, function( err )
+                Homey.set( 'logEnabled', logEnabledElement.checked, function( err )
                 {
                     if ( err ) return Homey.alert( err );
                 } );
