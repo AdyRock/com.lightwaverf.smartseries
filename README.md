@@ -11,7 +11,7 @@ You will also have to repair all related flows because of that. This only applie
 # Currently supported:
 * Dimmers: L21, L22. L23, L24, LW400, LW831.
 * Sockets: L41, L42, LW260.
-* Relays: LW380.
+* Relays: LW380, LW821, L82.
 * Contact Sensor: LW931.
 * Energy Monitor: LW600.
 * TRV: LW922.
@@ -61,20 +61,32 @@ You will also have to repair all related flows because of that. This only applie
 * Toggle on or off
 
 ## Capabilities supported for relay:
-* Switch (On / Off)
+(Switch)
+* On / Off
+(Three way relay)
+* Up / Idle / Down
 
 # Flows:
 ## Triggers:
+(Switch)
 * Turn on
-* Turn off
+* Switch Turn off
+(Three way relay)
+* State Changed
 
 ## Conditions:
+(Switch)
 * Is turned on
+(Three way relay)
+* The State is
 
 ## Then:
+(Switch)
 * Turn on
 * Turn off
-* Toggle on or off
+* Toggle on or off#
+(Three way relay)
+* Set state
 
 ## Capabilities supported for contact sensor:
 * Alarm
@@ -155,10 +167,16 @@ If you have devices that are not supported, a log will appear in the settings pa
 If you post the log to https://github.com/AdyRock/com.lightwaverf.smartseries/issues I will try to add the devices to the next version.
 
 # Version Log
+## 2.0.3
+* Added support for LW821 and L82.
+* Changed identifer to use productCode instead of product.
+
+## 2.0.1
+* Added support for LW929.
+
 ## 2.0.0
 * Added 'cumulative' energy settings to the Energy Monitor for compatibility with the new Energy information in Homey V3
 * Now fetches the dim level when a light is switched on to ensure it is in sync. The energy can then be calculated correctly on devices that do not support power reporting.
-* Added support for LW929.
 
 ## 1.1.4
 * Added hooks for power readings so they are updated in real time.

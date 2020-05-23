@@ -1,0 +1,11 @@
+{
+  "2.0.1": {
+    "en": "Fixed error code of -1 showing as the current power. Added support for LW929"
+  },
+  "2.0.2": {
+    "en": "removed markdown and version log from readme.txt"
+  },
+  "2.0.3": {
+    "en": "Added support for LW821 and L82 plus changed id field for compatability with the L82"
+  }
+}

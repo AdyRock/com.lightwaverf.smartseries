@@ -1,247 +1,275 @@
 {
-  "id": "com.lightwaverf.smartseries",
-  "version": "2.0.0",
-  "compatibility": ">=2.0.0",
-  "sdk": 2,
-  "name": {
-    "en": "Lightwave Smart Series"
-  },
-  "description": {
-    "en": "Adds support for LightwaveRF Smart Series Devices"
-  },
-  "category": [
-    "lights"
-  ],
-  "tags": {
-    "en": [
-      "Lightwave",
-      "Dimmer",
-      "Socket",
-      "Relay",
-      "Power",
-      "Thermostat",
-      "Remote"
-    ]
-  },
-  "permissions": [],
-  "images": {
-    "large": "/assets/images/large.png",
-    "small": "/assets/images/small.png"
-  },
-  "author": {
-    "name": "Adrian Rockall",
-    "email": "homey@rockall.plus.com"
-  },
-  "drivers": [
+    "id": "com.lightwaverf.smartseries",
+    "version": "2.0.3",
+    "compatibility": ">=2.0.0",
+    "sdk": 2,
+    "name":
     {
-      "id": "lwdimmer",
-      "name": {
-        "en": "Dimmer"
-      },
-      "class": "light",
-      "capabilities": [
-        "measure_power",
-        "meter_power",
-        "dim",
-        "onoff"
-      ],
-      "pair": [
-        {
-          "id": "list_devices",
-          "template": "list_devices",
-          "navigation": {
-            "next": "add_devices"
-          }
-        },
-        {
-          "id": "add_devices",
-          "template": "add_devices"
-        }
-      ],
-      "images": {
-        "large": "/drivers/lwdimmer/assets/images/large.png",
-        "small": "/drivers/lwdimmer/assets/images/small.png"
-      }
+        "en": "Lightwave Smart Series"
     },
+    "description":
     {
-      "id": "lwsockets",
-      "name": {
-        "en": "Socket"
-      },
-      "class": "socket",
-      "capabilities": [
-        "measure_power",
-        "meter_power",
-        "onoff"
-      ],
-      "pair": [
-        {
-          "id": "list_devices",
-          "template": "list_devices",
-          "navigation": {
-            "next": "add_devices"
-          }
-        },
-        {
-          "id": "add_devices",
-          "template": "add_devices"
-        }
-      ],
-      "images": {
-        "large": "/drivers/lwsockets/assets/images/large.png",
-        "small": "/drivers/lwsockets/assets/images/small.png"
-      }
+        "en": "Adds support for LightwaveRF Smart Series Devices"
     },
+    "category": [
+        "lights"
+    ],
+    "tags":
     {
-      "id": "lwrelay",
-      "name": {
-        "en": "Relay"
-      },
-      "class": "socket",
-      "capabilities": [
-        "onoff"
-      ],
-      "pair": [
-        {
-          "id": "list_devices",
-          "template": "list_devices",
-          "navigation": {
-            "next": "add_devices"
-          }
-        },
-        {
-          "id": "add_devices",
-          "template": "add_devices"
-        }
-      ],
-      "images": {
-        "large": "/drivers/lwrelay/assets/images/large.png",
-        "small": "/drivers/lwrelay/assets/images/small.png"
-      }
-    },
-    {
-      "id": "lwcontact",
-      "name": {
-        "en": "Contact Sensor"
-      },
-      "class": "sensor",
-      "capabilities": [
-        "measure_battery",
-        "alarm_contact"
-      ],
-      "energy": {
-        "batteries": [
-          "AA",
-          "AA"
+        "en": [
+            "Lightwave",
+            "Dimmer",
+            "Socket",
+            "Relay",
+            "Power",
+            "Thermostat",
+            "Remote"
         ]
-      },
-      "pair": [
+    },
+    "permissions": [],
+    "bugs":
+    {
+        "url": "https://github.com/AdyRock/com.lightwaverf.smartseries/issues"
+    },
+    "source": "https://github.com/AdyRock/com.lightwaverf.smartseries",
+    "images":
+    {
+        "large": "/assets/images/large.png",
+        "small": "/assets/images/small.png"
+    },
+    "author":
+    {
+        "name": "Adrian Rockall",
+        "email": "ady@rockall.plus.com"
+    },
+    "drivers": [
+    {
+        "id": "lwdimmer",
+        "name":
         {
-          "id": "list_devices",
-          "template": "list_devices",
-          "navigation": {
-            "next": "add_devices"
-          }
+            "en": "Dimmer"
+        },
+        "class": "light",
+        "capabilities": [
+            "measure_power",
+            "meter_power",
+            "dim",
+            "onoff"
+        ],
+        "pair": [
+        {
+            "id": "list_devices",
+            "template": "list_devices",
+            "navigation":
+            {
+                "next": "add_devices"
+            }
         },
         {
-          "id": "add_devices",
-          "template": "add_devices"
+            "id": "add_devices",
+            "template": "add_devices"
+        } ],
+        "images":
+        {
+            "large": "/drivers/lwdimmer/assets/images/large.png",
+            "small": "/drivers/lwdimmer/assets/images/small.png"
         }
-      ],
-      "images": {
-        "large": "/drivers/lwcontact/assets/images/large.png",
-        "small": "/drivers/lwcontact/assets/images/small.png"
-      }
     },
     {
-      "id": "lwenergy",
-      "name": {
-        "en": "Energy Monitor"
-      },
-      "class": "sensor",
-      "capabilities": [
-        "measure_power",
-        "meter_power"
-      ],
-      "energy": {
-        "cumulative": true
-      },
-      "pair": [
+        "id": "lwsockets",
+        "name":
         {
-          "id": "list_devices",
-          "template": "list_devices",
-          "navigation": {
-            "next": "add_devices"
-          }
+            "en": "Socket"
+        },
+        "class": "socket",
+        "capabilities": [
+            "measure_power",
+            "meter_power",
+            "onoff"
+        ],
+        "pair": [
+        {
+            "id": "list_devices",
+            "template": "list_devices",
+            "navigation":
+            {
+                "next": "add_devices"
+            }
         },
         {
-          "id": "add_devices",
-          "template": "add_devices"
+            "id": "add_devices",
+            "template": "add_devices"
+        } ],
+        "images":
+        {
+            "large": "/drivers/lwsockets/assets/images/large.png",
+            "small": "/drivers/lwsockets/assets/images/small.png"
         }
-      ],
-      "images": {
-        "large": "/drivers/lwenergy/assets/images/large.png",
-        "small": "/drivers/lwenergy/assets/images/small.png"
-      }
     },
     {
-      "id": "lwthermostat",
-      "name": {
-        "en": "Heating"
-      },
-      "class": "thermostat",
-      "capabilities": [
-        "target_temperature"
-      ],
-      "capabilitiesOptions": {
-        "target_temperature": {
-          "max": 40
-        }
-      },
-      "pair": [
+        "id": "lwrelay",
+        "name":
         {
-          "id": "list_devices",
-          "template": "list_devices",
-          "navigation": {
-            "next": "add_devices"
-          }
+            "en": "Relay"
+        },
+        "class": "socket",
+        "capabilities": [
+            "onoff",
+            "windowcoverings_state"
+        ],
+        "pair": [
+        {
+            "id": "list_devices",
+            "template": "list_devices",
+            "navigation":
+            {
+                "next": "add_devices"
+            }
         },
         {
-          "id": "add_devices",
-          "template": "add_devices"
+            "id": "add_devices",
+            "template": "add_devices"
+        } ],
+        "images":
+        {
+            "large": "/drivers/lwrelay/assets/images/large.png",
+            "small": "/drivers/lwrelay/assets/images/small.png"
         }
-      ],
-      "images": {
-        "large": "/drivers/lwthermostat/assets/images/large.png",
-        "small": "/drivers/lwthermostat/assets/images/small.png"
-      }
     },
     {
-      "id": "lwremote",
-      "name": {
-        "en": "Remote"
-      },
-      "class": "remote",
-      "capabilities": [
-        "alarm_generic"
-      ],
-      "pair": [
+        "id": "lwcontact",
+        "name":
         {
-          "id": "list_devices",
-          "template": "list_devices",
-          "navigation": {
-            "next": "add_devices"
-          }
+            "en": "Contact Sensor"
+        },
+        "class": "sensor",
+        "capabilities": [
+            "measure_battery",
+            "alarm_contact"
+        ],
+        "energy":
+        {
+            "batteries": [
+                "AA",
+                "AA"
+            ]
+        },
+        "pair": [
+        {
+            "id": "list_devices",
+            "template": "list_devices",
+            "navigation":
+            {
+                "next": "add_devices"
+            }
         },
         {
-          "id": "add_devices",
-          "template": "add_devices"
+            "id": "add_devices",
+            "template": "add_devices"
+        } ],
+        "images":
+        {
+            "large": "/drivers/lwcontact/assets/images/large.png",
+            "small": "/drivers/lwcontact/assets/images/small.png"
         }
-      ],
-      "images": {
-        "large": "/drivers/lwremote/assets/images/large.png",
-        "small": "/drivers/lwremote/assets/images/small.png"
-      }
-    }
-  ]
+    },
+    {
+        "id": "lwenergy",
+        "name":
+        {
+            "en": "Energy Monitor"
+        },
+        "class": "sensor",
+        "capabilities": [
+            "measure_power",
+            "meter_power"
+        ],
+        "energy":
+        {
+            "cumulative": true
+        },
+        "pair": [
+        {
+            "id": "list_devices",
+            "template": "list_devices",
+            "navigation":
+            {
+                "next": "add_devices"
+            }
+        },
+        {
+            "id": "add_devices",
+            "template": "add_devices"
+        } ],
+        "images":
+        {
+            "large": "/drivers/lwenergy/assets/images/large.png",
+            "small": "/drivers/lwenergy/assets/images/small.png"
+        }
+    },
+    {
+        "id": "lwthermostat",
+        "name":
+        {
+            "en": "Heating"
+        },
+        "class": "thermostat",
+        "capabilities": [
+            "target_temperature"
+        ],
+        "capabilitiesOptions":
+        {
+            "target_temperature":
+            {
+                "max": 40
+            }
+        },
+        "pair": [
+        {
+            "id": "list_devices",
+            "template": "list_devices",
+            "navigation":
+            {
+                "next": "add_devices"
+            }
+        },
+        {
+            "id": "add_devices",
+            "template": "add_devices"
+        } ],
+        "images":
+        {
+            "large": "/drivers/lwthermostat/assets/images/large.png",
+            "small": "/drivers/lwthermostat/assets/images/small.png"
+        }
+    },
+    {
+        "id": "lwremote",
+        "name":
+        {
+            "en": "Remote"
+        },
+        "class": "remote",
+        "capabilities": [
+            "alarm_generic"
+        ],
+        "pair": [
+        {
+            "id": "list_devices",
+            "template": "list_devices",
+            "navigation":
+            {
+                "next": "add_devices"
+            }
+        },
+        {
+            "id": "add_devices",
+            "template": "add_devices"
+        } ],
+        "images":
+        {
+            "large": "/drivers/lwremote/assets/images/large.png",
+            "small": "/drivers/lwremote/assets/images/small.png"
+        }
+    } ]
 }
