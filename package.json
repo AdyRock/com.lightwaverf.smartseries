@@ -1,0 +1,16 @@
+{
+  "name": "com.lightwave.smartseries",
+  "version": "2.0.0",
+  "main": "app.js",
+  "devDependencies": {
+    "homey": "^2.3.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AdyRock/com.lightwaverf.smartseries"
+  },
+  "dependencies": {
+    "node-fetch": "^2.6.0"
+  },
+  "license": "GPL-3.0"
+}
