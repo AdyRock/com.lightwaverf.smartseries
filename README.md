@@ -1,12 +1,10 @@
 # com.lightwaverf.smartseries
 
-This app is for the LightwaveRF Smart Series of devices and the Link Plus hub.
+This app is for the LightwaveRF 'Smart Series' of devices and requires the 'Link Plus' hub. It does not work with the old Link hub.
 
 # How does it work
 It connects via the Lightwave API for the Link Plus and therefore requires an internet connection to operate.
-
-> Note: If you have a previous version for this app installed, then you need to remove the already added devices and add them again to enable additional or changed functionality.
-You will also have to repair all related flows because of that. This only applies to new features for existing devices so should not be a problems yet.
+The app uses a callback mechanism so it is generally very fast to respond to external events like dim level changes or contact state changes.
 
 # Currently supported:
 * Dimmers: L21, L22. L23, L24, LW400, LW831.
