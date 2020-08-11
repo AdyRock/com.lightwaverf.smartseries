@@ -3,6 +3,7 @@
   "version": "2.0.5",
   "compatibility": ">=2.0.0",
   "sdk": 2,
+  "brandColor": "#FF7D4B",
   "name": {
     "en": "Lightwave Smart Series"
   },
