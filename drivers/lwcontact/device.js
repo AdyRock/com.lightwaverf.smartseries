@@ -55,17 +55,17 @@ module.exports = class lwcontact extends Homey.Device
             if ( capability == "windowPosition" )
             {
                 await this.setCapabilityValue( 'alarm_contact', ( value == 1 ) );
-                this.setAvailable();
+                //this.setAvailable();
             }
             else if ( capability == "buttonPress" )
             {
                 await this.setCapabilityValue( 'alarm_generic', ( value == 1 ) );
-                this.setAvailable();
+                //this.setAvailable();
             }
             else if ( capability == "batteryLevel" )
             {
                 await this.setCapabilityValue( 'measure_battery', value );
-                this.setAvailable();
+                //this.setAvailable();
             }
         }
         catch ( err )
@@ -90,12 +90,12 @@ module.exports = class lwcontact extends Homey.Device
                 {
                     case 0:
                         // Device returns 0 for off and 1 for on so convert o false and true
-                        this.setAvailable();
+                        //this.setAvailable();
                         await this.setCapabilityValue( 'alarm_contact', false );
                         break;
 
                     case 1:
-                        this.setAvailable();
+                        //this.setAvailable();
                         await this.setCapabilityValue( 'alarm_contact', true );
                         break;
 
@@ -111,7 +111,7 @@ module.exports = class lwcontact extends Homey.Device
             {
                 if ( battery >= 0 )
                 {
-                    this.setAvailable();
+                    //this.setAvailable();
                     await this.setCapabilityValue( 'measure_battery', battery );
                 }
                 else

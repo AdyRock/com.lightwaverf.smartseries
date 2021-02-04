@@ -3,14 +3,14 @@
   "version": "2.0.5",
   "main": "app.js",
   "devDependencies": {
-    "homey": "^2.3.3"
+    "homey": "^2.9.2"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/AdyRock/com.lightwaverf.smartseries"
   },
   "dependencies": {
-    "node-fetch": "^2.6.0"
+    "node-fetch": "^2.6.1"
   },
   "license": "GPL-3.0"
 }

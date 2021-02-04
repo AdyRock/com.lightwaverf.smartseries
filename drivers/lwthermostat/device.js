@@ -53,7 +53,7 @@ module.exports = class lwthermostat extends Homey.Device
             }
             else
             {
-                this.setAvailable();
+                //this.setAvailable();
             }
         }
         catch ( err )
@@ -84,7 +84,7 @@ module.exports = class lwthermostat extends Homey.Device
             }
             else
             {
-                this.setAvailable();
+                //this.setAvailable();
             }
         }
         catch ( err )
@@ -122,12 +122,12 @@ module.exports = class lwthermostat extends Homey.Device
             if ( capability == "temperature" )
             {
                 await this.setCapabilityValue( 'measure_temperature', value / 10 );
-                this.setAvailable();
+                //this.setAvailable();
             }
             else if ( capability == "targetTemperature" )
             {
                 await this.setCapabilityValue( 'target_temperature', value / 10 );
-                this.setAvailable();
+                //this.setAvailable();
             }
             else if ( capability == "heatState" )
             {
@@ -143,12 +143,12 @@ module.exports = class lwthermostat extends Homey.Device
                     const target = await Homey.app.getBridge().getFeatureValue( devData[ 'targetTemperature' ] );
                     await this.setCapabilityValue( 'target_temperature', target / 10 );
                 }
-                this.setAvailable();
+                //this.setAvailable();
             }
             else if ( capability == "valveLevel" )
             {
                 await this.setCapabilityValue( 'alarm_contact', value == 0 ? false : true );
-                this.setAvailable();
+                //this.setAvailable();
             }
         }
         catch ( err )

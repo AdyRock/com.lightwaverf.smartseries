@@ -58,7 +58,7 @@ module.exports = class lwsockets extends Homey.Device
             }
             else
             {
-                this.setAvailable();
+                //this.setAvailable();
             }
         }
         catch ( err )
@@ -94,17 +94,17 @@ module.exports = class lwsockets extends Homey.Device
             if ( capability == "switch" )
             {
                 await this.setCapabilityValue( 'onoff', ( value == 1 ) );
-                this.setAvailable();
+                //this.setAvailable();
             }
             else if ( capability == "power" )
             {
                 await this.setCapabilityValue( 'measure_power', value );
-                this.setAvailable();
+                //this.setAvailable();
             }
             else if ( capability == "energy" )
             {
                 await this.setCapabilityValue( 'meter_power', value / 1000 );
-                this.setAvailable();
+               // this.setAvailable();
             }
         }
         catch ( err )
@@ -128,12 +128,12 @@ module.exports = class lwsockets extends Homey.Device
             {
                 case 0:
                     // Device returns 0 for off and 1 for on so convert o false and true
-                    this.setAvailable();
+                    //this.setAvailable();
                     await this.setCapabilityValue( 'onoff', false );
                     break;
 
                 case 1:
-                    this.setAvailable();
+                    //this.setAvailable();
                     await this.setCapabilityValue( 'onoff', true );
                     break;
 

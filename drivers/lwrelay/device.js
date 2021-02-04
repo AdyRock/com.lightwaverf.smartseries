@@ -59,7 +59,7 @@ module.exports = class lwrelay extends Homey.Device
             }
             else
             {
-                this.setAvailable();
+                //this.setAvailable();
             }
         }
         catch ( err )
@@ -99,7 +99,7 @@ module.exports = class lwrelay extends Homey.Device
             }
             else
             {
-                this.setAvailable();
+                //this.setAvailable();
             }
         }
         catch ( err )
@@ -140,7 +140,7 @@ module.exports = class lwrelay extends Homey.Device
             if ( capability == "switch" )
             {
                 await this.setCapabilityValue( 'onoff', ( value == 1 ) );
-                this.setAvailable();
+                //this.setAvailable();
             }
             else if ( capability == "threeWayRelay" )
             {
@@ -154,7 +154,7 @@ module.exports = class lwrelay extends Homey.Device
                     data = "down";
                 }
                 await this.setCapabilityValue( 'windowcoverings_state', data );
-                this.setAvailable();
+                //this.setAvailable();
             }
         }
         catch ( err )
@@ -180,12 +180,12 @@ module.exports = class lwrelay extends Homey.Device
                 {
                     case 0:
                         // Device returns 0 for off and 1 for on so convert o false and true
-                        this.setAvailable();
+                        //this.setAvailable();
                         await this.setCapabilityValue( 'onoff', false );
                         break;
 
                     case 1:
-                        this.setAvailable();
+                        //this.setAvailable();
                         await this.setCapabilityValue( 'onoff', true );
                         break;
 
@@ -200,17 +200,17 @@ module.exports = class lwrelay extends Homey.Device
                 const oci = await Homey.app.getBridge().getFeatureValue( devData[ 'threeWayRelay' ], ValueList );
                 if ( oci == "0" )
                 {
-                    this.setAvailable();
+                    //this.setAvailable();
                     await this.setCapabilityValue( 'windowcoverings_state', "idle" );
                 }
                 else if ( oci == "1" )
                 {
-                    this.setAvailable();
+                    //this.setAvailable();
                     await this.setCapabilityValue( 'windowcoverings_state', "up" );
                 }
                 else
                 {
-                    this.setAvailable();
+                    //this.setAvailable();
                     await this.setCapabilityValue( 'windowcoverings_state', "down" );
                 }
 

@@ -58,12 +58,12 @@ module.exports = class lwenergy extends Homey.Device
             if ( capability == "power" )
             {
                 await this.setCapabilityValue( 'measure_power', value );
-                this.setAvailable();
+                //this.setAvailable();
             }
             else if ( capability == "energy" )
             {
                 await this.setCapabilityValue( 'meter_power', value / 1000 );
-                this.setAvailable();
+                //this.setAvailable();
             }
         }
         catch ( err )
@@ -85,7 +85,7 @@ module.exports = class lwenergy extends Homey.Device
             const power = await Homey.app.getBridge().getFeatureValue( devData[ 'power' ], ValueList );
             if ( power >= 0 )
             {
-                this.setAvailable();
+                //this.setAvailable();
                 await this.setCapabilityValue( 'measure_power', power );
             }
 
@@ -93,7 +93,7 @@ module.exports = class lwenergy extends Homey.Device
             const energy = await Homey.app.getBridge().getFeatureValue( devData[ 'energy' ] );
             if ( energy >= 0 )
             {
-                this.setAvailable();
+                //this.setAvailable();
                 await this.setCapabilityValue( 'meter_power', energy / 1000 );
             }
         }

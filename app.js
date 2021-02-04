@@ -1,5 +1,8 @@
 'use strict';
 
 const LightwaveSmartApp = require( './lib/LightwaveSmartApp' );
-//require('inspector').open(9229, '0.0.0.0');
+if (process.env.DEBUG === '1')
+{
+    require('inspector').open(9222, '0.0.0.0', true)
+}
 module.exports = LightwaveSmartApp;
