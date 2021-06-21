@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="800"
+   height="800"
+   viewBox="0 0 211.66666 211.66667"
+   version="1.1"
+   id="svg8"
+   inkscape:version="0.92.4 (5da689c313, 2019-01-14)"
+   sodipodi:docname="LW931.svg">
+  <defs
+     id="defs2" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.98994949"
+     inkscape:cx="355.90371"
+     inkscape:cy="369.96006"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     units="px"
+     inkscape:window-width="1920"
+     inkscape:window-height="1137"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-85.333317)">
+    <rect
+       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#000004;stroke-width:2.67199993;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:0;stroke-dasharray:none;stroke-dashoffset:101;stroke-opacity:1;paint-order:markers fill stroke"
+       id="rect4518"
+       width="50.648815"
+       height="200.32738"
+       x="29.482145"
+       y="86.845215"
+       rx="0"
+       ry="0" />
+    <rect
+       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#000004;stroke-width:2.67199993;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:0;stroke-dasharray:none;stroke-dashoffset:101;stroke-opacity:1;paint-order:markers fill stroke"
+       id="rect4520"
+       width="36.236248"
+       height="200.32736"
+       x="36.688431"
+       y="86.845215" />
+    <rect
+       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#000004;stroke-width:2.67199993;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:0;stroke-dasharray:none;stroke-dashoffset:101;stroke-opacity:1;paint-order:markers fill stroke"
+       id="rect4522"
+       width="22.45064"
+       height="82.853546"
+       x="91.673447"
+       y="148.71919" />
+    <rect
+       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#000004;stroke-width:2.67199993;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:0;stroke-dasharray:none;stroke-dashoffset:101;stroke-opacity:1;paint-order:markers fill stroke"
+       id="rect4524"
+       width="12.72997"
+       height="82.051743"
+       x="96.533783"
+       y="149.25372" />
+    <rect
+       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#000004;stroke-width:2.67199969;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:0;stroke-dasharray:none;stroke-dashoffset:101;stroke-opacity:1;paint-order:markers fill stroke"
+       id="rect4526"
+       width="8.8198938"
+       height="8.3199053"
+       x="50.396606"
+       y="287.87827" />
+    <circle
+       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#000004;stroke-width:2.67199993;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:0;stroke-dasharray:none;stroke-dashoffset:101;stroke-opacity:1;paint-order:markers fill stroke"
+       id="path4528"
+       cx="64.411957"
+       cy="188.00781"
+       r="3.7417731" />
+    <circle
+       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#000004;stroke-width:2.67199993;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:0;stroke-dasharray:none;stroke-dashoffset:101;stroke-opacity:1;paint-order:markers fill stroke"
+       id="path4530"
+       cx="102.09695"
+       cy="188.00781"
+       r="3.4745038" />
+  </g>
+</svg>

@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<svg width="892" height="891" viewBox="0 0 892 891" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet" style="vector-effect: non-scaling-stroke;">
+ <!-- Created with SVG-edit - https://github.com/SVG-Edit/svgedit-->
+ <g class="layer">
+  <title>Layer 1</title>
+  <polygon cx="429.333333" cy="458.333333" edge="330.472917" fill="none" id="svg_14" orient="x" points="877.7836418151855,445.5 751.3171501159668,750.817138671875 445.99995040893555,877.2836303710938 140.68278121948242,750.817138671875 14.216276168823242,445.5 140.68278121948242,140.18280029296875 445.99995040893555,13.716293334960938 751.3171501159668,140.18280029296875 877.7836418151855,445.5 " shape="regularPoly" sides="8" stroke="#000000" stroke-width="7" strokeWidth="1.308386" strokecolor="#000000" transform="rotate(22.5431 446 445.5)"/>
+  <polygon cx="1130.666667" cy="965" edge="0" fill="none" id="svg_15" orient="x" shape="regularPoly" sides="8" stroke-width="7" strokeWidth="1.308386" strokecolor="#000000"/>
+  <rect fill="none" height="49.333333" id="svg_18" stroke="#000000" stroke-dasharray="null" stroke-linecap="null" stroke-linejoin="null" stroke-width="7" width="42.666667" x="845.333333" y="418.916666"/>
+  <rect fill="none" height="120" id="svg_19" stroke="#000000" stroke-dasharray="null" stroke-linecap="null" stroke-linejoin="null" stroke-width="7" width="330.666667" x="282.666667" y="723"/>
+  <rect fill="none" height="362.666667" id="svg_21" stroke="#000000" stroke-dasharray="null" stroke-linecap="null" stroke-linejoin="null" stroke-width="7" width="86.666667" x="231.999999" y="313"/>
+  <rect fill="none" height="145.333333" id="svg_22" stroke="#000000" stroke-dasharray="null" stroke-linecap="null" stroke-linejoin="null" stroke-width="7" width="76" x="408" y="133"/>
+  <ellipse cx="446.00001" cy="171.666667" fill="none" id="svg_23" rx="20" ry="20" stroke="#000000" stroke-dasharray="null" stroke-linecap="null" stroke-linejoin="null" stroke-width="7"/>
+  <ellipse cx="445.99999" cy="238.333333" fill="none" id="svg_24" rx="22.666667" ry="22.666667" stroke="#000000" stroke-dasharray="null" stroke-linecap="null" stroke-linejoin="null" stroke-width="7"/>
+  <rect fill="none" height="37.333333" id="svg_25" stroke="#000000" stroke-dasharray="null" stroke-linecap="null" stroke-linejoin="null" stroke-width="7" width="18.666667" x="302.666667" y="723"/>
+  <rect fill="none" height="37.333333" id="svg_26" stroke="#000000" stroke-dasharray="null" stroke-linecap="null" stroke-linejoin="null" stroke-width="7" width="18.666667" x="572.000015" y="722.99999"/>
+  <rect fill="none" height="37.333333" id="svg_27" stroke="#000000" stroke-dasharray="null" stroke-linecap="null" stroke-linejoin="null" stroke-width="7" width="18.666667" x="506.66668" y="723"/>
+  <rect fill="none" height="37.333333" id="svg_28" stroke="#000000" stroke-dasharray="null" stroke-linecap="null" stroke-linejoin="null" stroke-width="7" width="18.666667" x="441.33335" y="722.99997"/>
+  <rect fill="none" height="37.333333" id="svg_29" stroke="#000000" stroke-dasharray="null" stroke-linecap="null" stroke-linejoin="null" stroke-width="7" width="18.666667" x="373.333354" y="722.99999"/>
+  <ellipse cx="868" cy="445" fill="none" id="svg_31" rx="16" ry="16" stroke="#000000" stroke-dasharray="null" stroke-linecap="null" stroke-linejoin="null" stroke-width="3"/>
+  <rect fill="none" height="49.333333" id="svg_34" stroke="#000000" stroke-dasharray="null" stroke-linecap="null" stroke-linejoin="null" stroke-width="7" width="42.666667" x="3.999949" y="418.916666"/>
+  <ellipse cx="25.333283" cy="443.583312" fill="none" id="svg_33" rx="16" ry="16" stroke="#000000" stroke-dasharray="null" stroke-linecap="null" stroke-linejoin="null" stroke-width="3"/>
+ </g>
+</svg>

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="800"
+   height="800"
+   viewBox="0 0 211.66666 211.66667"
+   version="1.1"
+   id="svg8"
+   inkscape:version="0.92.4 (5da689c313, 2019-01-14)"
+   sodipodi:docname="LW929.svg">
+  <defs
+     id="defs2" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.98994949"
+     inkscape:cx="175.0864"
+     inkscape:cy="369.96006"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     units="px"
+     inkscape:window-width="1920"
+     inkscape:window-height="1137"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-85.333317)">
+    <rect
+       style="opacity:0.997;fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#000004;stroke-width:2.64599991;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:101;stroke-opacity:1;paint-order:markers fill stroke"
+       id="rect5671"
+       width="67.886459"
+       height="206.0648"
+       x="68.688263"
+       y="89.064285"
+       ry="9.6217031" />
+    <circle
+       style="opacity:0.997;fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#000004;stroke-width:2.64583325;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:101;stroke-opacity:1;paint-order:markers fill stroke"
+       id="path5673"
+       cx="102.63149"
+       cy="125.94749"
+       r="9.6217022" />
+    <circle
+       style="opacity:0.997;fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#000004;stroke-width:2.64583325;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:101;stroke-opacity:1;paint-order:markers fill stroke"
+       id="path5675"
+       cx="102.63149"
+       cy="192.23032"
+       r="18.708866" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="88.624596"
+       y="146.79451"
+       id="text5679"><tspan
+         sodipodi:role="line"
+         id="tspan5677"
+         x="88.624596"
+         y="146.79451"
+         style="stroke-width:0.26458332">Away</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="86.880516"
+       y="224.30267"
+       id="text5683"><tspan
+         sodipodi:role="line"
+         id="tspan5681"
+         x="86.880516"
+         y="224.30267"
+         style="stroke-width:0.26458332">Home</tspan></text>
+  </g>
+</svg>
