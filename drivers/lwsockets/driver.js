@@ -44,6 +44,6 @@ module.exports = class lwsockets extends Homey.Driver
         } );
     }
 
-}
+};
 
 //module.exports = lwsockets;

@@ -43,6 +43,6 @@ module.exports = class lwcontact extends Homey.Driver
             callback( new Error( "Connection Failed" + err ), [] );
         } );
     }
-}
+};
 
 //module.exports = MyDriver;

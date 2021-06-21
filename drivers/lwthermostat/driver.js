@@ -43,5 +43,5 @@ module.exports = class lwthermostat extends Homey.Driver {
         } );
     }
 	
-}
+};
 

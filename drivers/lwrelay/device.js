@@ -92,7 +92,7 @@ module.exports = class lwrelay extends Homey.Device
             }
 
             // Set the switch Value on the device using the unique feature ID stored during pairing
-            result = await Homey.app.getBridge().setFeatureValue( devData[ 'threeWayRelay' ], data );
+            result = await Homey.app.getBridge().setFeatureValue( devData.threeWayRelay, data );
             if ( result == -1 )
             {
                 //this.setUnavailable();
@@ -195,9 +195,9 @@ module.exports = class lwrelay extends Homey.Device
                         break;
                 }
             }
-            else if ( devData[ 'threeWayRelay' ] )
+            else if ( devData.threeWayRelay )
             {
-                const oci = await Homey.app.getBridge().getFeatureValue( devData[ 'threeWayRelay' ], ValueList );
+                const oci = await Homey.app.getBridge().getFeatureValue( devData.threeWayRelay, ValueList );
                 if ( oci == "0" )
                 {
                     //this.setAvailable();
@@ -225,6 +225,6 @@ module.exports = class lwrelay extends Homey.Device
 
     async onDeleted()
     {}
-}
+};
 
 //module.exports = MyDevice;

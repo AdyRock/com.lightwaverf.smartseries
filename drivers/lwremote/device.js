@@ -65,6 +65,6 @@ module.exports = class lwremote extends Homey.Device
     }
 
     async onDeleted() {}
-}
+};
 
 // module.exports = MyDevice;

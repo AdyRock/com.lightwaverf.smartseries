@@ -43,5 +43,5 @@ module.exports = class lwdimmer extends Homey.Driver
         } );
     }
 
-}
+};
 //module.exports = lwdimmer;

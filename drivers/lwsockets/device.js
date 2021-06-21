@@ -159,7 +159,7 @@ module.exports = class lwsockets extends Homey.Device
             // If the device supports energy then fetch the current value
             if ( typeof devData.energy == 'string' )
             {
-                const energy = await Homey.app.getBridge().getFeatureValue( devData[ 'energy' ] );
+                const energy = await Homey.app.getBridge().getFeatureValue( devData.energy );
                 if ( energy >= 0 )
                 {
                     await this.setCapabilityValue( 'meter_power', energy / 1000 );
@@ -169,7 +169,7 @@ module.exports = class lwsockets extends Homey.Device
             // If the device supports power then fetch the current value
             if ( typeof devData.power == 'string' )
             {
-                const power = await Homey.app.getBridge().getFeatureValue( devData[ 'power' ] );
+                const power = await Homey.app.getBridge().getFeatureValue( devData.power );
                 if ( power >= 0 )
                 {
                     await this.setCapabilityValue( 'measure_power', power );
@@ -183,6 +183,6 @@ module.exports = class lwsockets extends Homey.Device
     }
 
     async onDeleted() {}
-}
+};
 
 //module.exports = MyDevice;

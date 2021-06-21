@@ -43,6 +43,6 @@ module.exports = class lwrelay extends Homey.Driver
             callback( new Error( "Connection Failed" + err ), [] );
         } );
     }
-}
+};
 
 //module.exports = MyDriver;

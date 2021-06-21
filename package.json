@@ -1,9 +1,9 @@
 {
   "name": "com.lightwave.smartseries",
-  "version": "2.0.5",
+  "version": "2.0.6",
   "main": "app.js",
   "devDependencies": {
-    "homey": "^2.9.2"
+    "homey": "^2.19.4"
   },
   "repository": {
     "type": "git",

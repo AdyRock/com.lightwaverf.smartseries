@@ -44,6 +44,6 @@ module.exports = class lwenergy extends Homey.Driver
         } );
     }
 
-}
+};
 
 //module.exports = MyDriver;

@@ -83,7 +83,7 @@ module.exports = class lwcontact extends Homey.Device
             const devData = this.getData();
 
             // Get the current switch Value from the device using the unique feature ID stored during pairing
-            const onoff = await Homey.app.getBridge().getFeatureValue( devData[ 'windowPosition' ], ValueList );
+            const onoff = await Homey.app.getBridge().getFeatureValue( devData.windowPosition, ValueList );
             if ( typeof onoff == 'number' )
             {
                 switch ( onoff )
@@ -106,7 +106,7 @@ module.exports = class lwcontact extends Homey.Device
                 }
             }
 
-            const battery = await Homey.app.getBridge().getFeatureValue( devData[ 'batteryLevel' ] );
+            const battery = await Homey.app.getBridge().getFeatureValue( devData.batteryLevel );
             if ( typeof battery == 'number' )
             {
                 if ( battery >= 0 )
@@ -129,6 +129,6 @@ module.exports = class lwcontact extends Homey.Device
     }
 
     async onDeleted() {}
-}
+};
 
 //module.exports = MyDevice;

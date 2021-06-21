@@ -9,9 +9,12 @@
     "en": "Added support for LW821 and L82 plus changed id field for compatability with the L82"
   },
   "2.0.4": {
-    "en": "Fixed missing getData in the socket device, added \"homeyCommunityTopicId\" and \"homepage\", added devcie name to webhook data log"
+    "en": "Fixed missing getData in the socket device, added \"homeyCommunityTopicId\" and \"homepage\", added device name to webhook data log"
   },
   "2.0.5": {
     "en": "Fixed typo in settings page that prevented logging being switched on"
+  },
+  "2.0.6": {
+    "en": "Fixed error when getting the current dim value when a light is switched on"
   }
 }

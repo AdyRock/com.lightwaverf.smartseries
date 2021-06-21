@@ -43,6 +43,6 @@ module.exports = class lwremote extends Homey.Driver {
         } );
     }
 	
-}
+};
 
 //module.exports = MyDriver;
