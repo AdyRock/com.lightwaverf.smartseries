@@ -1,0 +1,28 @@
+{
+  "name": {
+    "en": "Socket"
+  },
+  "class": "socket",
+  "capabilities": [
+    "measure_power",
+    "meter_power",
+    "onoff"
+  ],
+  "pair": [
+    {
+      "id": "list_devices",
+      "template": "list_devices",
+      "navigation": {
+        "next": "add_devices"
+      }
+    },
+    {
+      "id": "add_devices",
+      "template": "add_devices"
+    }
+  ],
+  "images": {
+    "large": "/drivers/lwsockets/assets/images/large.png",
+    "small": "/drivers/lwsockets/assets/images/small.png"
+  }
+}

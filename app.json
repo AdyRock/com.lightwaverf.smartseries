@@ -1,4 +1,5 @@
 {
+  "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
   "id": "com.lightwaverf.smartseries",
   "version": "2.0.6",
   "compatibility": ">=2.0.0",
@@ -48,94 +49,6 @@
   },
   "drivers": [
     {
-      "id": "lwdimmer",
-      "name": {
-        "en": "Dimmer"
-      },
-      "class": "light",
-      "capabilities": [
-        "measure_power",
-        "meter_power",
-        "dim",
-        "onoff"
-      ],
-      "pair": [
-        {
-          "id": "list_devices",
-          "template": "list_devices",
-          "navigation": {
-            "next": "add_devices"
-          }
-        },
-        {
-          "id": "add_devices",
-          "template": "add_devices"
-        }
-      ],
-      "images": {
-        "large": "/drivers/lwdimmer/assets/images/large.png",
-        "small": "/drivers/lwdimmer/assets/images/small.png"
-      }
-    },
-    {
-      "id": "lwsockets",
-      "name": {
-        "en": "Socket"
-      },
-      "class": "socket",
-      "capabilities": [
-        "measure_power",
-        "meter_power",
-        "onoff"
-      ],
-      "pair": [
-        {
-          "id": "list_devices",
-          "template": "list_devices",
-          "navigation": {
-            "next": "add_devices"
-          }
-        },
-        {
-          "id": "add_devices",
-          "template": "add_devices"
-        }
-      ],
-      "images": {
-        "large": "/drivers/lwsockets/assets/images/large.png",
-        "small": "/drivers/lwsockets/assets/images/small.png"
-      }
-    },
-    {
-      "id": "lwrelay",
-      "name": {
-        "en": "Relay"
-      },
-      "class": "socket",
-      "capabilities": [
-        "onoff",
-        "windowcoverings_state"
-      ],
-      "pair": [
-        {
-          "id": "list_devices",
-          "template": "list_devices",
-          "navigation": {
-            "next": "add_devices"
-          }
-        },
-        {
-          "id": "add_devices",
-          "template": "add_devices"
-        }
-      ],
-      "images": {
-        "large": "/drivers/lwrelay/assets/images/large.png",
-        "small": "/drivers/lwrelay/assets/images/small.png"
-      }
-    },
-    {
-      "id": "lwcontact",
       "name": {
         "en": "Contact Sensor"
       },
@@ -166,10 +79,40 @@
       "images": {
         "large": "/drivers/lwcontact/assets/images/large.png",
         "small": "/drivers/lwcontact/assets/images/small.png"
-      }
+      },
+      "id": "lwcontact"
     },
     {
-      "id": "lwenergy",
+      "name": {
+        "en": "Dimmer"
+      },
+      "class": "light",
+      "capabilities": [
+        "measure_power",
+        "meter_power",
+        "dim",
+        "onoff"
+      ],
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "images": {
+        "large": "/drivers/lwdimmer/assets/images/large.png",
+        "small": "/drivers/lwdimmer/assets/images/small.png"
+      },
+      "id": "lwdimmer"
+    },
+    {
       "name": {
         "en": "Energy Monitor"
       },
@@ -197,10 +140,94 @@
       "images": {
         "large": "/drivers/lwenergy/assets/images/large.png",
         "small": "/drivers/lwenergy/assets/images/small.png"
-      }
+      },
+      "id": "lwenergy"
     },
     {
-      "id": "lwthermostat",
+      "name": {
+        "en": "Relay"
+      },
+      "class": "socket",
+      "capabilities": [
+        "onoff",
+        "windowcoverings_state"
+      ],
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "images": {
+        "large": "/drivers/lwrelay/assets/images/large.png",
+        "small": "/drivers/lwrelay/assets/images/small.png"
+      },
+      "id": "lwrelay"
+    },
+    {
+      "name": {
+        "en": "Remote"
+      },
+      "class": "remote",
+      "capabilities": [
+        "alarm_generic"
+      ],
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "images": {
+        "large": "/drivers/lwremote/assets/images/large.png",
+        "small": "/drivers/lwremote/assets/images/small.png"
+      },
+      "id": "lwremote"
+    },
+    {
+      "name": {
+        "en": "Socket"
+      },
+      "class": "socket",
+      "capabilities": [
+        "measure_power",
+        "meter_power",
+        "onoff"
+      ],
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "images": {
+        "large": "/drivers/lwsockets/assets/images/large.png",
+        "small": "/drivers/lwsockets/assets/images/small.png"
+      },
+      "id": "lwsockets"
+    },
+    {
       "name": {
         "en": "Heating"
       },
@@ -229,34 +256,8 @@
       "images": {
         "large": "/drivers/lwthermostat/assets/images/large.png",
         "small": "/drivers/lwthermostat/assets/images/small.png"
-      }
-    },
-    {
-      "id": "lwremote",
-      "name": {
-        "en": "Remote"
       },
-      "class": "remote",
-      "capabilities": [
-        "alarm_generic"
-      ],
-      "pair": [
-        {
-          "id": "list_devices",
-          "template": "list_devices",
-          "navigation": {
-            "next": "add_devices"
-          }
-        },
-        {
-          "id": "add_devices",
-          "template": "add_devices"
-        }
-      ],
-      "images": {
-        "large": "/drivers/lwremote/assets/images/large.png",
-        "small": "/drivers/lwremote/assets/images/small.png"
-      }
+      "id": "lwthermostat"
     }
   ]
 }
