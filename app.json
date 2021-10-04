@@ -3,6 +3,10 @@
   "id": "com.lightwaverf.smartseries",
   "version": "2.0.6",
   "compatibility": ">=5.0.0",
+  "platforms": [
+    "local",
+    "cloud"
+  ],
   "sdk": 3,
   "brandColor": "#FF7D4B",
   "name": {
@@ -26,6 +30,7 @@
     ]
   },
   "permissions": [],
+  "support": "https://github.com/AdyRock/com.lightwave.smartseries/issues",
   "contributing": {
     "donate": {
       "paypal": {
@@ -64,6 +69,13 @@
       "name": {
         "en": "Contact Sensor"
       },
+      "platforms": [
+        "local",
+        "cloud"
+      ],
+      "connectivity": [
+        "cloud"
+      ],
       "class": "sensor",
       "capabilities": [
         "measure_battery",
@@ -98,6 +110,13 @@
       "name": {
         "en": "Dimmer"
       },
+      "platforms": [
+        "local",
+        "cloud"
+      ],
+      "connectivity": [
+        "cloud"
+      ],
       "class": "light",
       "capabilities": [
         "measure_power",
@@ -128,6 +147,13 @@
       "name": {
         "en": "Energy Monitor"
       },
+      "platforms": [
+        "local",
+        "cloud"
+      ],
+      "connectivity": [
+        "cloud"
+      ],
       "class": "sensor",
       "capabilities": [
         "measure_power",
@@ -159,6 +185,13 @@
       "name": {
         "en": "Relay"
       },
+      "platforms": [
+        "local",
+        "cloud"
+      ],
+      "connectivity": [
+        "cloud"
+      ],
       "class": "socket",
       "capabilities": [
         "onoff",
@@ -187,6 +220,13 @@
       "name": {
         "en": "Remote"
       },
+      "platforms": [
+        "local",
+        "cloud"
+      ],
+      "connectivity": [
+        "cloud"
+      ],
       "class": "remote",
       "capabilities": [
         "alarm_generic"
@@ -214,6 +254,13 @@
       "name": {
         "en": "Socket"
       },
+      "platforms": [
+        "local",
+        "cloud"
+      ],
+      "connectivity": [
+        "cloud"
+      ],
       "class": "socket",
       "capabilities": [
         "measure_power",
@@ -243,6 +290,13 @@
       "name": {
         "en": "Heating"
       },
+      "platforms": [
+        "local",
+        "cloud"
+      ],
+      "connectivity": [
+        "cloud"
+      ],
       "class": "thermostat",
       "capabilities": [
         "target_temperature"

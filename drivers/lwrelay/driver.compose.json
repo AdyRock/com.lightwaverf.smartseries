@@ -1,27 +1,34 @@
 {
-  "name": {
-    "en": "Relay"
-  },
-  "class": "socket",
-  "capabilities": [
-    "onoff",
-    "windowcoverings_state"
-  ],
-  "pair": [
-    {
-      "id": "list_devices",
-      "template": "list_devices",
-      "navigation": {
-        "next": "add_devices"
-      }
+    "name": {
+        "en": "Relay"
     },
-    {
-      "id": "add_devices",
-      "template": "add_devices"
+    "platforms": [
+        "local",
+        "cloud"
+    ],
+    "connectivity": [
+        "cloud"
+    ],
+    "class": "socket",
+    "capabilities": [
+        "onoff",
+        "windowcoverings_state"
+    ],
+    "pair": [
+        {
+            "id": "list_devices",
+            "template": "list_devices",
+            "navigation": {
+                "next": "add_devices"
+            }
+        },
+        {
+            "id": "add_devices",
+            "template": "add_devices"
+        }
+    ],
+    "images": {
+        "large": "/drivers/lwrelay/assets/images/large.png",
+        "small": "/drivers/lwrelay/assets/images/small.png"
     }
-  ],
-  "images": {
-    "large": "/drivers/lwrelay/assets/images/large.png",
-    "small": "/drivers/lwrelay/assets/images/small.png"
-  }
 }

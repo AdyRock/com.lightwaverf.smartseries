@@ -1,31 +1,38 @@
 {
-  "name": {
-    "en": "Heating"
-  },
-  "class": "thermostat",
-  "capabilities": [
-    "target_temperature"
-  ],
-  "capabilitiesOptions": {
-    "target_temperature": {
-      "max": 40
-    }
-  },
-  "pair": [
-    {
-      "id": "list_devices",
-      "template": "list_devices",
-      "navigation": {
-        "next": "add_devices"
-      }
+    "name": {
+        "en": "Heating"
     },
-    {
-      "id": "add_devices",
-      "template": "add_devices"
+    "platforms": [
+        "local",
+        "cloud"
+    ],
+    "connectivity": [
+        "cloud"
+    ],
+    "class": "thermostat",
+    "capabilities": [
+        "target_temperature"
+    ],
+    "capabilitiesOptions": {
+        "target_temperature": {
+            "max": 40
+        }
+    },
+    "pair": [
+        {
+            "id": "list_devices",
+            "template": "list_devices",
+            "navigation": {
+                "next": "add_devices"
+            }
+        },
+        {
+            "id": "add_devices",
+            "template": "add_devices"
+        }
+    ],
+    "images": {
+        "large": "/drivers/lwthermostat/assets/images/large.png",
+        "small": "/drivers/lwthermostat/assets/images/small.png"
     }
-  ],
-  "images": {
-    "large": "/drivers/lwthermostat/assets/images/large.png",
-    "small": "/drivers/lwthermostat/assets/images/small.png"
-  }
 }

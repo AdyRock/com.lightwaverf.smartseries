@@ -1,33 +1,40 @@
 {
-  "name": {
-    "en": "Contact Sensor"
-  },
-  "class": "sensor",
-  "capabilities": [
-    "measure_battery",
-    "alarm_contact"
-  ],
-  "energy": {
-    "batteries": [
-      "AA",
-      "AA"
-    ]
-  },
-  "pair": [
-    {
-      "id": "list_devices",
-      "template": "list_devices",
-      "navigation": {
-        "next": "add_devices"
-      }
+    "name": {
+        "en": "Contact Sensor"
     },
-    {
-      "id": "add_devices",
-      "template": "add_devices"
+    "platforms": [
+        "local",
+        "cloud"
+    ],
+    "connectivity": [
+        "cloud"
+    ],
+    "class": "sensor",
+    "capabilities": [
+        "measure_battery",
+        "alarm_contact"
+    ],
+    "energy": {
+        "batteries": [
+            "AA",
+            "AA"
+        ]
+    },
+    "pair": [
+        {
+            "id": "list_devices",
+            "template": "list_devices",
+            "navigation": {
+                "next": "add_devices"
+            }
+        },
+        {
+            "id": "add_devices",
+            "template": "add_devices"
+        }
+    ],
+    "images": {
+        "large": "/drivers/lwcontact/assets/images/large.png",
+        "small": "/drivers/lwcontact/assets/images/small.png"
     }
-  ],
-  "images": {
-    "large": "/drivers/lwcontact/assets/images/large.png",
-    "small": "/drivers/lwcontact/assets/images/small.png"
-  }
 }

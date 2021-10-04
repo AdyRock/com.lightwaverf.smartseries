@@ -1,26 +1,33 @@
 {
-  "name": {
-    "en": "Remote"
-  },
-  "class": "remote",
-  "capabilities": [
-    "alarm_generic"
-  ],
-  "pair": [
-    {
-      "id": "list_devices",
-      "template": "list_devices",
-      "navigation": {
-        "next": "add_devices"
-      }
+    "name": {
+        "en": "Remote"
     },
-    {
-      "id": "add_devices",
-      "template": "add_devices"
+    "platforms": [
+        "local",
+        "cloud"
+    ],
+    "connectivity": [
+        "cloud"
+    ],
+    "class": "remote",
+    "capabilities": [
+        "alarm_generic"
+    ],
+    "pair": [
+        {
+            "id": "list_devices",
+            "template": "list_devices",
+            "navigation": {
+                "next": "add_devices"
+            }
+        },
+        {
+            "id": "add_devices",
+            "template": "add_devices"
+        }
+    ],
+    "images": {
+        "large": "/drivers/lwremote/assets/images/large.png",
+        "small": "/drivers/lwremote/assets/images/small.png"
     }
-  ],
-  "images": {
-    "large": "/drivers/lwremote/assets/images/large.png",
-    "small": "/drivers/lwremote/assets/images/small.png"
-  }
 }
