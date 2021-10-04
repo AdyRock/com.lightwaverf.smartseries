@@ -9,17 +9,17 @@ module.exports = class lwcontact extends Homey.Device
     {
         try
         {
-            Homey.app.updateLog( 'Device initialising( Name: ' + this.getName() + ', Class: ' + this.getClass() + ")" );
+            this.homey.app.updateLog( 'Device initialising( Name: ' + this.getName() + ', Class: ' + this.getClass() + ")" );
 
-            if ( await Homey.app.getBridge().waitForBridgeReady() )
+            if ( await this.homey.app.getBridge().waitForBridgeReady() )
             {
                 this.initDevice();
             }
-            Homey.app.updateLog( 'Device initialised( Name: ' + this.getName() + ")" );
+            this.homey.app.updateLog( 'Device initialised( Name: ' + this.getName() + ")" );
         }
         catch ( err )
         {
-            Homey.app.updateLog( this.getName() + " OnInit Error: " + err );
+            this.homey.app.updateLog( this.getName() + " OnInit Error: " + err );
         }
     }
 
@@ -33,18 +33,18 @@ module.exports = class lwcontact extends Homey.Device
     {
         try
         {
-            let driverId = this.getDriver().id;
+            let driverId = this.driver.id;
             let data = this.getData();
             let id = driverId + "_" + data.id;
 
-            await Promise.all( [ Homey.app.getBridge().registerWEBHooks( data.windowPosition, 'feature', id + '_windowPosition' ),
-            Homey.app.getBridge().registerWEBHooks( data.buttonPress, 'feature', id + '_buttonPress' ),
-            Homey.app.getBridge().registerWEBHooks( data.batteryLevel, 'feature', id + '_batteryLevel' )
+            await Promise.all( [ this.homey.app.getBridge().registerWEBHooks( data.windowPosition, 'feature', id + '_windowPosition' ),
+            this.homey.app.getBridge().registerWEBHooks( data.buttonPress, 'feature', id + '_buttonPress' ),
+            this.homey.app.getBridge().registerWEBHooks( data.batteryLevel, 'feature', id + '_batteryLevel' )
             ] );
         }
         catch ( err )
         {
-            Homey.app.updateLog( this.getName() + " Failed to create webhooks" + err );
+            this.homey.app.updateLog( this.getName() + " Failed to create webhooks" + err );
         }
     }
 
@@ -76,14 +76,14 @@ module.exports = class lwcontact extends Homey.Device
 
     async getDeviceValues( ValueList )
     {
-        Homey.app.updateLog( this.getName() + ': Getting Values', true );
+        this.homey.app.updateLog( this.getName() + ': Getting Values', true );
 
         try
         {
             const devData = this.getData();
 
             // Get the current switch Value from the device using the unique feature ID stored during pairing
-            const onoff = await Homey.app.getBridge().getFeatureValue( devData.windowPosition, ValueList );
+            const onoff = await this.homey.app.getBridge().getFeatureValue( devData.windowPosition, ValueList );
             if ( typeof onoff == 'number' )
             {
                 switch ( onoff )
@@ -106,7 +106,7 @@ module.exports = class lwcontact extends Homey.Device
                 }
             }
 
-            const battery = await Homey.app.getBridge().getFeatureValue( devData.batteryLevel );
+            const battery = await this.homey.app.getBridge().getFeatureValue( devData.batteryLevel );
             if ( typeof battery == 'number' )
             {
                 if ( battery >= 0 )
@@ -124,7 +124,7 @@ module.exports = class lwcontact extends Homey.Device
         catch ( err )
         {
             //this.setUnavailable();
-            Homey.app.updateLog( "lwcontact Device getDeviceValues Error " + err );
+            this.homey.app.updateLog( "lwcontact Device getDeviceValues Error " + err );
         }
     }
 

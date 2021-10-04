@@ -9,17 +9,17 @@ module.exports = class lwsockets extends Homey.Device
     {
         try
         {
-            Homey.app.updateLog( 'Device initialising( Name: ' + this.getName() + ', Class: ' + this.getClass() + ")" );
+            this.homey.app.updateLog( 'Device initialising( Name: ' + this.getName() + ', Class: ' + this.getClass() + ")" );
 
-            if ( await Homey.app.getBridge().waitForBridgeReady() )
+            if ( await this.homey.app.getBridge().waitForBridgeReady() )
             {
                 this.initDevice();
             }
-            Homey.app.updateLog( 'Device initialised( Name: ' + this.getName() + ")" );
+            this.homey.app.updateLog( 'Device initialised( Name: ' + this.getName() + ")" );
         }
         catch ( err )
         {
-            Homey.app.updateLog( this.getName() + " OnInit Error: " + err );
+            this.homey.app.updateLog( this.getName() + " OnInit Error: " + err );
         }
         // register a capability listener
         this.registerCapabilityListener( 'onoff', this.onCapabilityOnoff.bind( this ) );
@@ -27,7 +27,7 @@ module.exports = class lwsockets extends Homey.Device
 
     initDevice()
     {
-        Homey.app.updateLog( this.getName() + ': Getting Values' );
+        this.homey.app.updateLog( this.getName() + ': Getting Values' );
         this.getDeviceValues();
         this.getEnergyValues();
         this.registerWebhook();
@@ -51,7 +51,7 @@ module.exports = class lwsockets extends Homey.Device
             }
 
             // Set the switch Value on the device using the unique feature ID stored during pairing
-            result = await Homey.app.getBridge().setFeatureValue( devData[ 'switch' ], data );
+            result = await this.homey.app.getBridge().setFeatureValue( devData[ 'switch' ], data );
             if ( result == -1 )
             {
                 //this.setUnavailable();
@@ -64,7 +64,7 @@ module.exports = class lwsockets extends Homey.Device
         catch ( err )
         {
             //this.setUnavailable();
-            Homey.app.updateLog( this.getName() + " onCapabilityOnoff Error " + err );
+            this.homey.app.updateLog( this.getName() + " onCapabilityOnoff Error " + err );
         }
     }
 
@@ -72,18 +72,18 @@ module.exports = class lwsockets extends Homey.Device
     {
         try
         {
-            let driverId = this.getDriver().id;
+            let driverId = this.driver.id;
             let data = this.getData();
             let id = driverId + "_" + data.id;
 
-            await Promise.all( [ Homey.app.getBridge().registerWEBHooks( data.switch, 'feature', id + '_switch' ),
-                Homey.app.getBridge().registerWEBHooks( data.power, 'feature', id + '_power' ),
-                Homey.app.getBridge().registerWEBHooks( data.energy, 'feature', id + '_energy' )
+            await Promise.all( [ this.homey.app.getBridge().registerWEBHooks( data.switch, 'feature', id + '_switch' ),
+                this.homey.app.getBridge().registerWEBHooks( data.power, 'feature', id + '_power' ),
+                this.homey.app.getBridge().registerWEBHooks( data.energy, 'feature', id + '_energy' )
             ] );
         }
         catch ( err )
         {
-            Homey.app.updateLog( this.getName() + " Failed to create webhooks " + err );
+            this.homey.app.updateLog( this.getName() + " Failed to create webhooks " + err );
         }
     }
 
@@ -115,7 +115,7 @@ module.exports = class lwsockets extends Homey.Device
 
     async getDeviceValues( ValueList )
     {
-        Homey.app.updateLog( this.getName() + ': Getting Values', true );
+        this.homey.app.updateLog( this.getName() + ': Getting Values', true );
 
         try
         {
@@ -123,7 +123,7 @@ module.exports = class lwsockets extends Homey.Device
             //console.log( devData );
 
             // Get the current switch Value from the device using the unique feature ID stored during pairing
-            const onoff = await Homey.app.getBridge().getFeatureValue( devData[ 'switch' ], ValueList );
+            const onoff = await this.homey.app.getBridge().getFeatureValue( devData[ 'switch' ], ValueList );
             switch ( onoff )
             {
                 case 0:
@@ -146,7 +146,7 @@ module.exports = class lwsockets extends Homey.Device
         catch ( err )
         {
             //this.setUnavailable();
-            Homey.app.updateLog( this.getName() + " getDeviceValues Error " + err );
+            this.homey.app.updateLog( this.getName() + " getDeviceValues Error " + err );
         }
     }
 
@@ -159,7 +159,7 @@ module.exports = class lwsockets extends Homey.Device
             // If the device supports energy then fetch the current value
             if ( typeof devData.energy == 'string' )
             {
-                const energy = await Homey.app.getBridge().getFeatureValue( devData.energy );
+                const energy = await this.homey.app.getBridge().getFeatureValue( devData.energy );
                 if ( energy >= 0 )
                 {
                     await this.setCapabilityValue( 'meter_power', energy / 1000 );
@@ -169,7 +169,7 @@ module.exports = class lwsockets extends Homey.Device
             // If the device supports power then fetch the current value
             if ( typeof devData.power == 'string' )
             {
-                const power = await Homey.app.getBridge().getFeatureValue( devData.power );
+                const power = await this.homey.app.getBridge().getFeatureValue( devData.power );
                 if ( power >= 0 )
                 {
                     await this.setCapabilityValue( 'measure_power', power );
@@ -178,7 +178,7 @@ module.exports = class lwsockets extends Homey.Device
         }
         catch ( err )
         {
-            Homey.app.updateLog( this.getName() + " getDeviceValues Error " + err );
+            this.homey.app.updateLog( this.getName() + " getDeviceValues Error " + err );
         }
     }
 

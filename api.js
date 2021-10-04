@@ -1,57 +1,15 @@
 const Homey = require( 'homey' );
 const LightwaveSmartBridge = require( '../../lib/LightwaveSmartBridge' );
 
-module.exports = [
+module.exports = {
 
+    async getSomething( { homey, query } )
     {
-        method: 'GET',
-        path: '/',
-        public: true,
-        fn: async function( args, callback )
-        {
-            const result = await Homey.app.getSomething( args );
-
-            // callback follows ( err, result )
-            callback( null, result );
-
-            // access /?foo=bar as args.query.foo
-        }
+        return await homey.app.getSomething( query );
     },
-
+    async postSomething( { homey, query, body } )
     {
-        method: 'POST',
-        path: '/',
-        public: true,
-        fn: function( args, callback )
-        {
-            const result = Homey.app.addSomething( args );
-            if ( result instanceof Error ) return callback( result );
-            return callback( null, result );
-        }
+        const result = homey.app.addSomething( body );
+        return result;
     },
-
-    {
-        method: 'PUT',
-        path: '/',
-        public: true,
-        fn: function( args, callback )
-        {
-            const result = Homey.app.updateSomething( args );
-            if ( result instanceof Error ) return callback( result );
-            return callback( null, result );
-        }
-    },
-
-    {
-        method: 'DELETE',
-        path: '/',
-        public: true,
-        fn: function( args, callback )
-        {
-            const result = Homey.app.deleteSomething( args );
-            if ( result instanceof Error ) return callback( result );
-            return callback( null, result );
-        }
-    }
-
-];
+};

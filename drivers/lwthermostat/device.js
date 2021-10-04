@@ -10,17 +10,17 @@ module.exports = class lwthermostat extends Homey.Device
     {
         try
         {
-            Homey.app.updateLog( 'Device initialising( Name: ' + this.getName() + ', Class: ' + this.getClass() + ")" );
+            this.homey.app.updateLog( 'Device initialising( Name: ' + this.getName() + ', Class: ' + this.getClass() + ")" );
 
-            if ( await Homey.app.getBridge().waitForBridgeReady() )
+            if ( await this.homey.app.getBridge().waitForBridgeReady() )
             {
                 this.initDevice();
             }
-            Homey.app.updateLog( 'Device initialised( Name: ' + this.getName() + ")" );
+            this.homey.app.updateLog( 'Device initialised( Name: ' + this.getName() + ")" );
         }
         catch ( err )
         {
-            Homey.app.updateLog( this.getName() + " OnInit Error: " + err );
+            this.homey.app.updateLog( this.getName() + " OnInit Error: " + err );
         }
 
         // register a capability listener
@@ -46,7 +46,7 @@ module.exports = class lwthermostat extends Homey.Device
             const devData = this.getData();
 
             // Set the switch Value on the device using the unique feature ID stored during pairing
-            result = await Homey.app.getBridge().setFeatureValue( devData.heatState, value == true ? 1 : 0 );
+            result = await this.homey.app.getBridge().setFeatureValue( devData.heatState, value == true ? 1 : 0 );
             if ( result == -1 )
             {
                 //this.setUnavailable();
@@ -59,7 +59,7 @@ module.exports = class lwthermostat extends Homey.Device
         catch ( err )
         {
             //this.setUnavailable();
-            Homey.app.updateLog( this.getName() + " onCapabilityMode Error "+ err );
+            this.homey.app.updateLog( this.getName() + " onCapabilityMode Error "+ err );
         }
     }
 
@@ -77,7 +77,7 @@ module.exports = class lwthermostat extends Homey.Device
             const devData = this.getData();
 
             // Set the dim Value on the device using the unique feature ID stored during pairing
-            result = await Homey.app.getBridge().setFeatureValue( devData.targetTemperature, value );
+            result = await this.homey.app.getBridge().setFeatureValue( devData.targetTemperature, value );
             if ( result == -1 )
             {
                 //this.setUnavailable();
@@ -90,7 +90,7 @@ module.exports = class lwthermostat extends Homey.Device
         catch ( err )
         {
             //this.setUnavailable();
-            Homey.app.updateLog( this.getName() + " onCapabilityTargetTemperature " + err );
+            this.homey.app.updateLog( this.getName() + " onCapabilityTargetTemperature " + err );
         }
     }
 
@@ -98,20 +98,20 @@ module.exports = class lwthermostat extends Homey.Device
     {
         try
         {
-            let driverId = this.getDriver().id;
+            let driverId = this.driver.id;
             let data = this.getData();
             let id = driverId + "_" + data.id;
 
-            await Promise.all( [ Homey.app.getBridge().registerWEBHooks( data.heatState, 'feature', id + '_heatState' ),
-                Homey.app.getBridge().registerWEBHooks( data.rssi, 'feature', id + '_rssi' ),
-                Homey.app.getBridge().registerWEBHooks( data.valveLevel, 'feature', id + '_valveLevel' ),
-                Homey.app.getBridge().registerWEBHooks( data.targetTemperature, 'feature', id + '_targetTemperature' ),
-                Homey.app.getBridge().registerWEBHooks( data.temperature, 'feature', id + '_temperature' )
+            await Promise.all( [ this.homey.app.getBridge().registerWEBHooks( data.heatState, 'feature', id + '_heatState' ),
+                this.homey.app.getBridge().registerWEBHooks( data.rssi, 'feature', id + '_rssi' ),
+                this.homey.app.getBridge().registerWEBHooks( data.valveLevel, 'feature', id + '_valveLevel' ),
+                this.homey.app.getBridge().registerWEBHooks( data.targetTemperature, 'feature', id + '_targetTemperature' ),
+                this.homey.app.getBridge().registerWEBHooks( data.temperature, 'feature', id + '_temperature' )
             ] );
         }
         catch ( err )
         {
-            Homey.app.updateLog( this.getName() + " Failed to create webhooks " + err );
+            this.homey.app.updateLog( this.getName() + " Failed to create webhooks " + err );
         }
     }
 
@@ -140,7 +140,7 @@ module.exports = class lwthermostat extends Homey.Device
                 {
                     // Get the current target temperature Value from the device using the unique feature ID stored during pairing
                     const devData = this.getData();
-                    const target = await Homey.app.getBridge().getFeatureValue( devData.targetTemperature );
+                    const target = await this.homey.app.getBridge().getFeatureValue( devData.targetTemperature );
                     await this.setCapabilityValue( 'target_temperature', target / 10 );
                 }
                 //this.setAvailable();
@@ -153,23 +153,23 @@ module.exports = class lwthermostat extends Homey.Device
         }
         catch ( err )
         {
-            Homey.app.updateLog( "setWebHookValue error: " + err );
+            this.homey.app.updateLog( "setWebHookValue error: " + err );
         }
     }
 
     async getDeviceValues()
     {
-        Homey.app.updateLog( this.getName() + ': Getting Values', true );
+        this.homey.app.updateLog( this.getName() + ': Getting Values', true );
         try
         {
             const devData = this.getData();
 
             // Get the current mode Value from the device using the unique feature ID stored during pairing
-            const mode = await Homey.app.getBridge().getFeatureValue( devData.heatState );
+            const mode = await this.homey.app.getBridge().getFeatureValue( devData.heatState );
             await this.setCapabilityValue( 'onoff', mode == 0 ? false : true );
 
             // Get the current temperature Value from the device using the unique feature ID stored during pairing
-            const temperature = await Homey.app.getBridge().getFeatureValue( devData.temperature );
+            const temperature = await this.homey.app.getBridge().getFeatureValue( devData.temperature );
             await this.setCapabilityValue( 'measure_temperature', temperature / 10 );
 
             if ( mode == 0 )
@@ -179,18 +179,18 @@ module.exports = class lwthermostat extends Homey.Device
             else
             {
                 // Get the current target temperature Value from the device using the unique feature ID stored during pairing
-                const target = await Homey.app.getBridge().getFeatureValue( devData.targetTemperature );
+                const target = await this.homey.app.getBridge().getFeatureValue( devData.targetTemperature );
                 await this.setCapabilityValue( 'target_temperature', target / 10 );
             }
 
             // Get the current contact Value from the device using the unique feature ID stored during pairing
-            const state = await Homey.app.getBridge().getFeatureValue( devData.valveLevel );
+            const state = await this.homey.app.getBridge().getFeatureValue( devData.valveLevel );
             await this.setCapabilityValue( 'alarm_contact', state == 0 ? false : true );
         }
         catch ( err )
         {
             //this.setUnavailable();
-            Homey.app.updateLog( this.getName() + " getDeviceValues Error " + err );
+            this.homey.app.updateLog( this.getName() + " getDeviceValues Error " + err );
         }
     }
 

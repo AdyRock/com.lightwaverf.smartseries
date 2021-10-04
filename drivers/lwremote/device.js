@@ -9,17 +9,17 @@ module.exports = class lwremote extends Homey.Device
     {
         try
         {
-            Homey.app.updateLog( 'Device initialising( Name: ' + this.getName() + ', Class: ' + this.getClass() + ")" );
+            this.homey.app.updateLog( 'Device initialising( Name: ' + this.getName() + ', Class: ' + this.getClass() + ")" );
 
-            if ( await Homey.app.getBridge().waitForBridgeReady() )
+            if ( await this.homey.app.getBridge().waitForBridgeReady() )
             {
                 this.initDevice();
             }
-            Homey.app.updateLog( 'Device initialised( Name: ' + this.getName() + ")" );
+            this.homey.app.updateLog( 'Device initialised( Name: ' + this.getName() + ")" );
         }
         catch ( err )
         {
-            Homey.app.updateLog( this.getName() + " OnInit Error: " + err );
+            this.homey.app.updateLog( this.getName() + " OnInit Error: " + err );
         }
     }
 
@@ -32,15 +32,15 @@ module.exports = class lwremote extends Homey.Device
     {
         try
         {
-            let driverId = this.getDriver().id;
+            let driverId = this.driver.id;
             let data = this.getData();
             let id = driverId + "_" + data.id;
 
-            await Promise.all( [ Homey.app.getBridge().registerWEBHooks( data.buttonPress, 'feature', id + '_buttonPress' ) ] );
+            await Promise.all( [ this.homey.app.getBridge().registerWEBHooks( data.buttonPress, 'feature', id + '_buttonPress' ) ] );
         }
         catch ( err )
         {
-            Homey.app.updateLog( this.getName() + " Failed to create webhooks" + err );
+            this.homey.app.updateLog( this.getName() + " Failed to create webhooks" + err );
         }
     }
 
@@ -48,12 +48,12 @@ module.exports = class lwremote extends Homey.Device
     {
         try
         {
-			Homey.app.updateLog( 'Button Pressed: ' + capability + ": " + this.getName(), true );
+			this.homey.app.updateLog( 'Button Pressed: ' + capability + ": " + this.getName(), true );
             if ( capability == "buttonPress" )
             {
 				await this.setCapabilityValue( 'alarm_generic', true );
 				this.setAvailable();
-				await new Promise( resolve => setTimeout( resolve, 1000 ) );
+				await new Promise( resolve => this.homey.setTimeout( resolve, 1000 ) );
                 await this.setCapabilityValue( 'alarm_generic', false );
             }
         }
