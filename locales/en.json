@@ -1,8 +1,26 @@
 {
     "settings": {
-      "title": "Settings",
-      "subtitle": "Access Credentials",
-      "unsupportedTitle": "Unsupported Devices",
-      "unsupportedDescription": "Any devices that were found in the last pairing stage that are not currently supported will appear below. The LinkPlus should always appear here."
+        "title": "Settings",
+        "subtitle": "Access Credentials",
+        "unsupportedTitle": "Unsupported Devices",
+        "unsupportedDescription": "Any devices that were found in the last pairing stage that are not currently supported will appear below. The LinkPlus should always appear here."
+    },
+    "pair": {
+        "bearerid":{
+            "title": "Connection Details",
+            "intro": "Get the API code from the LightwaveRF phone app or web page",
+            "intro1": "1. Open the LightwaveRF phone app",
+            "intro2": "2. Go to Settings > General > API integration",
+            "intro3": "3. Tap on REFRESH",
+            "intro4": "4. Copy the Basic code and paste into Basic below",
+            "intro5": "5. Copy the Refresh Token and paste into Refresh Token below",
+            "bearerid": "Basic:",
+            "refreshtoken": "Refresh Token:",
+            "login": "Connect",
+            "checking": "Checking connection",
+            "try_again": "Try again",
+            "correct": "Successful",
+            "adding": "Adding device(s)"
+        }
     }
-  }
+}

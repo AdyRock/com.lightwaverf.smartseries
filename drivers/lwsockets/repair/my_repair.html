@@ -1,0 +1,59 @@
+</br>
+<p data-i18n="pair.bearerid.intro" style="text-align:left;"></p>
+<p data-i18n="pair.bearerid.intro1" style="text-align:left;"></p>
+<p data-i18n="pair.bearerid.intro2" style="text-align:left;"></p>
+<p data-i18n="pair.bearerid.intro3" style="text-align:left;"></p>
+<p data-i18n="pair.bearerid.intro4" style="text-align:left;"></p>
+<p data-i18n="pair.bearerid.intro5" style="text-align:left;"></p>
+
+<form id="form" name="form" onsubmit="return getForm()" action="javascript:void(0);" method="post" style="text-align:left;">
+    <div class="form-group">
+        <label for="bearerid" data-i18n="pair.bearerid.bearerid"></label>
+        <input type="text" name="bearerid" id="bearerid" />
+        <label for="refreshtoken" data-i18n="pair.bearerid.refreshtoken"></label>
+        <input type="text" name="refreshtoken" id="refreshtoken" />
+        </br>
+        <input type="submit" id="submit" value="Log In" style="margin: 15px; padding: 10px; text-align:center; color: white; background-color: rgb(15, 170, 36);border-radius: 5px" />
+        </br>
+        </br>
+        <input type="text" id="status" readonly />
+    </div>
+</form>
+
+
+<script type="text/javascript">
+    Homey.setTitle(__('pair.bearerid.title'));
+
+    Homey.emit('bearerid_setup', {}).then(function(result)
+    {
+        document.getElementById('bearerid').value = result.bearerid;
+        document.getElementById('refreshtoken').value = result.refreshtoken;
+    });
+
+    function getForm()
+    {
+        // Mark as authenticating
+        document.getElementById('submit').disabled = 'disabled';
+        document.getElementById('submit').value = __('pair.bearerid.checking');
+
+        Homey.emit('api_connection', {bearerid: document.forms.form.bearerid.value, refreshtoken: document.forms.form.refreshtoken.value}).then(function(result)
+        {
+            if (result)
+            {
+                console.log('authentication succeeded');
+                document.getElementById('submit').value = __('pair.bearerid.correct');
+                document.getElementById('status').value = __('pair.bearerid.adding');
+                document.getElementById('status').style.color = 'green';
+                Homey.showView("list_my_devices");
+            }
+            else
+            {
+                console.log('authentication failed');
+                document.getElementById('submit').disabled = false;
+                document.getElementById('submit').value = __('pair.bearerid.try_again');
+                document.getElementById('status').value = err;
+                document.getElementById('status').style.color = 'red';
+            }
+        });
+    }
+</script>

@@ -22,15 +22,23 @@
     },
     "pair": [
         {
-            "id": "list_devices",
+            "id": "my_connect"
+        },
+        {
+            "id": "list_my_devices",
             "template": "list_devices",
             "navigation": {
-                "next": "add_devices"
+                "next": "add_my_devices"
             }
         },
         {
-            "id": "add_devices",
+            "id": "add_my_devices",
             "template": "add_devices"
+        }
+    ],
+    "repair": [
+        {
+            "id": "my_repair"
         }
     ],
     "images": {

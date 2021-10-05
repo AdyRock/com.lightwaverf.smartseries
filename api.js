@@ -1,5 +1,4 @@
 const Homey = require( 'homey' );
-const LightwaveSmartBridge = require( '../../lib/LightwaveSmartBridge' );
 
 module.exports = {
 
