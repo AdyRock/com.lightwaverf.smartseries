@@ -16,5 +16,8 @@
   },
   "2.0.6": {
     "en": "Fixed error when getting the current dim value when a light is switched on"
+  },
+  "3.0.0": {
+    "en": "Updated for Homey cloud compatability"
   }
 }
