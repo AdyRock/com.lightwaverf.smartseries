@@ -1,14 +1,18 @@
-const Homey = require( 'homey' );
+'use strict';
 
 module.exports = {
 
-    async getSomething( { homey, query } )
+    async getSomething({ homey, query })
     {
-        return await homey.app.getSomething( query );
+        return homey.app.getSomething(query);
     },
-    async postSomething( { homey, query, body } )
+    async postSomething({ homey, query, body })
     {
-        const result = homey.app.addSomething( body );
+        const result = homey.app.addSomething(body);
         return result;
+    },
+    async sendLog({ homey, body })
+    {
+        return homey.app.sendLog(body);
     },
 };

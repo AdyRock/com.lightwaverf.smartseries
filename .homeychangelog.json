@@ -19,5 +19,8 @@
   },
   "3.0.0": {
     "en": "Updated for Homey cloud compatability"
+  },
+  "3.0.1": {
+    "en": "Updated to SDK3 for Homey cloud compatability"
   }
 }

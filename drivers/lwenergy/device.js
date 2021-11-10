@@ -1,111 +1,107 @@
 'use strict';
 
-const Homey = require( 'homey' );
-const LightwaveSmartBridge = require( '../../lib/LightwaveSmartBridge' );
-
-const POLL_INTERVAL = 30000;
+const Homey = require('homey');
 
 module.exports = class lwenergy extends Homey.Device
 {
 
     async onInit()
     {
+        this.setUnavailable('initialising').catch(this.error);
         try
         {
-            this.homey.app.updateLog( 'Device initialising( Name: ' + this.getName() + ', Class: ' + this.getClass() + ")" );
+            this.homey.app.updateLog(`Device initialising( Name: ${this.getName()}, Class: ${this.getClass()})`);
 
-            if ( await this.homey.app.getBridge().waitForBridgeReady() )
+            if (await this.homey.app.getBridge().waitForBridgeReady())
             {
-                this.initDevice();
+                const initDelay = this.homey.app.getDeviceIntiDelay();
+                this.homey.setTimeout(() => {
+                    this.initDevice();
+                }, initDelay * 1000);
             }
-            this.homey.app.updateLog( 'Device initialised( Name: ' + this.getName() + ")" );
+            this.homey.app.updateLog(`Device initialised( Name: ${this.getName()})`);
         }
-        catch ( err )
+        catch (err)
         {
-            this.homey.app.updateLog( this.getName() + " OnInit Error: " + err );
+            this.homey.app.updateLog(`${this.getName()} OnInit Error: ${err}`);
         }
     }
 
-    initDevice()
+    async initDevice()
     {
-        this.homey.app.updateLog( this.getName() + ': Getting Values' );
-        this.getEnergyValues();
-        this.registerWebhook();
+        this.homey.app.updateLog(`${this.getName()}: Getting Values`);
+        await this.getEnergyValues();
+        await this.registerWebhook();
+        this.setAvailable().catch(this.error);
     }
 
     async registerWebhook()
     {
         try
         {
-            let driverId = this.driver.id;
-            let data = this.getData();
-            let id = driverId + "_" + data.id;
+            const driverId = this.driver.id;
+            const data = this.getData();
+            const id = `${driverId}_${data.id}`;
 
-            await Promise.all( [ this.homey.app.getBridge().registerWEBHooks( data.power, 'feature', id + '_power' ),
-                this.homey.app.getBridge().registerWEBHooks( data.energy, 'feature', id + '_energy' )
-            ] );
+            await Promise.all([this.homey.app.getBridge().registerWEBHooks(data.power, 'feature', `${id}_power`),
+                this.homey.app.getBridge().registerWEBHooks(data.energy, 'feature', `${id}_energy`),
+            ]);
         }
-        catch ( err )
+        catch (err)
         {
-            this.homey.app.updateLog( this.getName() + " Failed to create webhooks " + err );
+            this.homey.app.updateLog(`${this.getName()} Failed to create webhooks ${err}`);
         }
     }
 
-    async setWebHookValue( capability, value )
+    async setWebHookValue(capability, value)
     {
         try
         {
-            if ( capability == "power" )
+            if (capability === 'power')
             {
-                await this.setCapabilityValue( 'measure_power', value );
-                //this.setAvailable();
+                this.setCapabilityValue('measure_power', value).catch(this.error);
             }
-            else if ( capability == "energy" )
+            else if (capability === 'energy')
             {
-                await this.setCapabilityValue( 'meter_power', value / 1000 );
-                //this.setAvailable();
+                this.setCapabilityValue('meter_power', value / 1000).catch(this.error);
             }
         }
-        catch ( err )
+        catch (err)
         {
 
         }
     }
 
-    async getEnergyValues( ValueList )
+    async getEnergyValues(ValueList)
     {
-        this.homey.app.updateLog( this.getName() + ': Getting Energy', true );
+        this.homey.app.updateLog(`${this.getName()}: Getting Energy`, true);
 
         try
         {
             const devData = this.getData();
-            //console.log( devData );
+            // console.log( devData );
 
             // Get the current power Value from the device using the unique feature ID stored during pairing
-            const power = await this.homey.app.getBridge().getFeatureValue( devData.power, ValueList );
-            if ( power >= 0 )
+            const power = await this.homey.app.getBridge().getFeatureValue(devData.power, ValueList);
+            if (power >= 0)
             {
-                //this.setAvailable();
-                await this.setCapabilityValue( 'measure_power', power );
+                this.setCapabilityValue('measure_power', power).catch(this.error);
             }
 
             // Get the current power Value from the device using the unique feature ID stored during pairing
-            const energy = await this.homey.app.getBridge().getFeatureValue( devData.energy );
-            if ( energy >= 0 )
+            const energy = await this.homey.app.getBridge().getFeatureValue(devData.energy);
+            if (energy >= 0)
             {
-                //this.setAvailable();
-                await this.setCapabilityValue( 'meter_power', energy / 1000 );
+                this.setCapabilityValue('meter_power', energy / 1000).catch(this.error);
             }
         }
-        catch ( err )
+        catch (err)
         {
-            //this.setUnavailable();
-            this.homey.app.updateLog( this.getName() + " getDeviceValues Error " + err );
+            // this.setUnavailable();
+            this.homey.app.updateLog(`${this.getName()} getDeviceValues Error ${err}`);
         }
     }
 
-    async onDeleted()
-    {}
 };
 
-//module.exports = MyDevice;
+// module.exports = MyDevice;

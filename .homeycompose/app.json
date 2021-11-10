@@ -1,6 +1,6 @@
 {
     "id": "com.lightwaverf.smartseries",
-    "version": "3.0.0",
+    "version": "3.0.1",
     "compatibility": ">=5.0.0",
     "platforms": [
         "local",
@@ -61,6 +61,10 @@
             "method": "post",
             "path": "/",
             "public": true
+        },
+        "sendLog": {
+            "method": "post",
+            "path": "/sendLog/"
         }
     }
 }

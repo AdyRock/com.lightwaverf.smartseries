@@ -3,12 +3,44 @@
 
 <head>
     <link rel="stylesheet" type="text/css" href="lwsa.css">
+    <link rel="stylesheet" type="text/css" href="busy_indicator.css" />
+    <style>
+        label.a {
+            display: inline-block;
+            width: 200px;
+            height: 15px;
+            padding: 5px;
+        }
+    </style>
+
+    <style type="text/css">
+        .fog_div {
+            display: none;
+            position: fixed;
+            top: 0px;
+            left: 0px;
+            height: 100%;
+            width: 100%;
+            z-index: 100;
+            background-color: rgba(30, 30, 30, 0.5);
+        }
+
+        #busybox.show {
+            display: block;
+        }
+    </style>
 
     <!-- The '/homey.js' script must be included in your settings view to work -->
     <script type="text/javascript" src="/homey.js" data-origin="settings"></script>
+    <script type="text/javascript" src="busy_indicator.js"></script>
 </head>
 
 <body>
+    <!-- Busy indicator -->
+    <div id="busybox" class="fog_div">
+        <div></div>
+    </div>
+
     <!-- Tab links -->
     <div class="tab">
         <button class="tablinks" onclick="setPage(event, 'settings')" id="defaultOpen">Settings</button>
@@ -81,7 +113,7 @@
             </div>
         </fieldset>
         <fieldset>
-            <p><button id="clearLog">Clear Log</button></p>
+            <p><button id="clearLog">Clear Log</button> <button id="sendDiagLog"><span data-i18n="settings.sendLog"></span></button></p>
             <div class="field row">
                 <textarea id="diagLog"></textarea>
             </div>
@@ -89,6 +121,9 @@
     </div>
 
     <script type="text/javascript">
+        // Create the busy indicator
+        var busyi = new busy_indicator(document.getElementById("busybox"), document.querySelector("#busybox div"));
+
         var beareridElement = document.getElementById( 'bearerid' );
         var refreshtokenElement = document.getElementById( 'refreshtoken' );
         var unsupportedDevicesElement = document.getElementById( 'unsupportedDevices' );
@@ -100,6 +135,7 @@
 
         var saveElement = document.getElementById( 'save' );
         var clearLogElement = document.getElementById( 'clearLog' );
+        var sendDiagLogElement = document.getElementById('sendDiagLog');
 
         // a method named 'onHomeyReady' must be present in your code
         function onHomeyReady( Homey )
@@ -194,6 +230,33 @@
                 diagLogElement.value = "";
             } );
 
+            sendDiagLogElement.addEventListener('click', function(e)
+            {
+                Homey.confirm(Homey.__('settings.confirmSend'), null, function(e, ok)
+                {
+                    if (ok)
+                    {
+                        waitCursor(true);
+                        Homey.api('POST', '/sendLog/',
+                        {
+                            notify: true,
+                            logType: "diag"
+                        }, function(err, result)
+                        {
+                            waitCursor(false);
+                            if (err)
+                            {
+                                return Homey.alert(err);
+                            }
+                            else
+                            {
+                                return Homey.alert(result);
+                            }
+                        });
+                    }
+                });
+            });
+
             // Tell Homey we're ready to be displayed
             Homey.ready();
         }
@@ -256,6 +319,18 @@
                 // Make the unsupported devices text area fill the page
                 unsupportedDevicesElement.setAttribute( 'cols', unsupportedDevicesElement.parentElement.clientWidth / 8 );
                 unsupportedDevicesElement.style.height = ( window.innerHeight - unsupportedDevicesElement.offsetTop - 20 ) + 'px';
+            }
+        }
+
+        function waitCursor(On)
+        {
+            if (On)
+            {
+                busyi.show();
+            }
+            else
+            {
+                busyi.hide();
             }
         }
     </script>

@@ -1,230 +1,188 @@
 'use strict';
 
-const Homey = require( 'homey' );
-const LightwaveSmartBridge = require( '../../lib/LightwaveSmartBridge' );
+const Homey = require('homey');
+
 module.exports = class lwrelay extends Homey.Device
 {
 
     async onInit()
     {
+        this.setUnavailable('initialising').catch(this.error);
         try
         {
-            this.homey.app.updateLog( 'Device initialising( Name: ' + this.getName() + ', Class: ' + this.getClass() + ")" );
+            this.homey.app.updateLog(`Device initialising( Name: ${this.getName()}, Class: ${this.getClass()})`);
 
-            if ( await this.homey.app.getBridge().waitForBridgeReady() )
+            if (await this.homey.app.getBridge().waitForBridgeReady())
             {
-                this.initDevice();
+                const initDelay = this.homey.app.getDeviceIntiDelay();
+                this.homey.setTimeout(() => {
+                    this.initDevice();
+                }, initDelay * 1000);
             }
-            this.homey.app.updateLog( 'Device initialised( Name: ' + this.getName() + ")" );
+            this.homey.app.updateLog(`Device initialised( Name: ${this.getName()})`);
         }
-        catch ( err )
+        catch (err)
         {
-            this.homey.app.updateLog( this.getName() + " OnInit Error: " + err );
+            this.homey.app.updateLog(`${this.getName()} OnInit Error: ${err}`);
         }
 
         // register a capability listener
-        this.registerCapabilityListener( 'onoff', this.onCapabilityOnoff.bind( this ) );
-        this.registerCapabilityListener( 'windowcoverings_state', this.onCapabilityOpenCloseStop.bind( this ) );
+        this.registerCapabilityListener('onoff', this.onCapabilityOnoff.bind(this));
+        this.registerCapabilityListener('windowcoverings_state', this.onCapabilityOpenCloseStop.bind(this));
     }
 
-    initDevice()
+    async initDevice()
     {
-        this.homey.app.updateLog( this.getName() + ': Getting Values' );
-        this.getDeviceValues();
-        this.registerWebhook();
+        this.homey.app.updateLog(`${this.getName()}: Getting Values`);
+        await this.getDeviceValues();
+        await this.registerWebhook();
+        this.setAvailable().catch(this.error);
     }
 
     // this method is called when the Homey device has requested a state change (turned on or off)
-    async onCapabilityOnoff( value, opts )
+    async onCapabilityOnoff(value, opts)
     {
-        var result = "";
-
         try
         {
             // Get the device information stored during pairing
             const devData = this.getData();
 
             // The device requires '0' for off and '1' for on
-            var data = '0';
-            if ( value )
+            let data = '0';
+            if (value)
             {
                 data = '1';
             }
 
             // Set the switch Value on the device using the unique feature ID stored during pairing
-            result = await this.homey.app.getBridge().setFeatureValue( devData[ 'switch' ], data );
-            if ( result == -1 )
-            {
-                //this.setUnavailable();
-            }
-            else
-            {
-                //this.setAvailable();
-            }
+            this.homey.app.getBridge().setFeatureValue(devData['switch'], data).catch(this.error);
         }
-        catch ( err )
+        catch (err)
         {
-            //this.setUnavailable();
-            this.homey.app.updateLog( this.getName() + " onCapabilityOnoff Error " + err );
+            // this.setUnavailable();
+            this.homey.app.updateLog(`${this.getName()} onCapabilityOnoff Error ${err}`);
         }
     }
 
     // this method is called when the Homey device has requested a state change (Open / Close / Stop)
-    async onCapabilityOpenCloseStop( value, opts )
+    async onCapabilityOpenCloseStop(value, opts)
     {
-        var result = "";
-        //console.log( "onCapabilityOpenCloseStop: Value = ", value );
+        // Get the device information stored during pairing
+        const devData = this.getData();
 
-        try
+        // The device requires '0' for off and '1' for on
+        let data = '0';
+        if (value === 'up')
         {
-            // Get the device information stored during pairing
-            const devData = this.getData();
-
-            // The device requires '0' for off and '1' for on
-            var data = '0';
-            if ( value == "up" )
-            {
-                data = '1';
-            }
-            if ( value == "down" )
-            {
-                data = '2';
-            }
-
-            // Set the switch Value on the device using the unique feature ID stored during pairing
-            result = await this.homey.app.getBridge().setFeatureValue( devData.threeWayRelay, data );
-            if ( result == -1 )
-            {
-                //this.setUnavailable();
-            }
-            else
-            {
-                //this.setAvailable();
-            }
+            data = '1';
         }
-        catch ( err )
+        else if (value === 'down')
         {
-            //this.setUnavailable();
-            this.homey.app.updateLog( this.getName() + " onCapabilityOpenCloseStop Error " + err );
+            data = '2';
         }
+
+        // Set the switch Value on the device using the unique feature ID stored during pairing
+        this.homey.app.getBridge().setFeatureValue(devData.threeWayRelay, data).catch(this.error);
     }
 
     async registerWebhook()
     {
         try
         {
-            let driverId = this.driver.id;
-            let data = this.getData();
-            let id = driverId + "_" + data.id;
+            const driverId = this.driver.id;
+            const data = this.getData();
+            const id = `${driverId}_${data.id}`;
 
-            if ( data.switch )
+            if (data.switch)
             {
-                await Promise.all( [ this.homey.app.getBridge().registerWEBHooks( data.switch, 'feature', id + '_switch' ) ] );
+                await Promise.all([this.homey.app.getBridge().registerWEBHooks(data.switch, 'feature', `${id}_switch`)]);
             }
-            else if ( data.threeWayRelay )
+            else if (data.threeWayRelay)
             {
-                await Promise.all( [ this.homey.app.getBridge().registerWEBHooks( data.threeWayRelay, 'feature', id + '_threeWayRelay' ) ] );
+                await Promise.all([this.homey.app.getBridge().registerWEBHooks(data.threeWayRelay, 'feature', `${id}_threeWayRelay`)]);
             }
         }
-        catch ( err )
+        catch (err)
         {
-            this.homey.app.updateLog( this.getName() + " Failed to create webhooks " + err );
+            this.homey.app.updateLog(`${this.getName()} Failed to create webhooks ${err}`);
         }
     }
 
-    async setWebHookValue( capability, value )
+    async setWebHookValue(capability, value)
     {
-        //console.log( "setWebHookValue: Capability = ", capability, " Value = ", value );
-        try
+        if (capability === 'switch')
         {
-            if ( capability == "switch" )
-            {
-                await this.setCapabilityValue( 'onoff', ( value == 1 ) );
-                //this.setAvailable();
-            }
-            else if ( capability == "threeWayRelay" )
-            {
-                var data = "idle";
-                if ( value == 1 )
-                {
-                    data = "up";
-                }
-                else if ( value == 2 )
-                {
-                    data = "down";
-                }
-                await this.setCapabilityValue( 'windowcoverings_state', data );
-                //this.setAvailable();
-            }
+            this.setCapabilityValue('onoff', (value === 1)).catch(this.error);
         }
-        catch ( err )
+        else if (capability === 'threeWayRelay')
         {
-
+            let data = 'idle';
+            if (value === 1)
+            {
+                data = 'up';
+            }
+            else if (value === 2)
+            {
+                data = 'down';
+            }
+            this.setCapabilityValue('windowcoverings_state', data).catch(this.error);
         }
     }
 
-    async getDeviceValues( ValueList )
+    async getDeviceValues(ValueList)
     {
-        this.homey.app.updateLog( this.getName() + ': Getting Values', true );
+        this.homey.app.updateLog(`${this.getName()}: Getting Values`, true);
 
         try
         {
             const devData = this.getData();
-            //console.log( devData );
+            // console.log( devData );
 
-            if ( devData[ 'switch' ] )
+            if (devData['switch'])
             {
                 // Get the current switch Value from the device using the unique feature ID stored during pairing
-                const onoff = await this.homey.app.getBridge().getFeatureValue( devData[ 'switch' ], ValueList );
-                switch ( onoff )
+                const onoff = await this.homey.app.getBridge().getFeatureValue(devData['switch'], ValueList);
+                switch (onoff)
                 {
                     case 0:
                         // Device returns 0 for off and 1 for on so convert o false and true
-                        //this.setAvailable();
-                        await this.setCapabilityValue( 'onoff', false );
+                        this.setCapabilityValue('onoff', false).catch(this.error);
                         break;
 
                     case 1:
-                        //this.setAvailable();
-                        await this.setCapabilityValue( 'onoff', true );
+                        this.setCapabilityValue('onoff', true).catch(this.error);
                         break;
 
                     default:
                         // Bad response so set as unavailable for now
-                        //this.setUnavailable();
+                        // this.setUnavailable();
                         break;
                 }
             }
-            else if ( devData.threeWayRelay )
+            else if (devData.threeWayRelay)
             {
-                const oci = await this.homey.app.getBridge().getFeatureValue( devData.threeWayRelay, ValueList );
-                if ( oci == "0" )
+                const oci = await this.homey.app.getBridge().getFeatureValue(devData.threeWayRelay, ValueList);
+                if (oci === '0')
                 {
-                    //this.setAvailable();
-                    await this.setCapabilityValue( 'windowcoverings_state', "idle" );
+                    this.setCapabilityValue('windowcoverings_state', 'idle').catch(this.error);
                 }
-                else if ( oci == "1" )
+                else if (oci === '1')
                 {
-                    //this.setAvailable();
-                    await this.setCapabilityValue( 'windowcoverings_state', "up" );
+                    this.setCapabilityValue('windowcoverings_state', 'up').catch(this.error);
                 }
                 else
                 {
-                    //this.setAvailable();
-                    await this.setCapabilityValue( 'windowcoverings_state', "down" );
+                    this.setCapabilityValue('windowcoverings_state', 'down').catch(this.error);
                 }
-
             }
         }
-        catch ( err )
+        catch (err)
         {
-            //this.setUnavailable();
-            this.homey.app.updateLog( this.getName() + " getDeviceValues Error " + err );
+            // this.setUnavailable();
+            this.homey.app.updateLog(`${this.getName()} getDeviceValues Error ${err}`);
         }
     }
 
-    async onDeleted()
-    {}
 };
 
-//module.exports = MyDevice;
+// module.exports = MyDevice;

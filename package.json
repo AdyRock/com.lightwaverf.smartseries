@@ -1,16 +1,22 @@
 {
   "name": "com.lightwave.smartseries",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "main": "app.js",
   "devDependencies": {
-    "homey": "^2.0.6"
+    "@types/homey": "npm:homey-apps-sdk-v3-types@^0.2.2",
+    "eslint": "^8.2.0",
+    "eslint-config-athom": "^3.0.1",
+    "homey": "^2.23.3"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/AdyRock/com.lightwaverf.smartseries"
   },
   "dependencies": {
-    "node-fetch": "^2.6.1"
-  },
-  "license": "GPL-3.0"
+    "nodemailer": "^6.5.0"
+},
+"license": "GPL-3.0",
+  "engines": {
+    "node": ">=12.16.1"
+  }
 }
