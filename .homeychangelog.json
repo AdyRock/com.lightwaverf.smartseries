@@ -22,5 +22,8 @@
   },
   "3.0.1": {
     "en": "Updated to SDK3 for Homey cloud compatability"
+  },
+  "3.1.0": {
+    "en": "Now using faster http library. Slowed down device initialisation so LW rate limit is not exceed. Added option to send diagnostic log."
   }
 }
