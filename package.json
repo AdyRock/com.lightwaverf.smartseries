@@ -1,6 +1,6 @@
 {
   "name": "com.lightwave.smartseries",
-  "version": "3.1.0",
+  "version": "3.1.3",
   "main": "app.js",
   "devDependencies": {
     "@types/homey": "npm:homey-apps-sdk-v3-types@^0.2.2",
@@ -13,9 +13,9 @@
     "url": "https://github.com/AdyRock/com.lightwaverf.smartseries"
   },
   "dependencies": {
-    "nodemailer": "^6.5.0"
-},
-"license": "GPL-3.0",
+    "nodemailer": "^6.7.2"
+  },
+  "license": "GPL-3.0",
   "engines": {
     "node": ">=12.16.1"
   }

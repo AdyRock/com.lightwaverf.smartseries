@@ -3,8 +3,7 @@
         "en": "Remote"
     },
     "platforms": [
-        "local",
-        "cloud"
+        "local"
     ],
     "connectivity": [
         "cloud"

@@ -3,8 +3,7 @@
         "en": "Heating"
     },
     "platforms": [
-        "local",
-        "cloud"
+        "local"
     ],
     "connectivity": [
         "cloud"

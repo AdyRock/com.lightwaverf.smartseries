@@ -3,8 +3,7 @@
         "en": "Energy Monitor"
     },
     "platforms": [
-        "local",
-        "cloud"
+        "local"
     ],
     "connectivity": [
         "cloud"

@@ -3,8 +3,7 @@
         "en": "Dimmer"
     },
     "platforms": [
-        "local",
-        "cloud"
+        "local"
     ],
     "connectivity": [
         "cloud"

@@ -3,8 +3,7 @@
         "en": "Contact Sensor"
     },
     "platforms": [
-        "local",
-        "cloud"
+        "local"
     ],
     "connectivity": [
         "cloud"

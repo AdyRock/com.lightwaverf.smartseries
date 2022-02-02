@@ -1,11 +1,10 @@
 {
   "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
   "id": "com.lightwaverf.smartseries",
-  "version": "3.1.0",
+  "version": "3.1.2",
   "compatibility": ">=5.0.0",
   "platforms": [
-    "local",
-    "cloud"
+    "local"
   ],
   "sdk": 3,
   "brandColor": "#FF7D4B",
@@ -13,7 +12,7 @@
     "en": "Lightwave Smart Series"
   },
   "description": {
-    "en": "Adds support for LightwaveRF Smart Series Devices"
+    "en": "Your Home. Smarter."
   },
   "category": [
     "lights"
@@ -74,8 +73,7 @@
         "en": "Contact Sensor"
       },
       "platforms": [
-        "local",
-        "cloud"
+        "local"
       ],
       "connectivity": [
         "cloud"
@@ -123,8 +121,7 @@
         "en": "Dimmer"
       },
       "platforms": [
-        "local",
-        "cloud"
+        "local"
       ],
       "connectivity": [
         "cloud"
@@ -168,8 +165,7 @@
         "en": "Energy Monitor"
       },
       "platforms": [
-        "local",
-        "cloud"
+        "local"
       ],
       "connectivity": [
         "cloud"
@@ -214,8 +210,7 @@
         "en": "Relay"
       },
       "platforms": [
-        "local",
-        "cloud"
+        "local"
       ],
       "connectivity": [
         "cloud"
@@ -257,8 +252,7 @@
         "en": "Remote"
       },
       "platforms": [
-        "local",
-        "cloud"
+        "local"
       ],
       "connectivity": [
         "cloud"
@@ -299,8 +293,7 @@
         "en": "Socket"
       },
       "platforms": [
-        "local",
-        "cloud"
+        "local"
       ],
       "connectivity": [
         "cloud"
@@ -343,8 +336,7 @@
         "en": "Heating"
       },
       "platforms": [
-        "local",
-        "cloud"
+        "local"
       ],
       "connectivity": [
         "cloud"

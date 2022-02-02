@@ -18,7 +18,7 @@ module.exports = class lwdimmer extends Homey.Device
                 const initDelay = this.homey.app.getDeviceIntiDelay();
                 this.homey.setTimeout(() => {
                     this.initDevice();
-                }, initDelay * 1000);
+                }, initDelay * 3000);
             }
             this.homey.app.updateLog(`Device initialised( Name: ${this.getName()})`);
         }
@@ -144,7 +144,7 @@ module.exports = class lwdimmer extends Homey.Device
             switch (onoff)
             {
                 case 0:
-                    // Device returns 0 for off and 1 for on so convert o false and true
+                    // Device returns 0 for off and 1 for on so convert to false and true
                     this.setCapabilityValue('onoff', false).catch(this.error);
                     break;
 
