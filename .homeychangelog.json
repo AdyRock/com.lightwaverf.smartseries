@@ -37,5 +37,8 @@
   },
   "3.1.4": {
     "en": "Added retry to failed initialising devices."
+  },
+  "3.1.5": {
+    "en": "Fix failure to complete device init caused by last update."
   }
 }
