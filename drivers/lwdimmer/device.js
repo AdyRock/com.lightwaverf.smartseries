@@ -11,13 +11,7 @@ module.exports = class lwdimmer extends Homey.Device
         this.setUnavailable('initialising').catch(this.error);
         try
         {
-            this.homey.app.updateLog(`Device initialising( Name: ${this.getName()}, Class: ${this.getClass()})`);
-
-            if (await this.homey.app.getBridge().waitForBridgeReady())
-            {
-                this.initDevice();
-            }
-            this.homey.app.updateLog(`Device initialised( Name: ${this.getName()})`);
+            this.initDevice();
         }
         catch (err)
         {
@@ -31,18 +25,18 @@ module.exports = class lwdimmer extends Homey.Device
 
     initDevice(extraTime = 0)
     {
-        if (this.initDelay == null)
+        if (this.homey.app.getBridge().isBridgeReady() && this.initDelay == null)
         {
             this.initDelay = this.homey.app.getDeviceIntiDelay();
             this.homey.setTimeout(() => {
                 this.doInit();
-            }, this.initDelay * 2000 + extraTime);
+            }, this.initDelay * 1000 + extraTime);
         }
     }
 
     async doInit()
     {
-        this.homey.app.updateLog(`${this.getName()}: Getting Values`);
+        this.homey.app.updateLog(`Device initialising( Name: ${this.getName()}, Class: ${this.getClass()})`);
         if (await this.getDeviceValues())
         {
             if (await this.getEnergyValues())
@@ -51,12 +45,14 @@ module.exports = class lwdimmer extends Homey.Device
                 {
                     this.setAvailable().catch(this.error);
                     this.initDelay = null;
+                    this.homey.app.updateLog(`Device initialised( Name: ${this.getName()})`);
                     return;
                 }
             }
         }
 
         // Something failed so try again later
+        this.homey.app.updateLog(`Device failed to initialise( Name: ${this.getName()}). Retry in 60 seconds.`);
         this.initDevice(60000);
     }
 
@@ -98,16 +94,18 @@ module.exports = class lwdimmer extends Homey.Device
             const data = this.getData();
             const id = `${driverId}_${data.id}`;
 
-            await Promise.all([this.homey.app.getBridge().registerWEBHooks(data.switch, 'feature', `${id}_switch`),
-                this.homey.app.getBridge().registerWEBHooks(data.dimLevel, 'feature', `${id}_dimLevel`),
-                this.homey.app.getBridge().registerWEBHooks(data.power, 'feature', `${id}_power`),
-                this.homey.app.getBridge().registerWEBHooks(data.energy, 'feature', `${id}_energy`),
-            ]);
+            await this.homey.app.getBridge().registerWEBHooks(data.switch, 'feature', `${id}_switch`);
+            await this.homey.app.getBridge().registerWEBHooks(data.dimLevel, 'feature', `${id}_dimLevel`);
+            await this.homey.app.getBridge().registerWEBHooks(data.power, 'feature', `${id}_power`);
+            await this.homey.app.getBridge().registerWEBHooks(data.energy, 'feature', `${id}_energy`);
         }
         catch (err)
         {
             this.homey.app.updateLog(`${this.getName()} Failed to create webhooks ${err}`);
+            return false;
         }
+        
+        return true;
     }
 
     async setWebHookValue(capability, value)

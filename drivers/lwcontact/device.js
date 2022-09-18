@@ -9,47 +9,36 @@ module.exports = class lwcontact extends Homey.Device
     {
         this.setUnavailable('initialising').catch(this.error);
         this.initDelay = null;
-        try
-        {
-            this.homey.app.updateLog(`Device initialising( Name: ${this.getName()}, Class: ${this.getClass()})`);
-
-            if (await this.homey.app.getBridge().waitForBridgeReady())
-            {
-                this.initDevice();
-            }
-            this.homey.app.updateLog(`Device initialised( Name: ${this.getName()})`);
-        }
-        catch (err)
-        {
-            this.homey.app.updateLog(`${this.getName()} OnInit Error: ${err}`);
-        }
+        this.initDevice();
     }
 
     initDevice(extraTime = 0)
     {
-        if (this.initDelay == null)
+        if (this.homey.app.getBridge().isBridgeReady() && this.initDelay == null)
         {
             this.initDelay = this.homey.app.getDeviceIntiDelay();
             this.homey.setTimeout(() => {
                 this.doInit();
-            }, this.initDelay * 2000 + extraTime);
+            }, this.initDelay * 1000 + extraTime);
         }
     }
 
     async doInit()
     {
-        this.homey.app.updateLog(`${this.getName()}: Getting Values`);
+        this.homey.app.updateLog(`Device initialising( Name: ${this.getName()}, Class: ${this.getClass()})`);
         if (await this.getDeviceValues())
         {
             if (await this.registerWebhook())
             {
                 this.setAvailable().catch(this.error);
                 this.initDelay = null;
+                this.homey.app.updateLog(`Device initialised( Name: ${this.getName()})`);
                 return;
             }
         }
 
         // Something failed so try again later
+        this.homey.app.updateLog(`Device failed to initialise( Name: ${this.getName()}). Retry in 60 seconds.`);
         this.initDevice(60000);
     }
 
@@ -61,15 +50,17 @@ module.exports = class lwcontact extends Homey.Device
             const data = this.getData();
             const id = `${driverId}_${data.id}`;
 
-            await Promise.all([this.homey.app.getBridge().registerWEBHooks(data.windowPosition, 'feature', `${id}_windowPosition`),
-            this.homey.app.getBridge().registerWEBHooks(data.buttonPress, 'feature', `${id}_buttonPress`),
-            this.homey.app.getBridge().registerWEBHooks(data.batteryLevel, 'feature', `${id}_batteryLevel`),
-            ]);
+            await this.homey.app.getBridge().registerWEBHooks(data.windowPosition, 'feature', `${id}_windowPosition`);
+//            await this.homey.app.getBridge().registerWEBHooks(data.buttonPress, 'feature', `${id}_buttonPress`);
+            await this.homey.app.getBridge().registerWEBHooks(data.batteryLevel, 'feature', `${id}_batteryLevel`);
         }
         catch (err)
         {
             this.homey.app.updateLog(`${this.getName()} Failed to create webhooks${err}`);
+            return false;
         }
+
+        return true;
     }
 
     async setWebHookValue(capability, value)
@@ -131,12 +122,15 @@ module.exports = class lwcontact extends Homey.Device
                     // this.setUnavailable();
                 }
             }
+            return true;
         }
         catch (err)
         {
             // this.setUnavailable();
             this.homey.app.updateLog(`lwcontact Device getDeviceValues Error ${err}`);
         }
+
+        return false;
     }
 
 };

@@ -8,20 +8,8 @@ module.exports = class lwenergy extends Homey.Device
     async onInit()
     {
         this.setUnavailable('initialising').catch(this.error);
-        try
-        {
-            this.homey.app.updateLog(`Device initialising( Name: ${this.getName()}, Class: ${this.getClass()})`);
-
-            if (await this.homey.app.getBridge().waitForBridgeReady())
-            {
-                this.initDevice();
-            }
-            this.homey.app.updateLog(`Device initialised( Name: ${this.getName()})`);
-        }
-        catch (err)
-        {
-            this.homey.app.updateLog(`${this.getName()} OnInit Error: ${err}`);
-        }
+        this.initDelay = null;
+        this.initDevice();
     }
 
     initDevice(extraTime = 0)
@@ -31,12 +19,13 @@ module.exports = class lwenergy extends Homey.Device
             this.initDelay = this.homey.app.getDeviceIntiDelay();
             this.homey.setTimeout(() => {
                 this.doInit();
-            }, this.initDelay * 2000 + extraTime);
+            }, this.initDelay * 1000 + extraTime);
         }
     }
 
     async doInit()
     {
+        this.homey.app.updateLog(`Device initialising( Name: ${this.getName()}, Class: ${this.getClass()})`);
         this.homey.app.updateLog(`${this.getName()}: Getting Values`);
         if (await this.getEnergyValues())
         {
@@ -44,11 +33,13 @@ module.exports = class lwenergy extends Homey.Device
             {
                 this.setAvailable().catch(this.error);
                 this.initDelay = null;
+                this.homey.app.updateLog(`Device initialised( Name: ${this.getName()})`);
                 return;
             }
         }
 
         // Something failed so try again later
+        this.homey.app.updateLog(`Device failed to initialise( Name: ${this.getName()}). Retry in 60 seconds.`);
         this.initDevice(60000);
     }
 
@@ -60,14 +51,16 @@ module.exports = class lwenergy extends Homey.Device
             const data = this.getData();
             const id = `${driverId}_${data.id}`;
 
-            await Promise.all([this.homey.app.getBridge().registerWEBHooks(data.power, 'feature', `${id}_power`),
-                this.homey.app.getBridge().registerWEBHooks(data.energy, 'feature', `${id}_energy`),
-            ]);
+            await this.homey.app.getBridge().registerWEBHooks(data.power, 'feature', `${id}_power`);
+            await this.homey.app.getBridge().registerWEBHooks(data.energy, 'feature', `${id}_energy`);
         }
         catch (err)
         {
             this.homey.app.updateLog(`${this.getName()} Failed to create webhooks ${err}`);
+            return false;
         }
+
+        return true;
     }
 
     async setWebHookValue(capability, value)
@@ -116,7 +109,10 @@ module.exports = class lwenergy extends Homey.Device
         {
             // this.setUnavailable();
             this.homey.app.updateLog(`${this.getName()} getDeviceValues Error ${err}`);
+            return false;
         }
+
+        return true;
     }
 
 };

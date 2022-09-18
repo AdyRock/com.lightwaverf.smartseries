@@ -56,13 +56,18 @@ class lwdimmer extends Homey.Driver
                 {
                     this.homey.app.bearerid = data.bearerid;
                     this.homey.app.refreshtoken = data.refreshtoken;
-                    return this.homey.app.InitBridge(false);
+                    if (await this.homey.app.InitBridge(false))
+                    {
+                        return {ok:true};
+                    }
+
+                    return {ok:false, err:'Failed'};
                 }
 
-                return true;
+                return {ok:true};
             }
 
-            return false;
+            return {ok:false, err:'Missing Token'};
         });
     }
 
@@ -84,11 +89,18 @@ class lwdimmer extends Homey.Driver
                 {
                     this.homey.app.bearerid = data.bearerid;
                     this.homey.app.refreshtoken = data.refreshtoken;
-                    return this.homey.app.InitBridge(false);
+                    if (await this.homey.app.InitBridge(false))
+                    {
+                        return {ok:true};
+                    }
+
+                    return {ok:false, err:'Failed'};
                 }
+
+                return {ok:true};
             }
 
-            return false;
+            return {ok:false, err:'Missing Token'};
         });
     }
 

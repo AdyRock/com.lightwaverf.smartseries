@@ -8,20 +8,8 @@ module.exports = class lwthermostat extends Homey.Device
     async onInit()
     {
         this.setUnavailable('initialising').catch(this.error);
-        try
-        {
-            this.homey.app.updateLog(`Device initialising( Name: ${this.getName()}, Class: ${this.getClass()})`);
-
-            if (await this.homey.app.getBridge().waitForBridgeReady())
-            {
-                this.initDevice();
-            }
-            this.homey.app.updateLog(`Device initialised( Name: ${this.getName()})`);
-        }
-        catch (err)
-        {
-            this.homey.app.updateLog(`${this.getName()} OnInit Error: ${err}`);
-        }
+        this.initDelay = null;
+        this.initDevice();
 
         // register a capability listener
         this.registerCapabilityListener('onoff', this.onCapabilityMode.bind(this));
@@ -30,29 +18,31 @@ module.exports = class lwthermostat extends Homey.Device
 
     initDevice(extraTime = 0)
     {
-        if (this.initDelay == null)
+        if (this.homey.app.getBridge().isBridgeReady() && this.initDelay == null)
         {
             this.initDelay = this.homey.app.getDeviceIntiDelay();
             this.homey.setTimeout(() => {
                 this.doInit();
-            }, this.initDelay * 2000 + extraTime);
+            }, this.initDelay * 1000 + extraTime);
         }
     }
 
     async doInit()
     {
-        this.homey.app.updateLog(`${this.getName()}: Getting Values`);
+        this.homey.app.updateLog(`Device initialising( Name: ${this.getName()}, Class: ${this.getClass()})`);
         if (await this.getDeviceValues())
         {
             if (await this.registerWebhook())
             {
                 this.setAvailable().catch(this.error);
                 this.initDelay = null;
+                this.homey.app.updateLog(`Device initialised( Name: ${this.getName()})`);
                 return;
             }
         }
 
         // Something failed so try again later
+        this.homey.app.updateLog(`Device failed to initialise( Name: ${this.getName()}). Retry in 60 seconds.`);
         this.initDevice(60000);
     }
 
@@ -87,17 +77,19 @@ module.exports = class lwthermostat extends Homey.Device
             const data = this.getData();
             const id = `${driverId}_${data.id}`;
 
-            await Promise.all([this.homey.app.getBridge().registerWEBHooks(data.heatState, 'feature', `${id}_heatState`),
-                this.homey.app.getBridge().registerWEBHooks(data.rssi, 'feature', `${id}_rssi`),
-                this.homey.app.getBridge().registerWEBHooks(data.valveLevel, 'feature', `${id}_valveLevel`),
-                this.homey.app.getBridge().registerWEBHooks(data.targetTemperature, 'feature', `${id}_targetTemperature`),
-                this.homey.app.getBridge().registerWEBHooks(data.temperature, 'feature', `${id}_temperature`),
-            ]);
+            await this.homey.app.getBridge().registerWEBHooks(data.heatState, 'feature', `${id}_heatState`);
+            await this.homey.app.getBridge().registerWEBHooks(data.rssi, 'feature', `${id}_rssi`);
+            await this.homey.app.getBridge().registerWEBHooks(data.valveLevel, 'feature', `${id}_valveLevel`);
+            await this.homey.app.getBridge().registerWEBHooks(data.targetTemperature, 'feature', `${id}_targetTemperature`);
+            await this.homey.app.getBridge().registerWEBHooks(data.temperature, 'feature', `${id}_temperature`);
         }
         catch (err)
         {
             this.homey.app.updateLog(`${this.getName()} Failed to create webhooks ${err}`);
+            return false;
         }
+
+        return true;
     }
 
     async setWebHookValue(capability, value)
@@ -172,7 +164,10 @@ module.exports = class lwthermostat extends Homey.Device
         {
             // this.setUnavailable();
             this.homey.app.updateLog(`${this.getName()} getDeviceValues Error ${err}`);
+            return false;
         }
+
+        return true;
     }
 
 };

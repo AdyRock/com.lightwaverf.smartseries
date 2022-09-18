@@ -36,9 +36,9 @@
         document.getElementById('submit').disabled = 'disabled';
         document.getElementById('submit').value = __('pair.bearerid.checking');
 
-        Homey.emit('api_connection', {bearerid: document.forms.form.bearerid.value, refreshtoken: document.forms.form.refreshtoken.value}).then(function(result)
+        Homey.emit('api_connection', {bearerid: document.forms.form.bearerid.value, refreshtoken: document.forms.form.refreshtoken.value}).then(function(result, err)
         {
-            if (result)
+            if (result.ok)
             {
                 console.log('authentication succeeded');
                 document.getElementById('submit').value = __('pair.bearerid.correct');
@@ -51,7 +51,7 @@
                 console.log('authentication failed');
                 document.getElementById('submit').disabled = false;
                 document.getElementById('submit').value = __('pair.bearerid.try_again');
-                document.getElementById('status').value = err;
+                document.getElementById('status').value = result.err;
                 document.getElementById('status').style.color = 'red';
             }
         });
