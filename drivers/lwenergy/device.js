@@ -14,10 +14,7 @@ module.exports = class lwenergy extends Homey.Device
 
             if (await this.homey.app.getBridge().waitForBridgeReady())
             {
-                const initDelay = this.homey.app.getDeviceIntiDelay();
-                this.homey.setTimeout(() => {
-                    this.initDevice();
-                }, initDelay * 1000);
+                this.initDevice();
             }
             this.homey.app.updateLog(`Device initialised( Name: ${this.getName()})`);
         }
@@ -27,12 +24,32 @@ module.exports = class lwenergy extends Homey.Device
         }
     }
 
-    async initDevice()
+    initDevice(extraTime = 0)
+    {
+        if (this.initDelay == null)
+        {
+            this.initDelay = this.homey.app.getDeviceIntiDelay();
+            this.homey.setTimeout(() => {
+                this.doInit();
+            }, this.initDelay * 2000 + extraTime);
+        }
+    }
+
+    async doInit()
     {
         this.homey.app.updateLog(`${this.getName()}: Getting Values`);
-        await this.getEnergyValues();
-        await this.registerWebhook();
-        this.setAvailable().catch(this.error);
+        if (await this.getEnergyValues())
+        {
+            if (await this.registerWebhook())
+            {
+                this.setAvailable().catch(this.error);
+                this.initDelay = null;
+                return;
+            }
+        }
+
+        // Something failed so try again later
+        this.initDevice(60000);
     }
 
     async registerWebhook()

@@ -14,10 +14,7 @@ module.exports = class lwsockets extends Homey.Device
 
             if (await this.homey.app.getBridge().waitForBridgeReady())
             {
-                const initDelay = this.homey.app.getDeviceIntiDelay();
-                this.homey.setTimeout(() => {
-                    this.initDevice();
-                }, initDelay * 1000);
+                this.initDevice();
             }
             this.homey.app.updateLog(`Device initialised( Name: ${this.getName()})`);
         }
@@ -29,13 +26,35 @@ module.exports = class lwsockets extends Homey.Device
         this.registerCapabilityListener('onoff', this.onCapabilityOnoff.bind(this));
     }
 
-    async initDevice()
+    initDevice(extraTime = 0)
+    {
+        if (this.initDelay == null)
+        {
+            this.initDelay = this.homey.app.getDeviceIntiDelay();
+            this.homey.setTimeout(() => {
+                this.doInit();
+            }, this.initDelay * 2000 + extraTime);
+        }
+    }
+
+    async doInit()
     {
         this.homey.app.updateLog(`${this.getName()}: Getting Values`);
-        await this.getDeviceValues();
-        await this.getEnergyValues();
-        await this.registerWebhook();
-        this.setAvailable().catch(this.error);
+        if (await this.getDeviceValues())
+        {
+            if (await this.getEnergyValues())
+            {
+                if (await this.registerWebhook())
+                {
+                    this.setAvailable().catch(this.error);
+                    this.initDelay = null;
+                    return;
+                }
+            }
+        }
+
+        // Something failed so try again later
+        this.initDevice(60000);
     }
 
     // this method is called when the Homey device has requested a state change (turned on or off)
