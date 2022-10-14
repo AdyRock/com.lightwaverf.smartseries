@@ -2,7 +2,7 @@
 
 const Homey = require('homey');
 
-module.exports = class lwcontact extends Homey.Device
+module.exports = class lwmotion extends Homey.Device
 {
 
     async onInit()
@@ -50,7 +50,8 @@ module.exports = class lwcontact extends Homey.Device
             const data = this.getData();
             const id = `${driverId}_${data.id}`;
 
-            await this.homey.app.getBridge().registerWEBHooks(data.windowPosition, 'feature', `${id}_windowPosition`);
+            await this.homey.app.getBridge().registerWEBHooks(data.movement, 'feature', `${id}_movement`);
+            await this.homey.app.getBridge().registerWEBHooks(data.lightLevel, 'feature', `${id}_lightLevel`);
             await this.homey.app.getBridge().registerWEBHooks(data.batteryLevel, 'feature', `${id}_batteryLevel`);
         }
         catch (err)
@@ -64,9 +65,13 @@ module.exports = class lwcontact extends Homey.Device
 
     async setWebHookValue(capability, value)
     {
-        if (capability === 'windowPosition')
+        if (capability === 'movement')
         {
-            this.setCapabilityValue('alarm_contact', (value === 1)).catch(this.error);
+            this.setCapabilityValue('alarm_motion', (value === 1)).catch(this.error);
+        }
+        else if (capability === 'lightLevel')
+        {
+            this.setCapabilityValue('measure_lightLevel', value).catch(this.error);
         }
         else if (capability === 'batteryLevel')
         {
@@ -83,24 +88,38 @@ module.exports = class lwcontact extends Homey.Device
             const devData = this.getData();
 
             // Get the current switch Value from the device using the unique feature ID stored during pairing
-            const onoff = await this.homey.app.getBridge().getFeatureValue(devData.windowPosition, ValueList);
+            const onoff = await this.homey.app.getBridge().getFeatureValue(devData.movement, ValueList);
             if (typeof onoff === 'number')
             {
                 switch (onoff)
                 {
                     case 0:
                         // Device returns 0 for off and 1 for on so convert o false and true
-                        this.setCapabilityValue('alarm_contact', false).catch(this.error);
+                        this.setCapabilityValue('alarm_motion', false).catch(this.error);
                         break;
 
                     case 1:
-                        this.setCapabilityValue('alarm_contact', true).catch(this.error);
+                        this.setCapabilityValue('alarm_motion', true).catch(this.error);
                         break;
 
                     default:
                         // Bad response so set as unavailable for now
                         // this.setUnavailable();
                         break;
+                }
+            }
+
+            const light = await this.homey.app.getBridge().getFeatureValue(devData.lightLevel);
+            if (typeof light === 'number')
+            {
+                if (light >= 0)
+                {
+                    this.setCapabilityValue('measure_lightLevel', light).catch(this.error);
+                }
+                else
+                {
+                    // Bad response so set as unavailable for now
+                    // this.setUnavailable();
                 }
             }
 
@@ -122,7 +141,7 @@ module.exports = class lwcontact extends Homey.Device
         catch (err)
         {
             // this.setUnavailable();
-            this.homey.app.updateLog(`lwcontact Device getDeviceValues Error ${err}`);
+            this.homey.app.updateLog(`lwmotion Device getDeviceValues Error ${err}`);
         }
 
         return false;

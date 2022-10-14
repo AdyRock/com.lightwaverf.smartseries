@@ -1,0 +1,47 @@
+{
+    "name": {
+        "en": "Contact Sensor"
+    },
+    "platforms": [
+        "local"
+    ],
+    "connectivity": [
+        "cloud"
+    ],
+    "class": "sensor",
+    "capabilities": [
+        "measure_battery",
+        "measure_lightLevel",
+        "alarm_motion"
+    ],
+    "energy": {
+        "batteries": [
+            "CR2477"
+        ]
+    },
+    "pair": [
+        {
+            "id": "my_connect"
+        },
+        {
+            "id": "list_my_devices",
+            "template": "list_devices",
+            "navigation": {
+                "next": "add_my_devices"
+            }
+        },
+        {
+            "id": "add_my_devices",
+            "template": "add_devices"
+        }
+    ],
+    "repair": [
+        {
+            "id": "my_repair"
+        }
+    ],
+    "images": {
+        "large": "/drivers/lwmotion/assets/images/large.png",
+        "small": "/drivers/lwmotion/assets/images/small.png"
+    }
+}
