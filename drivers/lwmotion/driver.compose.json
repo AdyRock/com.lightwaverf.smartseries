@@ -1,6 +1,6 @@
 {
     "name": {
-        "en": "Contact Sensor"
+        "en": "Motion Sensor"
     },
     "platforms": [
         "local"

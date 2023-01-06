@@ -49,5 +49,8 @@
   },
   "3.1.8": {
     "en": "Add support for L40 Socket Smart Plug-in."
+  },
+  "3.1.9": {
+    "en": "Changed the device name of the Motion Sensor (it was Contact Sensor)."
   }
 }
