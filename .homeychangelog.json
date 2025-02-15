@@ -52,5 +52,11 @@
   },
   "3.1.9": {
     "en": "Changed the device name of the Motion Sensor (it was Contact Sensor)."
+  },
+  "3.1.10": {
+	"en": "Add support for L81 relay."
+  },
+  "3.1.11": {
+    "en": "Fix Send Log error introduced in 3.1.10."
   }
 }
