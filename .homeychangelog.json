@@ -64,5 +64,8 @@
   },
   "3.1.13": {
 	"en": "Add cumulativeImportedCapability to Energy meter settings and added support for LP92."
+  },
+  "3.1.14": {
+	"en": "Fixed support for LW92 and added support for DT92E."
   }
 }
