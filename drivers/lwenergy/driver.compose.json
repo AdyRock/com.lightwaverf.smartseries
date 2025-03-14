@@ -14,7 +14,8 @@
         "meter_power"
     ],
     "energy": {
-        "cumulative": true
+        "cumulative": true,
+		"cumulativeImportedCapability": "meter_power"
     },
     "pair": [
         {

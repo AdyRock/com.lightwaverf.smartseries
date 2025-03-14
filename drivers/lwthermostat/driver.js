@@ -47,7 +47,7 @@ module.exports = class lwthermostat extends Homey.Driver {
             return { bearerid: this.homey.app.bearerid, refreshtoken: this.homey.app.refreshtoken };
         });
 
-        session.setHandler('api_connection', async data =>
+        session.setHandler('api_connection', async (data) =>
         {
             if (data.bearerid && data.refreshtoken)
             {
@@ -57,16 +57,16 @@ module.exports = class lwthermostat extends Homey.Driver {
                     this.homey.app.refreshtoken = data.refreshtoken;
                     if (await this.homey.app.InitBridge(false))
                     {
-                        return {ok:true};
+                        return { ok: true };
                     }
 
-                    return {ok:false, err:'Failed'};
+                    return { ok: false, err: 'Failed' };
                 }
 
-                return {ok:true};
+                return { ok: true };
             }
 
-            return {ok:false, err:'Missing Token'};
+            return { ok: false, err: 'Missing Token' };
         });
     }
 
@@ -80,7 +80,7 @@ module.exports = class lwthermostat extends Homey.Driver {
             return { bearerid: this.homey.app.bearerid, refreshtoken: this.homey.app.refreshtoken };
         });
 
-        session.setHandler('api_connection', async data =>
+        session.setHandler('api_connection', async (data) =>
         {
             if (data.bearerid && data.refreshtoken)
             {
@@ -90,16 +90,16 @@ module.exports = class lwthermostat extends Homey.Driver {
                     this.homey.app.refreshtoken = data.refreshtoken;
                     if (await this.homey.app.InitBridge(false))
                     {
-                        return {ok:true};
+                        return { ok: true };
                     }
 
-                    return {ok:false, err:'Failed'};
+                    return { ok: false, err: 'Failed' };
                 }
 
-                return {ok:true};
+                return { ok: true };
             }
 
-            return {ok:false, err:'Missing Token'};
+            return { ok: false, err: 'Missing Token' };
         });
     }
 
