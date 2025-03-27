@@ -67,5 +67,8 @@
   },
   "3.1.14": {
 	"en": "Fixed support for LW92 and added support for DT92E."
+  },
+  "3.1.15": {
+	"en": "Added an Advanced Setting option to change the Class type of the Energy Monitor so it can be set as an EV Charger for inclusion in the new Homey Energy tab (requires Homey firmware 12 or higher)."
   }
 }

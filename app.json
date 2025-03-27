@@ -179,6 +179,35 @@
         "cumulative": true,
         "cumulativeImportedCapability": "meter_power"
       },
+      "settings": [
+        {
+          "id": "classType",
+          "type": "dropdown",
+          "label": {
+            "en": "Device Class"
+          },
+          "values": [
+            {
+              "id": "sensor",
+              "label": {
+                "en": "Sensor"
+              }
+            },
+            {
+              "id": "socket",
+              "label": {
+                "en": "Socket"
+              }
+            },
+            {
+              "id": "evcharger",
+              "label": {
+                "en": "EV Charger"
+              }
+            }
+          ]
+        }
+      ],
       "pair": [
         {
           "id": "my_connect"

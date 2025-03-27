@@ -43,6 +43,16 @@ module.exports = class lwenergy extends Homey.Device
         this.initDevice(60000);
     }
 
+	async onSettings({ oldSettings, newSettings, changedKeys })
+	{
+		this.homey.app.updateLog(`${this.getName()}: Settings updated`);
+
+		if (changedKeys.indexOf('classType') >= 0)
+		{
+			this.setClass(newSettings.classType);
+		}
+	}
+
     async registerWebhook()
     {
         try
