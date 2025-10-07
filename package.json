@@ -13,7 +13,7 @@
     "url": "https://github.com/AdyRock/com.lightwaverf.smartseries"
   },
   "dependencies": {
-    "nodemailer": "^6.7.2"
+    "nodemailer": "^7.0.7"
   },
   "license": "GPL-3.0",
   "engines": {
