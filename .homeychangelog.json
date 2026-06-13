@@ -74,4 +74,7 @@
   "3.1.16": {
 	"en": "Added support for MK4 devices. Added support for scene controller battery level (that is the only option supported by the API)."
   }
+  ,"3.1.17": {
+	"en": "Fixed retry storm when server is having issues. Fixed polling batch reads so stale Lightwave feature IDs are pruned and retried when the API reports Feature not found."
+  }
 }
