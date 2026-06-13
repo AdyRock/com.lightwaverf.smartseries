@@ -1,7 +1,10 @@
 <!doctype html>
-<html>
+<html lang="en">
 
 <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Lightwave Smart Settings</title>
     <link rel="stylesheet" type="text/css" href="lwsa.css">
     <link rel="stylesheet" type="text/css" href="busy_indicator.css" />
     <style>
@@ -93,7 +96,8 @@
                     -->
             </p>
             <div class="field row">
-                <textarea id="unsupportedDevices"></textarea>
+                <label for="unsupportedDevices">Unsupported Devices</label>
+                <textarea id="unsupportedDevices" title="Unsupported Devices"></textarea>
             </div>
         </fieldset>
     </div>
@@ -113,9 +117,19 @@
             </div>
         </fieldset>
         <fieldset>
-            <p><button id="clearLog">Clear Log</button> <button id="sendDiagLog"><span data-i18n="settings.sendLog"></span></button></p>
+            <p>Lightwave Support Bundle</p>
             <div class="field row">
-                <textarea id="diagLog"></textarea>
+                <label for="supportBundleLimit">Entries</label>
+                <input id="supportBundleLimit" type="number" min="1" max="200" value="50" />
+                <button id="getSupportBundle">Get Support Bundle</button>
+            </div>
+            <p>This creates a filtered bundle of split errors, connection failures and fallback events for Lightwave support.</p>
+        </fieldset>
+        <fieldset>
+            <p><button id="clearLog">Clear Log</button> <button id="sendDiagLog" title="Send Log" aria-label="Send Log"><span data-i18n="settings.sendLog">Send Log</span></button></p>
+            <div class="field row">
+                <label for="diagLog">Diagnostics Log</label>
+                <textarea id="diagLog" title="Diagnostics Log"></textarea>
             </div>
         </fieldset>
     </div>
@@ -136,6 +150,8 @@
         var saveElement = document.getElementById( 'save' );
         var clearLogElement = document.getElementById( 'clearLog' );
         var sendDiagLogElement = document.getElementById('sendDiagLog');
+        var getSupportBundleElement = document.getElementById('getSupportBundle');
+        var supportBundleLimitElement = document.getElementById('supportBundleLimit');
 
         // a method named 'onHomeyReady' must be present in your code
         function onHomeyReady( Homey )
@@ -257,6 +273,41 @@
                 });
             });
 
+            getSupportBundleElement.addEventListener('click', function(e)
+            {
+                var limit = Number(supportBundleLimitElement.value);
+                if (!limit || Number.isNaN(limit) || (limit < 1))
+                {
+                    limit = 50;
+                }
+                if (limit > 200)
+                {
+                    limit = 200;
+                }
+
+                waitCursor(true);
+                var requestPath = '/?cmd=supportBundle&limit=' + encodeURIComponent(limit);
+                Homey.api('GET', requestPath, null, function(err, result)
+                {
+                    waitCursor(false);
+                    if (err)
+                    {
+                        return Homey.alert(err);
+                    }
+
+                    var supportBundle = result;
+                    if (typeof supportBundle !== 'string')
+                    {
+                        supportBundle = JSON.stringify(supportBundle, null, 2);
+                    }
+
+                    diagLogElement.value = supportBundle;
+                    diagLogElement.focus();
+                    diagLogElement.select();
+                    return Homey.alert('Support bundle generated and copied to the log box.');
+                });
+            });
+
             // Tell Homey we're ready to be displayed
             Homey.ready();
         }
@@ -305,8 +356,8 @@
                 } );
 
                 // Make the log text area fill the page
-                diagLogElement.setAttribute( 'cols', diagLogElement.parentElement.clientWidth / 8 );
-                diagLogElement.style.height = ( window.innerHeight - diagLogElement.offsetTop - 20 ) + 'px';
+                diagLogElement.setAttribute( 'cols', diagLogElement.parentElement.clientWidth / 7.8 );
+                diagLogElement.style.height = ( window.innerHeight - diagLogElement.offsetTop - 60 ) + 'px';
             }
             else if ( tabPage == 'unsupported' )
             {
@@ -317,8 +368,8 @@
                 } );
 
                 // Make the unsupported devices text area fill the page
-                unsupportedDevicesElement.setAttribute( 'cols', unsupportedDevicesElement.parentElement.clientWidth / 8 );
-                unsupportedDevicesElement.style.height = ( window.innerHeight - unsupportedDevicesElement.offsetTop - 20 ) + 'px';
+                unsupportedDevicesElement.setAttribute( 'cols', unsupportedDevicesElement.parentElement.clientWidth / 7.8 );
+                unsupportedDevicesElement.style.height = ( window.innerHeight - unsupportedDevicesElement.offsetTop - 60 ) + 'px';
             }
         }
 
