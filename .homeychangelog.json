@@ -79,5 +79,8 @@
   },
   "3.1.18": {
 	"en": "Improved API outage resilience with endpoint-scoped cooldowns and smarter polling deferral, treated duplicate webhook registrations as successful, added jittered webhook retry pacing, reduced startup load with batch feature cache priming, and trimmed noisy diagnostic logs."
+  },
+  "3.1.19": {
+	"en": "Fixed startup crash when diagnostics log settings were null by hardening log initialization and null handling in updateLog/sendLog."
   }
 }

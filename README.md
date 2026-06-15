@@ -165,6 +165,10 @@ If you have devices that are not supported, a log will appear in the settings pa
 If you post the log to https://github.com/AdyRock/com.lightwaverf.smartseries/issues I will try to add the devices to the next version.
 
 # Version Log
+## 3.1.19
+* Fixed startup crash when diagnostic log settings were null by hardening log handling and initialization order.
+* Hardened diagnostic send-log flow against null/non-string diagnostic log content.
+
 ## 2.0.3
 * Added support for LW821 and L82.
 * Changed identifer to use productCode instead of product.
